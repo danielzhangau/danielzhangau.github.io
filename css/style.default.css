@@ -18,7 +18,7 @@ Bootstrapious Boilerplate Template
 }
 
 .text-small {
-  font-size: 0.9rem;
+  font-size: 1.125rem;
 }
 
 html {
@@ -148,7 +148,7 @@ INTRO SECTION
   width: 100%;
   height: 100%;
   color: #fff;
-  background-color: #111;
+  background-color: #eee;
   min-height: 600px;
   padding: 0;
   background-size: cover;
@@ -165,8 +165,13 @@ INTRO SECTION
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
+.intro h1 {
+  line-height: 9rem;
+  font-size: 3.5rem;
+}
+
 .intro p {
-  font-size: 1.35rem;
+  font-size: 1.6rem;
 }
 
 .content {
@@ -178,6 +183,14 @@ INTRO SECTION
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   z-index: 10;
+}
+
+.rowintro img {
+  float: right;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-right: 110px;
 }
 
 @media (max-width: 767.98px) {
@@ -275,14 +288,14 @@ p.social {
 }
 
 p.social a {
-  margin: 0 10px 0 0;
+  margin: 0 35px 0 0;
   color: #fff;
   display: inline-block;
-  width: 38px;
-  height: 38px;
-  border-radius: 19px;
-  line-height: 38px;
-  font-size: 15px;
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  line-height: 41px;
+  font-size: 26px;
   text-align: center;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -294,16 +307,16 @@ p.social a i {
   line-height: 38px;
 }
 
-p.social a.facebook {
-  background-color: #ccc;
+p.social a.github {
+  background-color: #999;
 }
 
-p.social a.gplus {
-  background-color: #333;
+p.social a.linkedin {
+  background-color: #999;
 }
 
 p.social a.twitter {
-  background-color: #aaa;
+  background-color: #999;
 }
 
 p.social a.instagram {
@@ -311,7 +324,7 @@ p.social a.instagram {
 }
 
 p.social a.email {
-  background-color: #666;
+  background-color: #999;
 }
 
 /*
@@ -329,7 +342,6 @@ footer {
   margin-top: 40px;
   margin-bottom: 40px;
   color: #eee;
-  font-style: italic;
 }
 
 .copyright p.credit {
@@ -385,12 +397,12 @@ STYLE SWITCHER FOR DEMO
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 }
 
 .navbar-toggler {
   padding: 0.25rem 0.75rem;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   line-height: 1;
   border: 1px solid transparent;
   border-radius: 0rem;
@@ -1117,16 +1129,16 @@ STYLE SWITCHER FOR DEMO
  * 3. TYPE
  */
 body {
-  font-family: "Cardo", "Times New Roman", Times, serif;
-  font-size: 1rem;
+  font-family: "Lora", "Times New Roman", Times, serif;
+  font-size: 1.125rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.9;
   color: #212529;
   background-color: #fff;
 }
 
 a {
-  color: #333;
+  color: #004d99;
   text-decoration: none;
 }
 
@@ -1148,17 +1160,16 @@ h6,
 .h5,
 .h6 {
   margin-bottom: 0.5rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Lora", sans-serif;
   font-weight: 700;
   line-height: 1.44;
   color: inherit;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.05em;
 }
 
 h1,
 .h1 {
-  font-size: 2.8rem;
+  font-size: 3rem;
 }
 
 h2,
