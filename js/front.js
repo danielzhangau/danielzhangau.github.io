@@ -81,7 +81,7 @@ $(function () {
 function map() {
 
     var mapId = 'map',
-        mapCenter = [53.14, 8.22],
+        mapCenter = [-27.4892582, 153.0063968],
         mapMarker = true;
 
     if ($('#' + mapId).length > 0) {
@@ -136,4 +136,5 @@ function map() {
 
         }
     }
+
 }
