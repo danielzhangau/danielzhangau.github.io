@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ===================================================================
 Plugins Used
 ===================================================================
@@ -7,4 +8,15 @@ Lightbox 2 - http://lokeshdhakar.com/projects/lightbox2/
 Photos
 ===================================================================
 David Schiersner - https://www.flickr.com/photos/freaky_designz/
+=======
+===================================================================
+Plugins Used
+===================================================================
+Lightbox 2 - http://lokeshdhakar.com/projects/lightbox2/
+
+===================================================================
+Photos
+===================================================================
+David Schiersner - https://www.flickr.com/photos/freaky_designz/
+>>>>>>> 72395ab9485c03974af0bbd830cdbfe7a9d0c2a6
 Martina Photography
