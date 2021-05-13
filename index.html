@@ -189,6 +189,79 @@
                   alt="image" class="img-fluid"></a></div>
           </div>
         </div>
+        <!-- additional project -->
+        <h3> <a href="https://github.com/danielzhangau/Artificial-Intelligence">A* Search in LaserTank
+            / LaserTank MDP / Reinforcement learning in LaserTank </a>
+        </h3>
+        <p> LaserTank is an open source computer puzzle game requiring logical thinking to solve a variety of levels,
+          originally developed by Jim Kindley in 1995. In LaserTank, a player controls a tank vehicle which can move
+          forwards, turn clockwise and counterclockwise, and shoot a laser which can be used to interact with special
+          map elements. The game takes place in a 2D map divided into grid cells. The player must navigate from a
+          starting position to the flag in as few moves as possible while avoiding "game over" conditions. The game is
+          over if the player moves into a dangerous cell (i.e. water cells or any cell in the line of fire area of an
+          anti-tank).
+          <br>Our goal is: to turn LaserTank into a search problem, I will have to first define the following agent
+          design components:
+          <br>• A problem state representation (state space),
+          <br>• A successor function that indicates which states can be reached from a given state (action space and
+          transition function), and
+          <br>• A cost function (utility function); we assume that each step has a uniform cost of 1.
+
+          <br>The solver program will: (i) take a testcase filename and an output filename as arguments, (ii) find a
+          solution to the testcase, and (iii) write the solution to an output file with the given output filename. It
+          will generate a solution in the form of a comma-separated list of actions, taken from the set of move symbols
+          defined in the supplied laser tank.py file, which are:
+          <br>• MOVE FORWARD = 'f'
+          <br>• TURN LEFT = 'l'
+          <br>• TURN RIGHT = 'r'
+          <br>• SHOOT LASER = 's'
+        </p>
+        <p>From the project, I learned:
+          <br>• Uniform Cost Search/ A* Search
+          <br>• Value Iteration (VI) / Policy Iteration (PI)
+          <br>• Q-learning / SARSA
+        </p>
+        <div class="box"><a href="img/laser_tank.gif" data-lightbox="image-1" data-title="laser_tank.gif"
+            class="has-border"><img src="img/laser_tank.gif" alt="image" class="img-fluid"></a></div>
+        <!-- additional project -->
+        <h3> <a href="https://github.com/danielzhangau/Artificial-Intelligence/tree/master/ass2">Motion planning for
+            CANADARM </a>
+        </h3>
+        <p> Canadarm2 is a remote-controlled mechanical arm aboard the International Space Station (ISS). The robotic
+          arm is used to deploy, capture and repair satellites, position astronauts, maintain equipment, and move cargo.
+          <br>The system: The simplified Canadarm operates in a 2D workspace (rather than 3D). In particular, the 2D
+          workspace is a plane, represented as [0, 1] x [0, 1] C R^2, and is populated by rectangular obstacles. In
+          addition, there are grapple point(s) which the end effectors of the robotic arm can attach to. One of the end
+          effectors must be grappled to a grapple point at any time. The exact dimensions and positions of each obstacle
+          and the number and position of the grapple points in the environment are known prior to execution.
+          <br>Given the initial and goal configurations of the Canadarm robotic arm, as well as a map of the
+          environment, my program will find a valid path from the initial to the goal configurations. A valid path means
+          that when the Canadarm executes the path, it will satisfy the following requirements:
+          <br>1. The path consists of primitive steps. In each primitive step, each joint of the robot arm cannot move
+          more than 0.001 units (i.e. radians or arm length).
+          <br>2. It will not collide with any of the obstacles
+          <br>3. It will not collide with itself
+          <br>4. The entire Canadarm robotic arm must lie inside the workspace
+          <br>5. The angle between adjacent arm segments cannot be tighter than 15 degrees (i.e. angles 2, 3, 4... must
+          be between -165 deg and +165 deg).
+          <br>6. The segment lengths must be within the bounds specified in the input file (i.e. within min and max
+          lengths)
+          <br>7. Since a primitive step is very small, it is sucient to satisfy requirements 2-4 at the beginning and
+          end of each primitive step.
+        </p>
+        <p>From the project, I learned:
+          <br>• Probabilistic Roadmap Path Planning
+        </p>
+        <div class="row">
+          <div class="col-md-7">
+            <div class="box"><a href="img/robot_arm_code.gif" data-lightbox="image-1" data-title="robot_arm_code"
+                class="has-border"><img src="img/robot_arm_code.gif" alt="image" class="img-fluid"></a></div>
+          </div>
+          <div class="col-md-5">
+            <div class="box"><a href="img/robot_arm.gif" data-lightbox="image-1" data-title="robot_arm.gif"
+                class="has-border"><img src="img/robot_arm.gif" alt="image" class="img-fluid"></a></div>
+          </div>
+        </div>
         <!-- third project -->
         <h3> <a href="https://drive.google.com/drive/folders/1jDt9WlaSOFPtw84l2dPu_8LhbKFgpeTk">Linked Project of
             Developing Time Management Application </a></h3>
