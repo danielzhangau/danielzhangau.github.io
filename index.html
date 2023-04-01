@@ -1,435 +1,758 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Bosheng (Daniel) Zhang | Machine Learning Engineer</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="all,follow" />
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />
+    <!-- Font Awesome CSS-->
+    <link
+      rel="stylesheet"
+      href="vendor/font-awesome/css/font-awesome.min.css"
+    />
+    <!-- Google fonts - Montserrat for headings, Cardo for copy-->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lora:500,500italic,700"
+    />
+    <!-- Lightbox-->
+    <link rel="stylesheet" href="vendor/lightbox2/css/lightbox.min.css" />
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet" />
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css" />
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/emoji.png" />
+    <!-- Leaflet CSS - For the map-->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <!-- Tweaks for older IEs-->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script
+    ><![endif]-->
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bosheng Zhang | Computer Science student</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="all,follow">
-  <!-- Bootstrap CSS-->
-  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome CSS-->
-  <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
-  <!-- Google fonts - Montserrat for headings, Cardo for copy-->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:500,500italic,700">
-  <!-- Lightbox-->
-  <link rel="stylesheet" href="vendor/lightbox2/css/lightbox.min.css">
-  <!-- theme stylesheet-->
-  <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
-  <!-- Custom stylesheet - for your changes-->
-  <link rel="stylesheet" href="css/custom.css">
-  <!-- Favicon-->
-  <link rel="shortcut icon" href="img/emoji.png">
-  <!-- Leaflet CSS - For the map-->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" />
-  <!-- Tweaks for older IEs-->
-  <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-</head>
+  <body>
+    <section
+      id="intro"
+      style="background-image: url('img/code.jpg')"
+      class="intro"
+    >
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="container clearfix">
+          <div class="rowintro">
+            <div class="col-lg-10 mx-auto">
+              <img src="img/emoji.png" alt="me" />
+              <h1>Bosheng Zhang</h1>
+              <p>
+                Hi, I'm Bosheng Zhang! I'm passionate about AI and Machine
+                Learning and enjoy using my skills in Data Analysis, Statistics,
+                and Programming to create innovative solutions. With a couple of
+                years of experience in software development, I've been focusing
+                on Python programming, machine learning applications, and Google
+                Cloud infrastructure. I'm always excited to learn new things and
+                tackle challenging problems. Feel free to explore my portfolio
+                to see what I've been up to!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<body>
-  <section id="intro" style="background-image: url('img/code.jpg');" class="intro">
-    <div class="overlay"></div>
-    <div class="content">
-      <div class="container clearfix">
-        <div class="rowintro">
-          <div class="col-lg-10 mx-auto">
-            <img src="img/emoji.png" alt="me" />
-            <h1>Bosheng Zhang</h1>
-            <p>Hi there! I am currently studying Computer Science at the University of Queensland.
-              My background lie in Machine Learning.
-              <br>My skills in Java/Python/C programing, UX/UI Design,
-              Algorithm and Data Structure have allowed me to build and deliver projects across many fields.
+    <!-- try react -->
+    <!-- <div id="like_button_container"></div> -->
+
+    <!-- intro end-->
+
+    <!-- navbar-->
+    <header class="header">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a href="#intro" class="navbar-brand link-scroll"
+            ><img src="img/logo.png" alt="" class="img-fluid"
+          /></a>
+          <button
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            class="navbar-toggler navbar-toggler-right"
+          >
+            <i class="fa fa-bars"></i>
+          </button>
+          <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a href="#intro" class="nav-link link-scroll">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="#about" class="nav-link link-scroll">About </a>
+              </li>
+              <li class="nav-item">
+                <a href="#portfolio" class="nav-link link-scroll">Portfolio</a>
+              </li>
+              <li class="nav-item">
+                <a href="#contact" class="nav-link link-scroll">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- about-->
+    <section id="about" class="text">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7">
+            <h1 class="heading">ABOUT ME</h1>
+            <p class="lead">
+              Hi, I'm Bosheng Zhang, you can also call me Daniel.
+            </p>
+            <p>
+              I am currently studying Computer Science degree. I love solving
+              challenging problems and learning new things. I have always
+              enjoyed creating things, and I love bringing creative ideas to
+              life through programming. My background lie in Machine Learning. I
+              pride myself on my abilities and achievements in Data Analysis,
+              Statistics and Programming. My problem solving skills are often
+              relied on by team-mates due to my ability to create high quality
+              work in an efficient and timely manner.
+            </p>
+            <p>
+              I have one year tutoring experience on Web Development. During
+              that time, I got a deeper understanding of the material for my own
+              self. Tutoring is a wonderful process. One way to determine how
+              well you know something is by how well you can explain it to
+              another. Tutoring will test that.
+            </p>
+            <p>
+              Outside of my studying life, I have a keen interest in all sorts
+              of technology, spend a decent amount of time playing and streaming
+              games, love to travel and am always on the hunt for the next hot
+              restaurant in my area.
+            </p>
+          </div>
+          <div class="col-lg-5 mx-auto">
+            <p>
+              <br /><br /><img
+                src="img/portfolio-picture.jpg"
+                alt=""
+                class="img-fluid rounded-circle"
+              />
             </p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+    <!-- about end-->
 
-  <!-- try react -->
-  <!-- <div id="like_button_container"></div> -->
-
-  <!-- intro end-->
-
-  <!-- navbar-->
-  <header class="header">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container"><a href="#intro" class="navbar-brand link-scroll"><img src="img/logo.png" alt=""
-            class="img-fluid"></a>
-        <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-          class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
-        <div id="navbarSupportedContent" class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a href="#intro" class="nav-link link-scroll">Home</a></li>
-            <li class="nav-item"><a href="#about" class="nav-link link-scroll">About </a></li>
-            <li class="nav-item"><a href="#portfolio" class="nav-link link-scroll">Portfolio</a></li>
-            <li class="nav-item"><a href="#contact" class="nav-link link-scroll">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-  <!-- about-->
-  <section id="about" class="text">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-7">
-          <h1 class="heading">ABOUT ME</h1>
-          <p class="lead">Hi, I'm Bosheng Zhang, you can also call me Daniel.</p>
-          <p>I am currently studying Computer Science degree. I love solving challenging problems and learning new
-            things.
-            I have always enjoyed creating things, and I love bringing creative ideas to life through programming.
-            My background lie in Machine Learning. I pride myself on my abilities and achievements in Data Analysis,
-            Statistics and Programming. My problem solving skills are often relied on by team-mates due to my ability to
-            create high quality work in an efficient and timely manner. </p>
-          <p>I have one year tutoring experience on Web Development. During that time, I got a deeper understanding of
-            the material for my own self. Tutoring is a wonderful process. One way to determine how well you know
-            something is by how well you can explain it to another. Tutoring will test that. </p>
-          <p>Outside of my studying life, I have a keen interest in all sorts of technology, spend a decent amount of
-            time playing and streaming games, love to travel and am always on the hunt for the next hot restaurant in my
-            area. </p>
-        </div>
-        <div class="col-lg-5 mx-auto">
-          <p><br><br><img src="img/portfolio-picture.jpg" alt="" class="img-fluid rounded-circle"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- about end-->
-
-  <!-- Portfolio / gallery-->
-  <section id="portfolio" style="background-color: #eee" class="gallery">
-    <div class="container clearfix">
-      <div class="col-lg-10 mx-auto">
-        <h1 class="heading">PORTFOLIO</h1>
-        <!-- first project -->
-        <h3> <a
-            href="https://github.com/danielzhangau/PatternFlow/tree/topic-recognition/recognition/ISIC_skin_cancer#readme">Image
-            Segmentation Keras : Implementation of Segmentation on the ISICs data set with the Improved UNet </a>
-        </h3>
-        <p> The agenda of this project is to apply the improved U-Net architecture on the ISICs data set to
-          predict the segmentation response of the lesion image in the test data set, and the overall minimum Dice
-          score is 0.8.</p>
-        <p> The data set is challenged by "Analysis of Skin Lesions for Melanoma Detection" using a data set of
-          annotated skin lesion images from ISIC archives. The data set contains raw (input data) and segmented
-          (response data) images of skin patches, which are used to detect skin lesions. The response data
-          includes a binary mask image in PNG format, which indicates the position of the original skin lesion in
-          each input lesion image.</p>
-        <p>From the project, I learned:
-          <br>• Solving pattern recognition problems, especially via deep CNN
-          <br>• A deep learning framework, such as Tensorflow or PyTorch
-          <br>• Algorithmic design incorporating software engineering principles, while contributing to a course run
-          open source project, PatternFlow – a pattern recognition and image processing library for Tensorflow
-          <br>• mathematical frameworks involved in understanding patterns and principles required for all of the above,
-          such as group theory and tensor calculus
-        </p>
-        <div class="box"><a href="img/isic_project.png" data-lightbox="image-1" data-title="Sign in page"
-            class="has-border"><img src="img/isic_project.png" alt="image" class="img-fluid"></a></div>
-        <div class="box"><a href="img/Improved_UNET.png" data-lightbox="image-1" data-title="Sign in page"
-            class="has-border"><img src="img/Improved_UNET.png" alt="image" class="img-fluid"></a></div>
-        <!-- second project -->
-        <h3> <a href="https://github.com/danielzhangau/DECO3801-7381-Zoomers">React
-            Native Application - GreenMiles </a>
-        </h3>
-        <p> The agenda of this project is to apply the improved U-Net architecture on the ISICs data set to
-          predict the segmentation response of the lesion image in the test data set, and the overall minimum Dice
-          score is 0.8.</p>
-        <p> The data set is challenged by "Analysis of Skin Lesions for Melanoma Detection" using a data set of
-          annotated skin lesion images from ISIC archives. The data set contains raw (input data) and segmented
-          (response data) images of skin patches, which are used to detect skin lesions. The response data
-          includes a binary mask image in PNG format, which indicates the position of the original skin lesion in
-          each input lesion image.</p>
-        <p>From the project, I learned:
-          <br>• Design, build and clearly document a significant software solution based on a design brief.
-          <br>• Apply previous experience and skills in multimedia design and software development to deliver a complete
-          and polished system that meets your client's requirements within a pre-determined deadline.
-          <br>• Investigate and overcome challenges associated with implementing new designs and technologies.
-          <br>• Apply sound project management skills (using relevant tools where necessary) to successfully deliver a
-          software development project.
-          <br>• Apply investigative, experimental, and prototyping methods in the software design and development
-          process.
-          <br>• Communicate effectively with stakeholders to gather requirements and context on briefs, and to manage
-          stakeholder expectations over the course of a project.
-          <br>• Develop the necessary skills to work successfully in a multi-disciplinary team, including the
-          application and evaluation of different methods for collaborative team work.
-          <br>• Explain and apply appropriate methods of user investigation, involvement and evaluation, using
-          techniques tailored to your specific software development project.
-          <br>• Demonstrate sound critical and professional judgment with respect to the ethical issues associated with
-          technology projects or products, and apply ethical thinking to your own work.
-        </p>
-        <!-- <div class="box"><a href="img/green_miles.png" data-lightbox="image-1" data-title="green mile logo"
+    <!-- Portfolio / gallery-->
+    <section id="portfolio" style="background-color: #eee" class="gallery">
+      <div class="container clearfix">
+        <div class="col-lg-10 mx-auto">
+          <h1 class="heading">PORTFOLIO</h1>
+          <!-- first project -->
+          <h3>
+            <a
+              href="https://github.com/danielzhangau/PatternFlow/tree/topic-recognition/recognition/ISIC_skin_cancer#readme"
+              >Image Segmentation Keras : Implementation of Segmentation on the
+              ISICs data set with the Improved UNet
+            </a>
+          </h3>
+          <p>
+            The agenda of this project is to apply the improved U-Net
+            architecture on the ISICs data set to predict the segmentation
+            response of the lesion image in the test data set, and the overall
+            minimum Dice score is 0.8.
+          </p>
+          <p>
+            The data set is challenged by "Analysis of Skin Lesions for Melanoma
+            Detection" using a data set of annotated skin lesion images from
+            ISIC archives. The data set contains raw (input data) and segmented
+            (response data) images of skin patches, which are used to detect
+            skin lesions. The response data includes a binary mask image in PNG
+            format, which indicates the position of the original skin lesion in
+            each input lesion image.
+          </p>
+          <p>
+            From the project, I learned: <br />• Solving pattern recognition
+            problems, especially via deep CNN <br />• A deep learning framework,
+            such as Tensorflow or PyTorch <br />• Algorithmic design
+            incorporating software engineering principles, while contributing to
+            a course run open source project, PatternFlow – a pattern
+            recognition and image processing library for Tensorflow <br />•
+            mathematical frameworks involved in understanding patterns and
+            principles required for all of the above, such as group theory and
+            tensor calculus
+          </p>
+          <div class="box">
+            <a
+              href="img/isic_project.png"
+              data-lightbox="image-1"
+              data-title="Sign in page"
+              class="has-border"
+              ><img src="img/isic_project.png" alt="image" class="img-fluid"
+            /></a>
+          </div>
+          <div class="box">
+            <a
+              href="img/Improved_UNET.png"
+              data-lightbox="image-1"
+              data-title="Sign in page"
+              class="has-border"
+              ><img src="img/Improved_UNET.png" alt="image" class="img-fluid"
+            /></a>
+          </div>
+          <!-- second project -->
+          <h3>
+            <a href="https://github.com/danielzhangau/DECO3801-7381-Zoomers"
+              >React Native Application - GreenMiles
+            </a>
+          </h3>
+          <p>
+            The agenda of this project is to apply the improved U-Net
+            architecture on the ISICs data set to predict the segmentation
+            response of the lesion image in the test data set, and the overall
+            minimum Dice score is 0.8.
+          </p>
+          <p>
+            The data set is challenged by "Analysis of Skin Lesions for Melanoma
+            Detection" using a data set of annotated skin lesion images from
+            ISIC archives. The data set contains raw (input data) and segmented
+            (response data) images of skin patches, which are used to detect
+            skin lesions. The response data includes a binary mask image in PNG
+            format, which indicates the position of the original skin lesion in
+            each input lesion image.
+          </p>
+          <p>
+            From the project, I learned: <br />• Design, build and clearly
+            document a significant software solution based on a design brief.
+            <br />• Apply previous experience and skills in multimedia design
+            and software development to deliver a complete and polished system
+            that meets your client's requirements within a pre-determined
+            deadline. <br />• Investigate and overcome challenges associated
+            with implementing new designs and technologies. <br />• Apply sound
+            project management skills (using relevant tools where necessary) to
+            successfully deliver a software development project. <br />• Apply
+            investigative, experimental, and prototyping methods in the software
+            design and development process. <br />• Communicate effectively with
+            stakeholders to gather requirements and context on briefs, and to
+            manage stakeholder expectations over the course of a project.
+            <br />• Develop the necessary skills to work successfully in a
+            multi-disciplinary team, including the application and evaluation of
+            different methods for collaborative team work. <br />• Explain and
+            apply appropriate methods of user investigation, involvement and
+            evaluation, using techniques tailored to your specific software
+            development project. <br />• Demonstrate sound critical and
+            professional judgment with respect to the ethical issues associated
+            with technology projects or products, and apply ethical thinking to
+            your own work.
+          </p>
+          <!-- <div class="box"><a href="img/green_miles.png" data-lightbox="image-1" data-title="green mile logo"
                   class="has-border"><img src="img/green_miles.png" alt="image" class="img-fluid"></a></div> -->
-        <div class="row">
-          <div class="col-md-4">
-            <div class="box"><a
-                href="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/home.gif?raw=true"
-                data-lightbox="image-1" data-title="leaderboard" class="has-border"><img
-                  src="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/home.gif?raw=true"
-                  alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-4">
-            <div class="box"><a
-                href="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/reward.gif?raw=true"
-                data-lightbox="image-1" data-title="reward page" class="has-border"><img
-                  src="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/reward.gif?raw=true"
-                  alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-4">
-            <div class="box"><a
-                href="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/trip.gif?raw=true"
-                data-lightbox="image-1" data-title="trip page" class="has-border"><img
-                  src="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/trip.gif?raw=true"
-                  alt="image" class="img-fluid"></a></div>
-          </div>
-        </div>
-        <!-- additional project -->
-        <h3> <a href="https://github.com/danielzhangau/Artificial-Intelligence">A* Search in LaserTank
-            / LaserTank MDP / Reinforcement learning in LaserTank </a>
-        </h3>
-        <p> LaserTank is an open source computer puzzle game requiring logical thinking to solve a variety of levels,
-          originally developed by Jim Kindley in 1995. In LaserTank, a player controls a tank vehicle which can move
-          forwards, turn clockwise and counterclockwise, and shoot a laser which can be used to interact with special
-          map elements. The game takes place in a 2D map divided into grid cells. The player must navigate from a
-          starting position to the flag in as few moves as possible while avoiding "game over" conditions. The game is
-          over if the player moves into a dangerous cell (i.e. water cells or any cell in the line of fire area of an
-          anti-tank).
-          <br>Our goal is: to turn LaserTank into a search problem, I will have to first define the following agent
-          design components:
-          <br>• A problem state representation (state space),
-          <br>• A successor function that indicates which states can be reached from a given state (action space and
-          transition function), and
-          <br>• A cost function (utility function); we assume that each step has a uniform cost of 1.
-
-          <br>The solver program will: (i) take a testcase filename and an output filename as arguments, (ii) find a
-          solution to the testcase, and (iii) write the solution to an output file with the given output filename. It
-          will generate a solution in the form of a comma-separated list of actions, taken from the set of move symbols
-          defined in the supplied laser tank.py file, which are:
-          <br>• MOVE FORWARD = 'f'
-          <br>• TURN LEFT = 'l'
-          <br>• TURN RIGHT = 'r'
-          <br>• SHOOT LASER = 's'
-        </p>
-        <p>From the project, I learned:
-          <br>• Uniform Cost Search/ A* Search
-          <br>• Value Iteration (VI) / Policy Iteration (PI)
-          <br>• Q-learning / SARSA
-        </p>
-        <div class="box"><a href="img/laser_tank.gif" data-lightbox="image-1" data-title="laser_tank.gif"
-            class="has-border"><img src="img/laser_tank.gif" alt="image" class="img-fluid"></a></div>
-        <!-- additional project -->
-        <h3> <a href="https://github.com/danielzhangau/Artificial-Intelligence/tree/master/ass2">Motion planning for
-            CANADARM </a>
-        </h3>
-        <p> Canadarm2 is a remote-controlled mechanical arm aboard the International Space Station (ISS). The robotic
-          arm is used to deploy, capture and repair satellites, position astronauts, maintain equipment, and move cargo.
-          <br>The system: The simplified Canadarm operates in a 2D workspace (rather than 3D). In particular, the 2D
-          workspace is a plane, represented as [0, 1] x [0, 1] C R^2, and is populated by rectangular obstacles. In
-          addition, there are grapple point(s) which the end effectors of the robotic arm can attach to. One of the end
-          effectors must be grappled to a grapple point at any time. The exact dimensions and positions of each obstacle
-          and the number and position of the grapple points in the environment are known prior to execution.
-          <br>Given the initial and goal configurations of the Canadarm robotic arm, as well as a map of the
-          environment, my program will find a valid path from the initial to the goal configurations. A valid path means
-          that when the Canadarm executes the path, it will satisfy the following requirements:
-          <br>1. The path consists of primitive steps. In each primitive step, each joint of the robot arm cannot move
-          more than 0.001 units (i.e. radians or arm length).
-          <br>2. It will not collide with any of the obstacles
-          <br>3. It will not collide with itself
-          <br>4. The entire Canadarm robotic arm must lie inside the workspace
-          <br>5. The angle between adjacent arm segments cannot be tighter than 15 degrees (i.e. angles 2, 3, 4... must
-          be between -165 deg and +165 deg).
-          <br>6. The segment lengths must be within the bounds specified in the input file (i.e. within min and max
-          lengths)
-          <br>7. Since a primitive step is very small, it is sucient to satisfy requirements 2-4 at the beginning and
-          end of each primitive step.
-        </p>
-        <p>From the project, I learned:
-          <br>• Probabilistic Roadmap Path Planning
-        </p>
-        <div class="row">
-          <div class="col-md-7">
-            <div class="box"><a href="img/robot_arm_code.gif" data-lightbox="image-1" data-title="robot_arm_code"
-                class="has-border"><img src="img/robot_arm_code.gif" alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-5">
-            <div class="box"><a href="img/robot_arm.gif" data-lightbox="image-1" data-title="robot_arm.gif"
-                class="has-border"><img src="img/robot_arm.gif" alt="image" class="img-fluid"></a></div>
-          </div>
-        </div>
-        <!-- additional project -->
-        <h3> <a href="https://github.com/danielzhangau/Computer-Networks">Computer Network
-            (RUSHBSvr - RUSHBAdapater - RUSHBSwitch) </a>
-        </h3>
-        <p> My task is to develop:
-          <br>• A network server capable of sending messages to a client that comply with the desired protocol.
-          <br>• A RUSHBAdapter is supposed to work as an adapter for one process only through TCP (e.g. RUSHBSvr).
-          <br>• A RUSHBSwitch works like a network router, and it can be local or global.
-        <div class="box"><a href="img/network_layer_mapping.png" data-lightbox="image-1"
-            data-title="network_layer_mapping.png" class="has-border"><img src="img/network_layer_mapping.png"
-              alt="image" class="img-fluid"></a></div>
-        <br>The final goal for this programming project is sending and receiving data across the global network
-        without losses and errors. Data can be anything that can attached to the adapter, such as netcat, or RUSHBSvr,
-        or even stdin (as in this assignment).
-        <br>From the project, I learned:
-        <br>• Describe the architecture of the Internet and the functions of each component.
-        <br>• Describe functionality and design principles of communication protocols in various layers of the
-        Internet reference model.
-        <br>• Understand network security threats and their countermeasures
-        <br>• Design and implement computer networking protocols based on RFC standards.
-        <br>• Analyse computer network traffic using a network protocol analyser tool.
-        <br>• Networks - layers, ogres & DNS + HTTP & File Systems
-        </p>
-
-        <div class="box"><a href="img/RUSHB.py–RUSHBSwitch.py.gif" data-lightbox="image-1"
-            data-title="RUSHB.py–RUSHBSwitch.py.gif" class="has-border"><img src="img/RUSHB.py–RUSHBSwitch.py.gif"
-              alt="image" class="img-fluid"></a></div>
-        <!-- third project -->
-        <h3> <a href="https://drive.google.com/drive/folders/1jDt9WlaSOFPtw84l2dPu_8LhbKFgpeTk">Linked Project of
-            Developing Time Management Application </a></h3>
-        <p> The team aims to design and develop an engaging mobile application with minimal cognitive
-          demands, for university students that promotes efficient time management by mitigating
-          distraction and aiding task management through incentivisation which, in turn, enables users to
-          study in a manner that is more productive within the same time constraints </p>
-        <p> Time management focuses on an individual’s ability to prioritise tasks and work effectively within
-          a given time frame (Mindtools, 2017). Thus, it was necessary for the team to take these two
-          aforementioned factors into consideration when developing an time management application.
-          With that being said, the functionality of the application is able to be split into four main
-          categories: task management, time management, progress and incentives. </p>
-        <p>developed work through interaction design and human-centered design process to develop an interactive
-          system - an application (FOCUS) in a group of size four. Completed the three 'cycles' of the process:
-          <br>• Report 1: Contextual Inquiry, Conceptual Design, Low Fidelity Prototype (Paper prototyping) &
-          Initial Evaluation
-          <br>• Report 2: Adding in UX, Medium Fidelity Prototype developed by Adobe XD & adding Rigorous
-          Empirical Evaluation
-          <br>• Report 3: High Fidelity Prototype (fully functioned) & adding Expert Evaluations from other
-          group's member
-        </p>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="box"><a href="img/sign-in.jpg" data-lightbox="image-1" data-title="Sign in page"
-                class="has-border"><img src="img/sign-in.jpg" alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-4">
-            <div class="box"><a href="img/profile.jpg" data-lightbox="image-1" data-title="profile page"
-                class="has-border"><img src="img/profile.jpg" alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-4">
-            <div class="box"><a href="img/home-page.jpg" data-lightbox="image-1" data-title="home page"
-                class="has-border"><img src="img/home-page.jpg" alt="image" class="img-fluid"></a></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="box"><a href="img/tutorial.jpg" data-lightbox="image-1" data-title="tutorial page"
-                class="has-border"><img src="img/tutorial.jpg" alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-4">
-            <div class="box"><a href="img/create-new-popup.jpg" data-lightbox="image-1" data-title="create new popup"
-                class="has-border"><img src="img/create-new-popup.jpg" alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-4">
-            <div class="box"><a href="img/task-view.jpg" data-lightbox="image-1" data-title="task view page"
-                class="has-border"><img src="img/task-view.jpg" alt="image" class="img-fluid"></a></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="box"><a href="img/create-timer.jpg" data-lightbox="image-1" data-title="create timer page"
-                class="has-border"><img src="img/create-timer.jpg" alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-4">
-            <div class="box"><a href="img/running-timer.jpg" data-lightbox="image-1" data-title="running timer page"
-                class="has-border"><img src="img/running-timer.jpg" alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-4">
-            <div class="box"><a href="img/achievements-popup.jpg" data-lightbox="image-1"
-                data-title="achievements popup" class="has-border"><img src="img/achievements-popup.jpg" alt="image"
-                  class="img-fluid"></a></div>
-          </div>
-        </div>
-        <!-- fourth project -->
-        <h3> <a href="https://github.com/danielzhangau/Systems-Programming-in-C">A Simple Networked Simulation of
-            Plane Flights </a>
-        </h3>
-        <p> A complete simulation consists of three C99 programs:
-          <br>- roc2310: Simulates an aircraft
-          <br>- control2310: Simulates an airport
-          <br>- mapper2310: Maps airport names to ports
-          <br>Multiple instances of these programs will be executed to carry out the simulation. The project used
-          pthreads and communicated via IPv4 TCP networking. The implementation used blocking communications.
-        </p>
-        <p>From the project, I learned:
-          <br>• Compilling c and intial features
-          <br>• Processes
-          <br>• Virtual memory
-          <br>• File descriptor and pipe
-          <br>• Threads and synchronization
-          <br>• Networks - layers, ogres
-          <br>• DNS + HTTP
-          <br>• File Systems
-        </p>
-        <div class="row">
-          <div class="col-md-7">
-            <div class="box"><a href="img/cdemo1.png" data-lightbox="image-1" data-title="cdemo1"
-                class="has-border"><img src="img/cdemo1.png" alt="image" class="img-fluid"></a></div>
-          </div>
-          <div class="col-md-5">
-            <div class="box"><a href="img/cdemo2.png" data-lightbox="image-1" data-title="cdemo2"
-                class="has-border"><img src="img/cdemo2.png" alt="image" class="img-fluid"></a></div>
-          </div>
-        </div>
-        <!-- fifth project -->
-        <h3> <a href="https://github.com/danielzhangau/Asteroids-Project-on-AVR">Asteroids Project on AVR </a>
-        </h3>
-        <p> The program is a simple version of Asteroids.
-          <br>The AVR ATmega324A micro-controller runs the program and receives input from a number of sources and
-          outputs a display to an LED display board, with additional information being output to a serial terminal
-          and – to be implemented as part of this project – a seven-segment display and other LEDs.
-        </p>
-        <div class="box"><a href="img/avr_project.png" data-lightbox="image-1" data-title="avr_project"
-            class="has-border"><img src="img/avr_project.png" alt="image" class="img-fluid"></a></div>
-        <!-- sixth project -->
-        <h3> <a href="https://github.com/danielzhangau/Public-Transportation-Network-Modeling">Public
-            Transportation Network Modeling </a>
-        </h3>
-        <p> The program involves modeling a public transportation network.
-          <br>Main class:
-          <br>Passenger — A standard passenger. Included subclass ConcessionPassenger — extends Passenger.
-          <br>PublicTransport — Defines the basic vehicle functionality. Included subclasses Bus, Train, Ferry.
-          <br>Stop — Responsible for routing passengers to their destinations
-          <br>Route — Defines the basic route functionality. Included subclasses BusRoute, TrainRoute, FerryRoute.
-        </p>
-        <!-- seventh project -->
-        <h3> <a href="https://github.com/danielzhangau/Queueing-Application">Queueing application </a>
-        </h3>
-        <p> A desktop application is written entirely in python using Tkinter.
-          When a user presses either the "Request Quick Help" button or "Request Long Help" button, the
-          application display a dialog box that asks the user for their name. Once they have entered their name,
-          the application should join the user to the queue, display their name on the screen, and regularly
-          update the amount of time they have been waiting on the queue (roughly once every ten seconds).
-          <br>Further, the "The Questions Asked" heading really refers to the questions answered since opening the
-          application, and is tracked separately for quick & long help.
-        </p>
-        <div class="box"><a href="img/queue_app.jpg" data-lightbox="image-1" data-title="Sign in page"
-            class="has-border"><img src="img/queue_app.jpg" alt="image" class="img-fluid"></a></div>
-      </div>
-    </div>
-  </section>
-  <!-- Portfolio / gallery end-->
-  <!-- contact-->
-  <section id="contact" style="background-color: #fff;" class="text-page pb-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <h1 class="heading">CONTACT</h1>
           <div class="row">
-            <!-- <div class="col-lg-6">
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/home.gif?raw=true"
+                  data-lightbox="image-1"
+                  data-title="leaderboard"
+                  class="has-border"
+                  ><img
+                    src="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/home.gif?raw=true"
+                    alt="image"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/reward.gif?raw=true"
+                  data-lightbox="image-1"
+                  data-title="reward page"
+                  class="has-border"
+                  ><img
+                    src="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/reward.gif?raw=true"
+                    alt="image"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/trip.gif?raw=true"
+                  data-lightbox="image-1"
+                  data-title="trip page"
+                  class="has-border"
+                  ><img
+                    src="https://github.com/danielzhangau/DECO3801-7381-Zoomers/blob/master/gif/trip.gif?raw=true"
+                    alt="image"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+          </div>
+          <!-- additional project -->
+          <h3>
+            <a href="https://github.com/danielzhangau/Artificial-Intelligence"
+              >A* Search in LaserTank / LaserTank MDP / Reinforcement learning
+              in LaserTank
+            </a>
+          </h3>
+          <p>
+            LaserTank is an open source computer puzzle game requiring logical
+            thinking to solve a variety of levels, originally developed by Jim
+            Kindley in 1995. In LaserTank, a player controls a tank vehicle
+            which can move forwards, turn clockwise and counterclockwise, and
+            shoot a laser which can be used to interact with special map
+            elements. The game takes place in a 2D map divided into grid cells.
+            The player must navigate from a starting position to the flag in as
+            few moves as possible while avoiding "game over" conditions. The
+            game is over if the player moves into a dangerous cell (i.e. water
+            cells or any cell in the line of fire area of an anti-tank).
+            <br />Our goal is: to turn LaserTank into a search problem, I will
+            have to first define the following agent design components: <br />•
+            A problem state representation (state space), <br />• A successor
+            function that indicates which states can be reached from a given
+            state (action space and transition function), and <br />• A cost
+            function (utility function); we assume that each step has a uniform
+            cost of 1.
+
+            <br />The solver program will: (i) take a testcase filename and an
+            output filename as arguments, (ii) find a solution to the testcase,
+            and (iii) write the solution to an output file with the given output
+            filename. It will generate a solution in the form of a
+            comma-separated list of actions, taken from the set of move symbols
+            defined in the supplied laser tank.py file, which are: <br />• MOVE
+            FORWARD = 'f' <br />• TURN LEFT = 'l' <br />• TURN RIGHT = 'r'
+            <br />• SHOOT LASER = 's'
+          </p>
+          <p>
+            From the project, I learned: <br />• Uniform Cost Search/ A* Search
+            <br />• Value Iteration (VI) / Policy Iteration (PI) <br />•
+            Q-learning / SARSA
+          </p>
+          <div class="box">
+            <a
+              href="img/laser_tank.gif"
+              data-lightbox="image-1"
+              data-title="laser_tank.gif"
+              class="has-border"
+              ><img src="img/laser_tank.gif" alt="image" class="img-fluid"
+            /></a>
+          </div>
+          <!-- additional project -->
+          <h3>
+            <a
+              href="https://github.com/danielzhangau/Artificial-Intelligence/tree/master/ass2"
+              >Motion planning for CANADARM
+            </a>
+          </h3>
+          <p>
+            Canadarm2 is a remote-controlled mechanical arm aboard the
+            International Space Station (ISS). The robotic arm is used to
+            deploy, capture and repair satellites, position astronauts, maintain
+            equipment, and move cargo. <br />The system: The simplified Canadarm
+            operates in a 2D workspace (rather than 3D). In particular, the 2D
+            workspace is a plane, represented as [0, 1] x [0, 1] C R^2, and is
+            populated by rectangular obstacles. In addition, there are grapple
+            point(s) which the end effectors of the robotic arm can attach to.
+            One of the end effectors must be grappled to a grapple point at any
+            time. The exact dimensions and positions of each obstacle and the
+            number and position of the grapple points in the environment are
+            known prior to execution. <br />Given the initial and goal
+            configurations of the Canadarm robotic arm, as well as a map of the
+            environment, my program will find a valid path from the initial to
+            the goal configurations. A valid path means that when the Canadarm
+            executes the path, it will satisfy the following requirements:
+            <br />1. The path consists of primitive steps. In each primitive
+            step, each joint of the robot arm cannot move more than 0.001 units
+            (i.e. radians or arm length). <br />2. It will not collide with any
+            of the obstacles <br />3. It will not collide with itself <br />4.
+            The entire Canadarm robotic arm must lie inside the workspace
+            <br />5. The angle between adjacent arm segments cannot be tighter
+            than 15 degrees (i.e. angles 2, 3, 4... must be between -165 deg and
+            +165 deg). <br />6. The segment lengths must be within the bounds
+            specified in the input file (i.e. within min and max lengths)
+            <br />7. Since a primitive step is very small, it is sucient to
+            satisfy requirements 2-4 at the beginning and end of each primitive
+            step.
+          </p>
+          <p>
+            From the project, I learned: <br />• Probabilistic Roadmap Path
+            Planning
+          </p>
+          <div class="row">
+            <div class="col-md-7">
+              <div class="box">
+                <a
+                  href="img/robot_arm_code.gif"
+                  data-lightbox="image-1"
+                  data-title="robot_arm_code"
+                  class="has-border"
+                  ><img
+                    src="img/robot_arm_code.gif"
+                    alt="image"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="box">
+                <a
+                  href="img/robot_arm.gif"
+                  data-lightbox="image-1"
+                  data-title="robot_arm.gif"
+                  class="has-border"
+                  ><img src="img/robot_arm.gif" alt="image" class="img-fluid"
+                /></a>
+              </div>
+            </div>
+          </div>
+          <!-- additional project -->
+          <h3>
+            <a href="https://github.com/danielzhangau/Computer-Networks"
+              >Computer Network (RUSHBSvr - RUSHBAdapater - RUSHBSwitch)
+            </a>
+          </h3>
+          <p>
+            My task is to develop: <br />• A network server capable of sending
+            messages to a client that comply with the desired protocol. <br />•
+            A RUSHBAdapter is supposed to work as an adapter for one process
+            only through TCP (e.g. RUSHBSvr). <br />• A RUSHBSwitch works like a
+            network router, and it can be local or global.
+          </p>
+          <div class="box">
+            <a
+              href="img/network_layer_mapping.png"
+              data-lightbox="image-1"
+              data-title="network_layer_mapping.png"
+              class="has-border"
+              ><img
+                src="img/network_layer_mapping.png"
+                alt="image"
+                class="img-fluid"
+            /></a>
+          </div>
+          <p>
+            The final goal for this programming project is sending and receiving
+            data across the global network without losses and errors. Data can
+            be anything that can attached to the adapter, such as netcat, or
+            RUSHBSvr, or even stdin (as in this assignment). <br />From the
+            project, I learned: <br />• Describe the architecture of the
+            Internet and the functions of each component. <br />• Describe
+            functionality and design principles of communication protocols in
+            various layers of the Internet reference model. <br />• Understand
+            network security threats and their countermeasures <br />• Design
+            and implement computer networking protocols based on RFC standards.
+            <br />• Analyse computer network traffic using a network protocol
+            analyser tool. <br />• Networks - layers, ogres & DNS + HTTP & File
+            Systems
+          </p>
+
+          <div class="box">
+            <a
+              href="img/RUSHB.py–RUSHBSwitch.py.gif"
+              data-lightbox="image-1"
+              data-title="RUSHB.py–RUSHBSwitch.py.gif"
+              class="has-border"
+              ><img
+                src="img/RUSHB.py–RUSHBSwitch.py.gif"
+                alt="image"
+                class="img-fluid"
+            /></a>
+          </div>
+          <!-- third project -->
+          <h3>
+            <a
+              href="https://drive.google.com/drive/folders/1jDt9WlaSOFPtw84l2dPu_8LhbKFgpeTk"
+              >Linked Project of Developing Time Management Application
+            </a>
+          </h3>
+          <p>
+            The team aims to design and develop an engaging mobile application
+            with minimal cognitive demands, for university students that
+            promotes efficient time management by mitigating distraction and
+            aiding task management through incentivisation which, in turn,
+            enables users to study in a manner that is more productive within
+            the same time constraints
+          </p>
+          <p>
+            Time management focuses on an individual’s ability to prioritise
+            tasks and work effectively within a given time frame (Mindtools,
+            2017). Thus, it was necessary for the team to take these two
+            aforementioned factors into consideration when developing an time
+            management application. With that being said, the functionality of
+            the application is able to be split into four main categories: task
+            management, time management, progress and incentives.
+          </p>
+          <p>
+            developed work through interaction design and human-centered design
+            process to develop an interactive system - an application (FOCUS) in
+            a group of size four. Completed the three 'cycles' of the process:
+            <br />• Report 1: Contextual Inquiry, Conceptual Design, Low
+            Fidelity Prototype (Paper prototyping) & Initial Evaluation <br />•
+            Report 2: Adding in UX, Medium Fidelity Prototype developed by Adobe
+            XD & adding Rigorous Empirical Evaluation <br />• Report 3: High
+            Fidelity Prototype (fully functioned) & adding Expert Evaluations
+            from other group's member
+          </p>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/sign-in.jpg"
+                  data-lightbox="image-1"
+                  data-title="Sign in page"
+                  class="has-border"
+                  ><img src="img/sign-in.jpg" alt="image" class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/profile.jpg"
+                  data-lightbox="image-1"
+                  data-title="profile page"
+                  class="has-border"
+                  ><img src="img/profile.jpg" alt="image" class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/home-page.jpg"
+                  data-lightbox="image-1"
+                  data-title="home page"
+                  class="has-border"
+                  ><img src="img/home-page.jpg" alt="image" class="img-fluid"
+                /></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/tutorial.jpg"
+                  data-lightbox="image-1"
+                  data-title="tutorial page"
+                  class="has-border"
+                  ><img src="img/tutorial.jpg" alt="image" class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/create-new-popup.jpg"
+                  data-lightbox="image-1"
+                  data-title="create new popup"
+                  class="has-border"
+                  ><img
+                    src="img/create-new-popup.jpg"
+                    alt="image"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/task-view.jpg"
+                  data-lightbox="image-1"
+                  data-title="task view page"
+                  class="has-border"
+                  ><img src="img/task-view.jpg" alt="image" class="img-fluid"
+                /></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/create-timer.jpg"
+                  data-lightbox="image-1"
+                  data-title="create timer page"
+                  class="has-border"
+                  ><img
+                    src="img/create-timer.jpg"
+                    alt="image"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/running-timer.jpg"
+                  data-lightbox="image-1"
+                  data-title="running timer page"
+                  class="has-border"
+                  ><img
+                    src="img/running-timer.jpg"
+                    alt="image"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box">
+                <a
+                  href="img/achievements-popup.jpg"
+                  data-lightbox="image-1"
+                  data-title="achievements popup"
+                  class="has-border"
+                  ><img
+                    src="img/achievements-popup.jpg"
+                    alt="image"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+          </div>
+          <!-- fourth project -->
+          <h3>
+            <a href="https://github.com/danielzhangau/Systems-Programming-in-C"
+              >A Simple Networked Simulation of Plane Flights
+            </a>
+          </h3>
+          <p>
+            A complete simulation consists of three C99 programs: <br />-
+            roc2310: Simulates an aircraft <br />- control2310: Simulates an
+            airport <br />- mapper2310: Maps airport names to ports
+            <br />Multiple instances of these programs will be executed to carry
+            out the simulation. The project used pthreads and communicated via
+            IPv4 TCP networking. The implementation used blocking
+            communications.
+          </p>
+          <p>
+            From the project, I learned: <br />• Compilling c and intial
+            features <br />• Processes <br />• Virtual memory <br />• File
+            descriptor and pipe <br />• Threads and synchronization <br />•
+            Networks - layers, ogres <br />• DNS + HTTP <br />• File Systems
+          </p>
+          <div class="row">
+            <div class="col-md-7">
+              <div class="box">
+                <a
+                  href="img/cdemo1.png"
+                  data-lightbox="image-1"
+                  data-title="cdemo1"
+                  class="has-border"
+                  ><img src="img/cdemo1.png" alt="image" class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="box">
+                <a
+                  href="img/cdemo2.png"
+                  data-lightbox="image-1"
+                  data-title="cdemo2"
+                  class="has-border"
+                  ><img src="img/cdemo2.png" alt="image" class="img-fluid"
+                /></a>
+              </div>
+            </div>
+          </div>
+          <!-- fifth project -->
+          <h3>
+            <a href="https://github.com/danielzhangau/Asteroids-Project-on-AVR"
+              >Asteroids Project on AVR
+            </a>
+          </h3>
+          <p>
+            The program is a simple version of Asteroids. <br />The AVR
+            ATmega324A micro-controller runs the program and receives input from
+            a number of sources and outputs a display to an LED display board,
+            with additional information being output to a serial terminal and –
+            to be implemented as part of this project – a seven-segment display
+            and other LEDs.
+          </p>
+          <div class="box">
+            <a
+              href="img/avr_project.png"
+              data-lightbox="image-1"
+              data-title="avr_project"
+              class="has-border"
+              ><img src="img/avr_project.png" alt="image" class="img-fluid"
+            /></a>
+          </div>
+          <!-- sixth project -->
+          <h3>
+            <a
+              href="https://github.com/danielzhangau/Public-Transportation-Network-Modeling"
+              >Public Transportation Network Modeling
+            </a>
+          </h3>
+          <p>
+            The program involves modeling a public transportation network.
+            <br />Main class: <br />Passenger — A standard passenger. Included
+            subclass ConcessionPassenger — extends Passenger.
+            <br />PublicTransport — Defines the basic vehicle functionality.
+            Included subclasses Bus, Train, Ferry. <br />Stop — Responsible for
+            routing passengers to their destinations <br />Route — Defines the
+            basic route functionality. Included subclasses BusRoute, TrainRoute,
+            FerryRoute.
+          </p>
+          <!-- seventh project -->
+          <h3>
+            <a href="https://github.com/danielzhangau/Queueing-Application"
+              >Queueing application
+            </a>
+          </h3>
+          <p>
+            A desktop application is written entirely in python using Tkinter.
+            When a user presses either the "Request Quick Help" button or
+            "Request Long Help" button, the application display a dialog box
+            that asks the user for their name. Once they have entered their
+            name, the application should join the user to the queue, display
+            their name on the screen, and regularly update the amount of time
+            they have been waiting on the queue (roughly once every ten
+            seconds). <br />Further, the "The Questions Asked" heading really
+            refers to the questions answered since opening the application, and
+            is tracked separately for quick & long help.
+          </p>
+          <div class="box">
+            <a
+              href="img/queue_app.jpg"
+              data-lightbox="image-1"
+              data-title="Sign in page"
+              class="has-border"
+              ><img src="img/queue_app.jpg" alt="image" class="img-fluid"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Portfolio / gallery end-->
+    <!-- contact-->
+    <section id="contact" style="background-color: #fff" class="text-page pb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="heading">CONTACT</h1>
+            <div class="row">
+              <!-- <div class="col-lg-6">
               <form id="contact-form" method="post" action="#" class="contact-form">
                 <div class="controls">
                   <div class="row">
@@ -465,44 +788,64 @@
               </form>
             </div>
             <div class="col-lg-6"> -->
-            <!-- <p>Keen to get in contact, or just want to know more? </p> -->
-            <p class="social"><a href="https://www.instagram.com/ddanielzhang/" title="" class="instagram"><i
-                  class="fa fa-instagram"></i></a><a href="https://twitter.com/DanielZhangg" title="" class="twitter"><i
-                  class="fa fa-twitter"></i></a><a href="https://github.com/danielzhangau" title="" class="github"><i
-                  class="fa fa-github"></i></a><a href="https://www.linkedin.com/in/bosheng-zhang-7b7036149/" title=""
-                class="linkedin"><i class="fa fa-linkedin"></i></a></p>
+              <!-- <p>Keen to get in contact, or just want to know more? </p> -->
+              <p class="social">
+                <a
+                  href="https://www.instagram.com/ddanielzhang/"
+                  title=""
+                  class="instagram"
+                  ><i class="fa fa-instagram"></i></a
+                ><a
+                  href="https://twitter.com/DanielZhangg"
+                  title=""
+                  class="twitter"
+                  ><i class="fa fa-twitter"></i></a
+                ><a
+                  href="https://github.com/danielzhangau"
+                  title=""
+                  class="github"
+                  ><i class="fa fa-github"></i></a
+                ><a
+                  href="https://www.linkedin.com/in/bosheng-zhang-7b7036149/"
+                  title=""
+                  class="linkedin"
+                  ><i class="fa fa-linkedin"></i
+                ></a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    </div>
-  </section>
-  <div id="map"></div>
+    </section>
+    <div id="map"></div>
 
-  <footer style="background-color: #111;">
-    <div class="container">
-      <div class="row copyright">
-        <p class="mb-md-0 text-center text-md-left">&copy;2021 by Bosheng Zhang. All rights reserved. </p>
+    <footer style="background-color: #111">
+      <div class="container">
+        <div class="row copyright">
+          <p class="mb-md-0 text-center text-md-left">
+            &copy;2021 by Bosheng Zhang. All rights reserved.
+          </p>
+        </div>
       </div>
-    </div>
-  </footer>
-  <!-- JavaScript files-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
-  <script src="vendor/lightbox2/js/lightbox.min.js"></script>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-  <script src="js/front.js"></script>
+    </footer>
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="vendor/lightbox2/js/lightbox.min.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <script src="js/front.js"></script>
 
-  <!-- Load React. -->
-  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-  <!-- <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <!-- <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script> -->
 
-  <!-- Load our React component. -->
-  <!-- <script src="js/like_button.js"></script> -->
-</body>
-
+    <!-- Load our React component. -->
+    <!-- <script src="js/like_button.js"></script> -->
+  </body>
 </html>
