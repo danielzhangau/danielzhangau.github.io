@@ -2,9 +2,17 @@
 
 /* Improve intro section on mobile */
 @media (max-width: 767.98px) {
-  /* Make intro section more compact on mobile */
+  /* Vertically center intro content on mobile */
   .intro .content {
-    padding: 60px 0 40px 0;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 0;
+  }
+
+  /* Ensure intro section has proper height */
+  .intro {
+    min-height: 100vh;
   }
 
   .emoji-name {
@@ -116,9 +124,11 @@
 
 /* Small mobile devices */
 @media (max-width: 575.98px) {
-  /* Even more compact intro on small phones */
+  /* Keep vertical centering on small phones */
   .intro .content {
-    padding: 50px 0 30px 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 0;
   }
 
   .emoji-name h1 {
