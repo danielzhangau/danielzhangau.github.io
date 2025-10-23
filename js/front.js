@@ -78,10 +78,8 @@ function map() {
             scrollWheelZoom: false
         });
 
-        var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        var tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            subdomains: 'abc',
-            minZoom: 0,
             maxZoom: 19
         });
 
