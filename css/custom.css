@@ -1,7 +1,691 @@
+/* Global improvements */
+body {
+  font-size: 16px;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Better text selection */
+::selection {
+  background: #007bff;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Focus outline for accessibility */
+a:focus,
+button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Remove focus outline from navigation and lightbox */
+.nav-link:focus,
+.navbar-toggler:focus,
+.lb-nav a:focus,
+.lb-close:focus,
+.lb-prev:focus,
+.lb-next:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove Bootstrap's default focus styles on navbar */
+.navbar-nav .nav-link:focus {
+  outline: none !important;
+}
+
+/* Lightbox navigation improvements */
+.lb-nav a.lb-prev,
+.lb-nav a.lb-next {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.lb-nav a.lb-prev:hover,
+.lb-nav a.lb-next:hover {
+  opacity: 1;
+}
+
+/* Section spacing */
+section {
+  padding: 4rem 0;
+}
+
+/* Consistent max-width for content */
+.text .container,
+.text-page .container,
+.gallery .col-lg-10 {
+  max-width: 900px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navbar improvements */
+.navbar {
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background: #fff !important;
+}
+
+.navbar.sticky {
+  background: rgba(255,255,255,0.98) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Logo sizing */
+.navbar-brand img {
+  max-height: 40px;
+  transition: max-height 0.3s ease;
+}
+
+.navbar.sticky .navbar-brand img {
+  max-height: 35px;
+}
+
+/* Navigation links */
+.nav-link {
+  font-weight: 500;
+  color: #333 !important;
+  transition: color 0.3s ease;
+  position: relative;
+  padding: 0.5rem 1rem !important;
+  font-family: 'Lora', serif;
+  letter-spacing: 0.5px;
+}
+
+.nav-link:hover {
+  color: #000 !important;
+}
+
+.nav-link:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: #333;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover:after {
+  width: 80%;
+}
+
+.nav-link.active {
+  color: #000 !important;
+  font-weight: 600;
+}
+
+.nav-link.active:after {
+  width: 80%;
+  background: #000;
+}
+
+/* Intro section improvements */
+.intro .content {
+  text-align: center;
+}
+
+.emoji-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.emoji-name img {
+  max-width: 80px;
+  height: auto;
+}
+
+.intro .content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.intro .content p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Portfolio section improvements */
+.gallery .col-lg-10 {
+  max-width: 900px;
+}
+
+.gallery .heading {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: #1a1a1a;
+  text-align: center;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.gallery .heading:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #007bff, #0056b3);
+  border-radius: 2px;
+}
+
+.gallery h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  color: #2c2c2c;
+  letter-spacing: 0.5px;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 0.75rem;
+  display: inline-block;
+}
+
+.gallery h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #2c2c2c;
+  line-height: 1.5;
+  letter-spacing: 0.3px;
+}
+
+.gallery h3 a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.gallery h3 a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.gallery p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: #555;
+  text-align: justify;
+}
+
+.gallery p strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Project cards */
+.project-card {
+  background: #fff;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s ease;
+  position: relative;
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* Divider between project cards */
+.project-card + .project-card:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #ddd 20%, #ddd 80%, transparent);
+  position: absolute;
+  top: -1rem;
+  left: 0;
+}
+
+/* Tech stack styling */
+.tech-stack {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Compact spacing for professional projects */
+.professional-projects .project-card {
+  margin-bottom: 1.5rem;
+}
+
+.professional-projects p {
+  margin-bottom: 0.75rem;
+}
+
+/* Academic projects - card-based layout */
+.academic-projects {
+  margin-top: 3rem;
+}
+
+.academic-project-card {
+  background: #fff;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.academic-project-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.academic-project-card h3 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: #2c2c2c;
+}
+
+.academic-project-card .project-summary {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.academic-project-card .project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.academic-project-card .tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #f0f7ff;
+  color: #007bff;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.academic-project-card .expand-icon {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  color: #007bff;
+  font-size: 1rem;
+}
+
+.academic-project-card .expand-icon i {
+  transition: transform 0.3s ease;
+}
+
+.academic-project-card:hover .expand-icon i {
+  transform: translateX(3px);
+}
+
+/* Full project details (hidden by default) */
+.project-details {
+  display: none;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e8e8e8;
+}
+
+.project-details.active {
+  display: block;
+}
+
+.project-details p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.project-details .box {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* About section improvements */
+.text .heading {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #1a1a1a;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.text .heading:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #007bff, #0056b3);
+  border-radius: 2px;
+}
+
+.text .lead {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.text p {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  color: #555;
+}
+
+/* Profile picture styling */
+.text img.rounded-circle {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.text img.rounded-circle:hover {
+  transform: scale(1.05);
+}
+
+/* Contact section improvements */
+.text-page .heading {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #1a1a1a;
+  text-align: center;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.text-page .heading:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #007bff, #0056b3);
+  border-radius: 2px;
+}
+
+.text-page .lead {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Social icons improvement */
+.social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 0 8px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  color: #333;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.social a:hover {
+  background: #007bff;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+}
+
+/* Map styling */
+#map {
+  height: 400px;
+}
+
+/* Footer improvements */
+footer {
+  padding: 2rem 0;
+  font-size: 0.9rem;
+  color: #999;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, .box img {
+  transition: all 0.3s ease;
+}
+
+/* Image hover effects in portfolio */
+.gallery .box img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery .box:hover img {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* About section layout improvements */
+#about .container {
+  max-width: 1100px;
+}
+
+#about .heading {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Visual separation between sections */
+section:nth-child(even) {
+  background: #fff;
+}
+
+section:nth-child(odd):not(.intro) {
+  background: #f8f9fa;
+}
+
+/* Portfolio background */
+#portfolio {
+  background: #f8f9fa !important;
+}
+
+/* Contact section enhancement */
+#contact {
+  background: #fff !important;
+}
+
+/* Add subtle border to project cards */
+.project-card {
+  border: 1px solid #e8e8e8;
+}
+
+/* Better link styling in portfolio */
+.gallery a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.gallery a:hover {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+/* Improve list formatting in academic projects */
+.academic-projects ul,
+.academic-projects ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.academic-projects li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+/* Better spacing for images in portfolio */
+.gallery .box {
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.gallery .row {
+  margin-bottom: 1rem;
+}
+
+/* Email and location styling in contact */
+#contact a[href^="mailto"] {
+  color: #007bff;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+#contact a[href^="mailto"]:hover {
+  border-bottom-color: #007bff;
+}
+
 /* Mobile optimizations */
 
 /* Improve intro section on mobile */
 @media (max-width: 767.98px) {
+  /* Section spacing on mobile */
+  section {
+    padding: 3rem 0;
+  }
+
+  /* Headings on mobile */
+  .text .heading,
+  .text-page .heading,
+  .gallery .heading {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .text .lead {
+    font-size: 1.1rem;
+  }
+
+  .text p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* Compact portfolio on mobile */
+  .gallery h2 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .gallery h3 {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+  }
+
+  .project-card {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .gallery p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .tech-stack {
+    font-size: 0.85rem;
+  }
+
+  /* Social icons on mobile */
+  .social a {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+    margin: 0 6px;
+  }
+
+  /* Map on mobile */
+  #map {
+    height: 300px;
+  }
+
+  /* Navbar improvements on mobile */
+  .nav-link:after {
+    display: none;
+  }
+
+  /* Intro text on mobile */
+  .intro .content h1 {
+    font-size: 1.8rem;
+  }
+
+  .intro .content p {
+    font-size: 1rem;
+    text-align: left;
+  }
+
   /* Full height intro with flex layout */
   .intro {
     min-height: 100vh;
@@ -35,18 +719,19 @@
     padding: 0;
   }
 
-  /* Emoji and name at the top */
+  /* Emoji and name at the top - centered and stacked */
   .emoji-name {
-    flex-direction: column-reverse;
+    flex-direction: column;
     text-align: center;
     margin-top: 60px;
     margin-bottom: 0;
     padding: 0 20px;
+    gap: 1rem;
   }
 
   .emoji-name h1 {
     font-size: 1.75rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0;
     margin-top: 0;
     line-height: 1.1;
     order: 2;
@@ -83,27 +768,23 @@
     background-position: center center;
   }
 
-  /* Make sticky navbar smaller on mobile */
-  nav.navbar.sticky {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-  }
-
-  nav.navbar.sticky .navbar-brand img {
-    max-height: 35px;
-    transition: max-height 0.3s ease;
-  }
-
-  nav.navbar.sticky a.nav-link {
+  /* Navbar on mobile */
+  .navbar {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    font-size: 0.9rem;
   }
 
-  /* Normal navbar on mobile */
-  nav.navbar .navbar-brand img {
-    max-height: 50px;
-    transition: max-height 0.3s ease;
+  .navbar-brand img {
+    max-height: 35px !important;
+  }
+
+  .navbar.sticky .navbar-brand img {
+    max-height: 30px !important;
+  }
+
+  .nav-link {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.95rem;
   }
 
   /* Better padding for mobile content */
@@ -203,14 +884,5 @@
 
   .gallery h3 {
     font-size: 1.1rem;
-  }
-
-  /* Smaller sticky navbar on small phones */
-  nav.navbar.sticky .navbar-brand img {
-    max-height: 30px;
-  }
-
-  nav.navbar.sticky a.nav-link {
-    font-size: 0.85rem;
   }
 }

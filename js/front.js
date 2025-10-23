@@ -19,7 +19,7 @@ $(function () {
 
     $('body').scrollspy({
         target: '.navbar',
-        offset: 80
+        offset: 100
     });
 
     // ---------------------------------------------- //
@@ -28,10 +28,26 @@ $(function () {
 
     $('.navbar-nav a, #scroll-down').bind('click', function (e) {
         var anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $(anchor.attr('href')).offset().top
-        }, 1000);
-        e.preventDefault();
+        var href = anchor.attr('href');
+        var target = $(href);
+
+        if (target.length) {
+            var navHeight = $('nav').outerHeight() || 80;
+            var offset = 20;
+
+            var scrollPosition = target.offset().top - navHeight - offset;
+
+            // For contact section, ensure we scroll to the maximum to show it fully
+            if (href === '#contact') {
+                var maxScroll = $(document).height() - $(window).height();
+                scrollPosition = maxScroll;
+            }
+
+            $('html, body').stop().animate({
+                scrollTop: scrollPosition
+            }, 1000);
+            e.preventDefault();
+        }
     });
 
     // ------------------------------------------------------ //
@@ -44,6 +60,25 @@ $(function () {
 
 
 // ------------------------------------------------------ //
+// Toggle academic project details
+// ------------------------------------------------------ //
+
+function toggleProject(card) {
+    var details = card.querySelector('.project-details');
+    var icon = card.querySelector('.expand-icon i');
+
+    if (details.classList.contains('active')) {
+        details.classList.remove('active');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+    } else {
+        details.classList.add('active');
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+    }
+}
+
+// ------------------------------------------------------ //
 // styled Google Map
 // ------------------------------------------------------ //
 
@@ -51,6 +86,7 @@ function map() {
 
     var mapId = 'map',
         mapCenter = [-27.4698, 153.0251],
+        markerPosition = [-27.4640, 153.0251],
         mapMarker = true;
 
     if ($('#' + mapId).length > 0) {
@@ -78,9 +114,10 @@ function map() {
             scrollWheelZoom: false
         });
 
-        var tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom: 19
+        var tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
         });
 
         tileLayer.addTo(map);
@@ -90,7 +127,7 @@ function map() {
         });
 
         if (mapMarker) {
-            var marker = L.marker(mapCenter, {
+            var marker = L.marker(markerPosition, {
                 icon: icon
             }).addTo(map);
 
