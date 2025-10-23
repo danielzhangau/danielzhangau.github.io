@@ -1,1 +1,82 @@
-/* your styles go here */
+/* Mobile optimizations */
+
+/* Improve intro section on mobile */
+@media (max-width: 767.98px) {
+  .emoji-name {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .emoji-name h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .emoji-name img {
+    margin-right: 0;
+    margin-bottom: 1rem;
+    max-width: 80px;
+  }
+
+  .intro p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Better padding for mobile content */
+  .text .container,
+  .text-page .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Improve portfolio images on mobile */
+  .gallery .box {
+    margin-bottom: 1rem;
+  }
+
+  .gallery h3 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .gallery p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* Better social icons spacing on mobile */
+  .social a {
+    margin: 0 10px;
+    font-size: 1.5rem;
+  }
+
+  /* Map height on mobile */
+  #map {
+    height: 300px;
+  }
+
+  /* Improve heading sizes on mobile */
+  .heading {
+    font-size: 2rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 575.98px) {
+  .emoji-name h1 {
+    font-size: 1.75rem;
+  }
+
+  .intro p {
+    font-size: 0.95rem;
+  }
+
+  .heading {
+    font-size: 1.75rem;
+  }
+
+  .gallery h3 {
+    font-size: 1.1rem;
+  }
+}
