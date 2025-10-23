@@ -50,7 +50,7 @@ $(function () {
 function map() {
 
     var mapId = 'map',
-        mapCenter = [-27.4892582, 153.0063968],
+        mapCenter = [-27.4698, 153.0251],
         mapMarker = true;
 
     if ($('#' + mapId).length > 0) {
