@@ -382,6 +382,35 @@ html {
   margin-bottom: 1rem;
 }
 
+/* GitHub link styling */
+.github-link {
+  margin-bottom: 1.5rem !important;
+}
+
+.github-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #24292e;
+  color: #fff !important;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.github-link a:hover {
+  background: #1a1e22;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(36, 41, 46, 0.3);
+}
+
+.github-link a i {
+  font-size: 1.1rem;
+}
+
 /* About section improvements */
 .text .heading {
   font-size: 2.8rem;
@@ -724,7 +753,7 @@ section:nth-child(odd):not(.intro) {
     flex-direction: column;
     text-align: center;
     margin-top: 60px;
-    margin-bottom: 0;
+    margin-bottom: 3rem;
     padding: 0 20px;
     gap: 1rem;
   }
@@ -750,9 +779,9 @@ section:nth-child(odd):not(.intro) {
   .intro p {
     font-size: 1.05rem;
     line-height: 1.7;
-    margin-top: auto;
+    margin-top: 2rem;
     margin-bottom: auto;
-    padding-bottom: 15vh;
+    padding-bottom: 12vh;
     max-width: 85%;
     text-align: left;
     margin-left: auto;
