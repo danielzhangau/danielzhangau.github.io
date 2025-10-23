@@ -7,18 +7,23 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    padding: 20px 0;
+    padding: 30px 20px;
+    max-width: 90%;
+    margin: 0 auto;
   }
 
   /* Ensure intro section has proper height */
   .intro {
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .emoji-name {
     flex-direction: column;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .emoji-name h1 {
@@ -29,16 +34,18 @@
 
   .emoji-name img {
     margin-right: 0;
-    margin-bottom: 0.75rem;
-    max-width: 70px;
+    margin-bottom: 1rem;
+    max-width: 80px;
     height: auto;
     object-fit: contain;
   }
 
   .intro p {
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.7;
     margin-bottom: 0;
+    max-width: 100%;
+    text-align: center;
   }
 
   /* Fix background image on mobile - disable parallax */
@@ -124,11 +131,14 @@
 
 /* Small mobile devices */
 @media (max-width: 575.98px) {
-  /* Keep vertical centering on small phones */
+  /* Adjust for smaller screens */
   .intro .content {
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 20px 0;
+    padding: 20px 15px;
+    max-width: 95%;
+  }
+
+  .emoji-name {
+    margin-bottom: 1.25rem;
   }
 
   .emoji-name h1 {
@@ -137,13 +147,15 @@
   }
 
   .emoji-name img {
-    max-width: 60px;
+    max-width: 70px;
+    margin-bottom: 0.875rem;
     height: auto;
     object-fit: contain;
   }
 
   .intro p {
-    font-size: 0.95rem;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   /* Consistent text sizing for small phones */
