@@ -2,58 +2,70 @@
 
 /* Improve intro section on mobile */
 @media (max-width: 767.98px) {
-  /* Vertically center intro content on mobile */
-  .intro .content {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 30px 20px;
-    max-width: 90%;
-    margin: 0 auto;
-  }
-
-  /* Ensure intro section has proper height */
+  /* Full height intro with flex layout */
   .intro {
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
   }
 
+  .intro .content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    transform: none;
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .intro .rowintro {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .intro .col-lg-10 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  /* Emoji and name at the top */
   .emoji-name {
     flex-direction: column;
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-top: 60px;
+    margin-bottom: 0;
+    padding: 0 20px;
   }
 
   .emoji-name h1 {
     font-size: 1.75rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
     line-height: 1.1;
   }
 
   .emoji-name img {
     margin-right: 0;
     margin-bottom: 1rem;
-    max-width: 100px;
+    max-width: 110px;
     height: auto;
     object-fit: contain;
   }
 
+  /* Center the intro text in the middle of the page */
   .intro p {
     font-size: 1.05rem;
     line-height: 1.7;
-    margin-bottom: 0;
-    max-width: 100%;
+    margin: auto;
+    max-width: 85%;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* Better container width for centered text */
-  .intro .col-lg-10 {
-    max-width: 100%;
-    padding: 0 15px;
+    padding: 0 20px;
   }
 
   /* Fix background image on mobile - disable parallax */
@@ -139,14 +151,9 @@
 
 /* Small mobile devices */
 @media (max-width: 575.98px) {
-  /* Adjust for smaller screens */
-  .intro .content {
-    padding: 20px 15px;
-    max-width: 95%;
-  }
-
+  /* Adjust emoji and name for smaller screens */
   .emoji-name {
-    margin-bottom: 1.25rem;
+    margin-top: 50px;
   }
 
   .emoji-name h1 {
@@ -155,7 +162,7 @@
   }
 
   .emoji-name img {
-    max-width: 90px;
+    max-width: 100px;
     margin-bottom: 0.875rem;
     height: auto;
     object-fit: contain;
@@ -164,9 +171,7 @@
   .intro p {
     font-size: 1rem;
     line-height: 1.6;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 90%;
   }
 
   /* Consistent text sizing for small phones */
