@@ -28,9 +28,16 @@
   }
 
   .intro p {
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.6;
     margin-bottom: 0;
+  }
+
+  /* Fix background image on mobile - disable parallax */
+  .intro {
+    background-attachment: scroll !important;
+    background-size: cover;
+    background-position: center center;
   }
 
   /* Make sticky navbar smaller on mobile */
@@ -61,6 +68,18 @@
   .text-page .container {
     padding-left: 20px;
     padding-right: 20px;
+  }
+
+  /* Adjust about section text size for mobile */
+  .text p,
+  .text-page p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .text .lead,
+  .text-page .lead {
+    font-size: 1.1rem;
   }
 
   /* Improve portfolio images on mobile */
@@ -114,7 +133,18 @@
   }
 
   .intro p {
+    font-size: 0.95rem;
+  }
+
+  /* Consistent text sizing for small phones */
+  .text p,
+  .text-page p {
     font-size: 0.9rem;
+  }
+
+  .text .lead,
+  .text-page .lead {
+    font-size: 1.05rem;
   }
 
   .heading {
