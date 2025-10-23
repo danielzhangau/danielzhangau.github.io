@@ -37,7 +37,7 @@
 
   /* Emoji and name at the top */
   .emoji-name {
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
     margin-top: 60px;
     margin-bottom: 0;
@@ -46,9 +46,10 @@
 
   .emoji-name h1 {
     font-size: 1.75rem;
-    margin-bottom: 0;
-    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0;
     line-height: 1.1;
+    order: 2;
   }
 
   .emoji-name img {
@@ -57,9 +58,10 @@
     max-width: 110px;
     height: auto;
     object-fit: contain;
+    order: 1;
   }
 
-  /* Center the intro text, shifted down by 1/3 */
+  /* Center the intro text block, but left-align the text */
   .intro p {
     font-size: 1.05rem;
     line-height: 1.7;
@@ -67,7 +69,9 @@
     margin-bottom: auto;
     padding-bottom: 15vh;
     max-width: 85%;
-    text-align: center;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -163,7 +167,8 @@
   .emoji-name h1 {
     font-size: 1.5rem;
     line-height: 1.1;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
   }
 
   .emoji-name img {
@@ -178,6 +183,7 @@
     line-height: 1.6;
     max-width: 90%;
     padding-bottom: 12vh;
+    text-align: left;
   }
 
   /* Consistent text sizing for small phones */
