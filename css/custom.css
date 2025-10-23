@@ -35,7 +35,7 @@
   .emoji-name img {
     margin-right: 0;
     margin-bottom: 1rem;
-    max-width: 80px;
+    max-width: 100px;
     height: auto;
     object-fit: contain;
   }
@@ -46,6 +46,14 @@
     margin-bottom: 0;
     max-width: 100%;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Better container width for centered text */
+  .intro .col-lg-10 {
+    max-width: 100%;
+    padding: 0 15px;
   }
 
   /* Fix background image on mobile - disable parallax */
@@ -147,7 +155,7 @@
   }
 
   .emoji-name img {
-    max-width: 70px;
+    max-width: 90px;
     margin-bottom: 0.875rem;
     height: auto;
     object-fit: contain;
@@ -156,6 +164,9 @@
   .intro p {
     font-size: 1rem;
     line-height: 1.6;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   /* Consistent text sizing for small phones */
