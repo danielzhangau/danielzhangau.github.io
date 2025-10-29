@@ -93,7 +93,7 @@ This portfolio is based on the "Black and White" Bootstrap theme by [Bootstrapio
 - **Location:** Brisbane, QLD, Australia
 - **LinkedIn:** [bosheng-zhang](https://www.linkedin.com/in/bosheng-zhang-7b7036149/)
 - **GitHub:** [danielzhangau](https://github.com/danielzhangau)
-- **Twitter:** [@DanielZhangg](https://twitter.com/DanielZhangg)
+- **Twitter:** [@danielzhangau](https://twitter.com/danielzhangau)
 
 ---
 
