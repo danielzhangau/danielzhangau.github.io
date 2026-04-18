@@ -100,7 +100,9 @@ const navItems = [
         <button
           id="mobile-menu-btn"
           class="p-2 rounded-lg text-white/90 header-scrolled:text-slate-600 dark:text-slate-300 transition-colors"
-          aria-label="Open menu"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
           <svg
             class="w-6 h-6"
@@ -170,12 +172,15 @@ const navItems = [
   const mobileMenu = document.getElementById("mobile-menu");
   menuBtn?.addEventListener("click", () => {
     mobileMenu?.classList.toggle("hidden");
+    const isOpen = !mobileMenu?.classList.contains("hidden");
+    menuBtn?.setAttribute("aria-expanded", String(isOpen));
   });
 
   // Close mobile menu on link click
   document.querySelectorAll(".mobile-nav-link").forEach((link) => {
     link.addEventListener("click", () => {
       mobileMenu?.classList.add("hidden");
+      menuBtn?.setAttribute("aria-expanded", "false");
     });
   });
 

@@ -38,6 +38,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.site)} />
     <meta property="og:site_name" content="Bosheng Zhang Portfolio" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -67,11 +68,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         "alternateName": "Daniel Zhang",
         "url": "https://danielzhangau.github.io/",
         "image": "https://danielzhangau.github.io/img/portfolio-picture.jpg",
-        "jobTitle": "AI/ML Engineer",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Vision HQ"
-        },
+        "jobTitle": "AI Engineer & Researcher",
         "alumniOf": {
           "@type": "EducationalOrganization",
           "name": "University of Queensland"
