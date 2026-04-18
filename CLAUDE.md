@@ -4,88 +4,61 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal portfolio website for Bosheng (Daniel) Zhang, built as a static single-page application using the "Black and White" Bootstrap theme from Bootstrapious. The site is hosted on GitHub Pages and showcases Daniel's work as a Machine Learning Engineer.
+Personal portfolio website for Bosheng (Daniel) Zhang — AI/ML Engineer. Built with Astro 6, Tailwind CSS 4, and deployed to GitHub Pages via GitHub Actions.
 
 ## Architecture
 
-**Static Site Structure:**
-- Single-page application with all content in `index.html`
-- Sections are navigated via anchor links with smooth scrolling (handled by `js/front.js`)
-- No build process required - pure HTML/CSS/JS
+**Framework:** Astro 6 (static site generator, zero JS by default)
+**Styling:** Tailwind CSS 4 via `@tailwindcss/vite` plugin (NOT `@astrojs/tailwind`)
+**Content:** Markdown files in `src/content/` using Astro Content Collections with `glob()` loader
+**Dark Mode:** Class-based (`class="dark"` on `<html>`), default light, persisted via `localStorage`
 
-**Key Sections in index.html:**
-- `#intro` - Hero section with name and title
-- `#about` - About/bio section
-- `#portfolio` - Work/project gallery with Lightbox integration
-- Contact section with Leaflet.js map integration
+**Key Directories:**
+- `src/components/` — Astro components (Header, Hero, About, Experience, Skills, Projects, BlogPreview, Contact, Footer, ProjectCard)
+- `src/layouts/BaseLayout.astro` — Global layout with SEO meta, fonts, theme script
+- `src/pages/` — Route pages (index, blog/[slug], projects/[slug])
+- `src/content/projects/` — Project markdown files (production & academic categories)
+- `src/content/blog/` — Blog post markdown files
+- `src/content.config.ts` — Content collection schemas
+- `src/styles/global.css` — Tailwind config, custom theme colors, prose styles
+- `public/img/` — Static images and SVG diagrams
+- `.github/workflows/deploy.yml` — GitHub Actions CI/CD
 
-**Styling:**
-- Main theme: `css/style.default.css` (from Bootstrapious template)
-- Custom overrides: `css/custom.css` - use this file for any style modifications
-- Framework: Bootstrap 4
-- Icons: Font Awesome 4.7
-- Fonts: Lora (headings), Cardo (copy)
-
-**JavaScript:**
-- `js/front.js` - Core functionality:
-  - Sticky navbar on scroll
-  - Smooth scroll navigation
-  - ScrollSpy for active nav items
-  - Leaflet.js map initialization with Stamen TonerLite tiles
-  - Theme switching (demo feature using jQuery cookies)
-- `js/like_button.js` - React component (currently not integrated in main page)
-
-**Dependencies (vendor/):**
-- Bootstrap 4 (framework)
-- jQuery (required for Bootstrap and front.js)
-- Popper.js (Bootstrap tooltips/popovers)
-- Font Awesome 4.7 (icons)
-- Lightbox2 (image gallery overlays)
-- Leaflet.js (loaded via CDN for map functionality)
-- jquery.cookie (theme switching)
+**Content Schema (projects):** title, description, tags[], image?, featured?, order?, github?, demo?, category (production|academic)
+**Content Schema (blog):** title, description, pubDate, updatedDate?, tags[], draft?
 
 ## Development Commands
 
-**Local Development:**
 ```bash
-# Serve locally (simple HTTP server)
-python3 -m http.server 8000
-# or
-python -m SimpleHTTPServer 8000
-# or using Node.js
-npx http-server
+npm install          # Install dependencies
+npm run dev          # Dev server at localhost:4321
+npm run build        # Build to ./dist
+npm run preview      # Preview production build
 ```
 
-**Testing:**
-- No automated tests currently configured
-- Manual testing: Open `index.html` in browser or use local server
+## Deployment
 
-**Deployment:**
-- Site is deployed via GitHub Pages
-- Push to `master` branch to deploy
-- No build step required
+- Push to `master` triggers GitHub Actions → build → deploy to GitHub Pages
+- Requires Node.js 22+ (Astro 6 requirement)
+- Deploy config: `.github/workflows/deploy.yml`
 
-## Important Notes
+## Important Conventions
 
-**Template Attribution:**
-- Based on "Black and White" theme by Bootstrapious
-- License requires footer backlink to Bootstrapious (see `license.txt` and `readme.txt`)
+**Tailwind CSS 4 specifics:**
+- Use `@custom-variant dark (&:where(.dark, .dark *));` for dark mode
+- Use `@theme { }` block for custom values (not `theme.extend`)
+- Scoped `<style>` blocks in Astro components require `@reference "tailwindcss";` at top
+- Use `@import "tailwindcss";` instead of `@tailwind` directives
 
-**Making Changes:**
-- CSS: Add custom styles to `css/custom.css` rather than modifying `css/style.default.css`
-- Content: Edit `index.html` directly for text, images, and structure
-- Images: Stored in `img/` directory
-- Map location: Configured in `js/front.js` (currently set to Brisbane coordinates: -27.4892582, 153.0063968)
+**Styling rules:**
+- Custom styles go in `src/styles/global.css`
+- Image containers for project cards use `bg-white` (not dark-responsive) to handle transparent PNGs/SVGs
+- Card borders use `border-slate-200` + `shadow-sm` for light mode visibility
 
-**Map Configuration:**
-- Uses Leaflet.js with OpenStreetMap tiles (Stamen TonerLite style)
-- Map center and marker position set in `map()` function in `js/front.js:84`
-- Disable/enable dragging based on screen width (>700px)
+**Content:**
+- Add new projects as markdown in `src/content/projects/`
+- Add new blog posts as markdown in `src/content/blog/`
+- Images go in `public/img/` (referenced as `/img/filename`)
+- Blog diagrams go in `public/img/blog/`
 
-**Contact Form:**
-- Currently no backend configured
-- See `readme.txt` for instructions on implementing contact form with backend
-
-**React Component:**
-- `js/like_button.js` exists but is not currently integrated into the main page
-- Would require React CDN scripts added to `index.html` and a container element
+**Path aliases:** `@/*` maps to `src/*` (configured in `tsconfig.json`)
