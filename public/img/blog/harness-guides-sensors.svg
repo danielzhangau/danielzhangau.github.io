@@ -109,18 +109,19 @@
   <text x="740" y="358" text-anchor="middle" font-size="10" font-weight="600" fill="#be185d">Goal: Enable self-correction</text>
   <text x="740" y="374" text-anchor="middle" font-size="10" font-weight="600" fill="#be185d">and error detection</text>
 
-  <!-- Arrow: Guides → Agent (single, centered, bold) -->
-  <line x1="290" y1="240" x2="334" y2="240" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)" />
-  <text x="312" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#3b82f6">steer</text>
+  <!-- Arrow: Guides → Agent -->
+  <line x1="290" y1="240" x2="332" y2="240" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)" />
+  <text x="312" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#3b82f6">steer</text>
 
-  <!-- Arrow: Agent → Sensors (single, centered, bold) -->
-  <line x1="560" y1="240" x2="624" y2="240" stroke="#16a34a" stroke-width="3" marker-end="url(#arrowGreen)" />
-  <text x="592" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">validate</text>
+  <!-- Arrow: Agent → Sensors -->
+  <line x1="560" y1="240" x2="622" y2="240" stroke="#16a34a" stroke-width="3" marker-end="url(#arrowGreen)" />
+  <text x="592" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">validate</text>
 
-  <!-- Feedback arrow: Sensors → Agent (curved, bottom, prominent) -->
-  <path d="M 700 400 Q 700 448 450 448 Q 380 448 380 355" fill="none" stroke="#e11d48" stroke-width="3" stroke-dasharray="8,4" />
-  <!-- Explicit arrowhead pointing UP into Agent -->
-  <polygon points="374,362 380,344 386,362" fill="#e11d48" />
-  <text x="540" y="442" text-anchor="middle" font-size="11" font-weight="600" fill="#e11d48">Feedback Loop</text>
-  <text x="540" y="466" text-anchor="middle" font-size="10" fill="#e11d48">Error signals trigger self-correction</text>
+  <!-- Feedback arrow: Sensors → Agent (curved below, re-enters Agent bottom) -->
+  <path d="M 740 400 L 740 430 Q 740 448 720 448 L 480 448 Q 450 448 450 430 L 450 360" fill="none" stroke="#e11d48" stroke-width="3" stroke-dasharray="8,4" />
+  <!-- Arrowhead pointing UP, flush with path end -->
+  <polygon points="442,366 450,346 458,366" fill="#e11d48" />
+  <!-- Label centered on horizontal segment -->
+  <text x="590" y="442" text-anchor="middle" font-size="11" font-weight="600" fill="#e11d48">Feedback Loop</text>
+  <text x="590" y="466" text-anchor="middle" font-size="10" fill="#e11d48">Error signals trigger self-correction</text>
 </svg>
