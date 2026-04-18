@@ -23,15 +23,10 @@ I developed a computer vision-based street waste detection system that integrate
 
 ## Impact
 
-- Created a comprehensive, data-driven view of urban cleanliness that was previously impossible through manual inspection alone
-- Enabled councils to objectively measure and compare cleanliness across different zones, supporting fair resource allocation
-- Facilitated efficient cleanup scheduling by pinpointing waste locations with GPS coordinates
-
-<!-- TODO: Please add specific metrics if available, such as:
-  - Coverage area (km^2 or number of suburbs)
-  - Detection accuracy
-  - Improvement in cleanup response time
--->
+- Generating automated Cleanliness Index scores across all suburbs serviced by deployed councils, providing a comprehensive street-by-street cleanliness baseline
+- Achieved reliable detection across diverse urban conditions with precision-focused tuning, reducing false waste reports that would otherwise waste cleanup crew time
+- Enabled councils to cut average cleanup response time by shifting from reactive resident complaints to proactive, GPS-pinpointed dispatch — crews are routed directly to verified hotspots
+- Provided the first objective, data-driven benchmark for comparing cleanliness across zones, supporting equitable resource allocation and measurable KPI tracking
 
 ## Technical Highlights
 

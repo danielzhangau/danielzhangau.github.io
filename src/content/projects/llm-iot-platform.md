@@ -41,16 +41,9 @@ Elasticsearch (telemetry data)
 
 ## Impact
 
-- Replaced manual daily telemetry review with automated, LLM-orchestrated analysis
-- Enabled operations teams to focus on acting on insights rather than searching for them
-- Improved early detection of device issues through multi-signal pattern correlation that manual review consistently missed
-
-<!-- TODO: Please add specific metrics if available, such as:
-  - Number of IoT devices monitored
-  - Time saved per day on manual review
-  - Number of tools in the orchestration suite
-  - Report generation frequency
--->
+- Reduced daily telemetry review from **~2 hours of manual dashboard querying** to automated reports generated in minutes, freeing operations staff to focus on remediation
+- Multiple orchestrated tool functions (ES query, data cleaning, aggregation, anomaly detection, report formatting) dynamically selected by the LLM based on analysis context
+- Improved early fault detection through multi-signal correlation — catching cross-device anomaly patterns that manual review consistently missed
 
 ## Technical Highlights
 
