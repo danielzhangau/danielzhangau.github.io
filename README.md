@@ -1,100 +1,54 @@
-# Bosheng (Daniel) Zhang - Portfolio Website
+# Bosheng (Daniel) Zhang - Portfolio
 
 [![Live Site](https://img.shields.io/badge/Live-danielzhangau.github.io-blue)](https://danielzhangau.github.io/)
+[![Built with Astro](https://img.shields.io/badge/Built%20with-Astro%206-BC52EE)](https://astro.build/)
+[![Deploy](https://github.com/danielzhangau/danielzhangau.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/danielzhangau/danielzhangau.github.io/actions/workflows/deploy.yml)
 
-Personal portfolio website showcasing my work as an AI/ML Engineer with 4+ years of experience in building intelligent automation systems.
+Personal portfolio and blog for an AI/ML Engineer, featuring production AI systems, academic research projects, and technical writing on the latest in AI engineering.
 
-## 🚀 About
+## Tech Stack
 
-This portfolio highlights my expertise in:
-- Computer Vision & Deep Learning
-- Large Language Models (LLMs) & AI Integration
-- Production ML Systems & MLOps
-- End-to-end AI Solutions
+- **Framework:** [Astro 6](https://astro.build/) — static site generator with zero JS by default
+- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/) via `@tailwindcss/vite`
+- **Content:** Markdown with Astro Content Collections
+- **Deployment:** GitHub Pages via GitHub Actions
+- **Features:** Dark/light mode, SEO (Open Graph, JSON-LD, sitemap), responsive design
 
-## 🛠️ Tech Stack
-
-**Frontend:**
-- HTML5, CSS3, JavaScript
-- Bootstrap 4 Framework
-- Leaflet.js for interactive maps
-- Lightbox2 for image galleries
-
-**Libraries & Tools:**
-- jQuery
-- Font Awesome icons
-- CARTO maps integration
-
-## 📂 Project Structure
+## Project Structure
 
 ```
-.
-├── css/
-│   ├── style.default.css    # Base theme styles
-│   └── custom.css            # Custom overrides and enhancements
-├── js/
-│   └── front.js              # Core functionality and interactions
-├── img/                      # Project images and assets
-├── vendor/                   # Third-party libraries
-├── index.html                # Main portfolio page
-└── CLAUDE.md                 # Development guidelines for Claude Code
+src/
+├── components/        # Astro components (Header, Hero, About, etc.)
+├── content/
+│   ├── projects/      # Project markdown files
+│   └── blog/          # Blog post markdown files
+├── layouts/           # BaseLayout with SEO and theme
+├── pages/             # Route pages (index, blog/, projects/)
+├── styles/            # Global CSS and Tailwind config
+└── content.config.ts  # Content collection schemas
+public/
+└── img/               # Static images and SVG diagrams
 ```
 
-## ✨ Features
-
-- **Responsive Design** - Optimized for desktop, tablet, and mobile devices
-- **Modern UI** - Clean, professional design with smooth animations
-- **Expandable Project Cards** - Click-to-expand academic projects with technology tags
-- **Interactive Map** - Shows location in Brisbane, Australia
-- **Professional & Academic Projects** - Showcasing production AI/ML work and research
-
-## 🎨 Design Highlights
-
-- Uppercase section headings with gradient underlines
-- Card-based project layouts with hover effects
-- Minimalist CARTO Light map style
-- Styled GitHub buttons in project details
-- Technology tags for quick project overview
-
-## 🚀 Local Development
+## Development
 
 ```bash
-# Simple HTTP server
-python3 -m http.server 8000
-
-# Or using Node.js
-npx http-server
-
-# Then visit http://localhost:8000
+npm install            # Install dependencies
+npm run dev            # Dev server at localhost:4321
+npm run build          # Production build to ./dist
+npm run preview        # Preview production build
 ```
 
-## 📝 Key Projects Featured
+Requires Node.js 22+.
 
-### Production AI/ML Projects
-- AI-Powered Road Infrastructure Monitoring System
-- Street Waste Detection System
-- LLM-Enhanced IoT Device Monitoring Platform
+## Content
 
-### Academic & Research Projects
-- Skin Lesion Segmentation (U-Net, Medical Imaging)
-- GreenMiles App (React Native, Sustainable Transportation)
-- LaserTank AI Solver (Reinforcement Learning)
-- And 7 more academic projects
+**Adding a project:** Create a markdown file in `src/content/projects/` with frontmatter: `title`, `description`, `tags`, `category` (production/academic), `image`, `order`.
 
-## 📄 License
+**Adding a blog post:** Create a markdown file in `src/content/blog/` with frontmatter: `title`, `description`, `pubDate`, `tags`.
 
-This portfolio is based on the "Black and White" Bootstrap theme by [Bootstrapious](https://bootstrapious.com/).
-
-**Template License:** Free for personal and commercial use with attribution.
-
-## 👤 Contact
+## Contact
 
 - **Email:** ddaniel.zhang0413@gmail.com
-- **Location:** Brisbane, QLD, Australia
 - **LinkedIn:** [bosheng-zhang](https://www.linkedin.com/in/bosheng-zhang-7b7036149/)
 - **GitHub:** [danielzhangau](https://github.com/danielzhangau)
-- **Twitter:** [@danielzhangau](https://twitter.com/danielzhangau)
-
----
-
-© 2025 Bosheng Zhang. All rights reserved.
