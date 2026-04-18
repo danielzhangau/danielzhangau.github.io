@@ -22,10 +22,7 @@ function formatDate(date: Date): string {
 }
 ---
 
-<BaseLayout
-  title={`${post.data.title} | Bosheng Zhang`}
-  description={post.data.description}
->
+<BaseLayout title={`${post.data.title} | Bosheng Zhang`} description={post.data.description}>
   <article class="pt-24 pb-20 bg-white dark:bg-slate-950">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
       <!-- Navigation -->
@@ -44,18 +41,22 @@ function formatDate(date: Date): string {
         <time class="text-sm text-slate-400 dark:text-slate-500">
           {formatDate(post.data.pubDate)}
         </time>
-        <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-2 mb-4 leading-tight">
+        <h1
+          class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-2 mb-4 leading-tight"
+        >
           {post.data.title}
         </h1>
-        {post.data.tags.length > 0 && (
-          <div class="flex flex-wrap gap-1.5">
-            {post.data.tags.map((tag: string) => (
-              <span class="inline-block px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+        {
+          post.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-1.5">
+              {post.data.tags.map((tag: string) => (
+                <span class="inline-block px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
       </header>
 
       <!-- Content -->
@@ -69,7 +70,13 @@ function formatDate(date: Date): string {
           href="/blog"
           class="inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
         >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <path d="M15 19l-7-7 7-7"></path>
           </svg>
           Back to all posts

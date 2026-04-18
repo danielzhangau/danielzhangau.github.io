@@ -22,6 +22,7 @@ Implemented multiple AI solving algorithms for LaserTank, a puzzle game where a 
 ## Problem Formulation
 
 The game was formulated as a search problem with:
+
 - State space: tank position, orientation, and map configuration
 - Action space: move forward, turn left, turn right, shoot laser
 - Uniform cost of 1 per step

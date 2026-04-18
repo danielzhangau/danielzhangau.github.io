@@ -1,29 +1,35 @@
 {
   "name": "danielzhangau.github.io",
   "version": "1.0.0",
-  "description": "[![Live Site](https://img.shields.io/badge/Live-danielzhangau.github.io-blue)](https://danielzhangau.github.io/)",
+  "description": "Personal portfolio and blog for Bosheng (Daniel) Zhang — AI/ML Engineer. Built with Astro 6 and Tailwind CSS 4.",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "format": "prettier --write 'src/**/*.{astro,ts,md,css}'",
+    "format:check": "prettier --check 'src/**/*.{astro,ts,md,css}'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danielzhangau/danielzhangau.github.io.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["portfolio", "ai-engineer", "astro", "tailwindcss"],
+  "author": "Bosheng (Daniel) Zhang <ddaniel.zhang0413@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/danielzhangau/danielzhangau.github.io/issues"
   },
-  "homepage": "https://github.com/danielzhangau/danielzhangau.github.io#readme",
+  "homepage": "https://danielzhangau.github.io",
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.7",
     "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }

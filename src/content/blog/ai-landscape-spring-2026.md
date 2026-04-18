@@ -13,13 +13,13 @@ The "Big Three" — Anthropic, OpenAI, and Google — are now in a genuine three
 
 ### Current Frontier Models (April 2026)
 
-| Provider | Model | Highlights |
-|---|---|---|
-| **Anthropic** | Claude Opus 4.6 | Top-tier on Humanity's Last Exam (~50%), 128K output tokens, strongest natural prose |
-| **OpenAI** | GPT-5.4 (Standard / Thinking / Pro) | Unified general-purpose + coding line, native computer use |
-| **Google** | Gemini 3.1 Pro | Leads SWE-bench Verified (78.8%), GPQA Diamond (94.3%), native multimodal reasoning |
-| **Meta** | Llama 4 Scout | 10M context window, MoE architecture, open-weight |
-| **DeepSeek** | V4 | 1T parameters on Huawei Ascend chips, $0.28/M input tokens |
+| Provider      | Model                               | Highlights                                                                           |
+| ------------- | ----------------------------------- | ------------------------------------------------------------------------------------ |
+| **Anthropic** | Claude Opus 4.6                     | Top-tier on Humanity's Last Exam (~50%), 128K output tokens, strongest natural prose |
+| **OpenAI**    | GPT-5.4 (Standard / Thinking / Pro) | Unified general-purpose + coding line, native computer use                           |
+| **Google**    | Gemini 3.1 Pro                      | Leads SWE-bench Verified (78.8%), GPQA Diamond (94.3%), native multimodal reasoning  |
+| **Meta**      | Llama 4 Scout                       | 10M context window, MoE architecture, open-weight                                    |
+| **DeepSeek**  | V4                                  | 1T parameters on Huawei Ascend chips, $0.28/M input tokens                           |
 
 The key takeaway: **no single model wins everything.** Claude excels at writing and instruction following, GPT-5.4 at tool use and computer interaction, Gemini at multimodal reasoning and code, and open models like Llama 4 and DeepSeek V4 now reach 90%+ of frontier performance at a fraction of the cost.
 
@@ -72,12 +72,14 @@ User Query → LLM (with tool schemas) → Function Call → Your Code Executes 
 ```
 
 **Strengths:**
+
 - Simple to implement and debug
 - Direct control over execution
 - Works with any LLM provider that supports it
 - No additional infrastructure needed
 
 **Limitations:**
+
 - Tool definitions sent with every request (token overhead)
 - Tight coupling between tool schemas and application code
 - Vendor-specific implementations (OpenAI format ≠ Anthropic format)
@@ -92,6 +94,7 @@ LLM ↔ MCP Client ↔ MCP Server (tools, resources, prompts) ↔ External Syste
 ```
 
 **Key advantages over function calling:**
+
 - **Universal adapter**: Build one MCP server, works with Claude, ChatGPT, Gemini, Cursor, etc.
 - **Dynamic discovery**: Tools are discovered at runtime via `tools/list`, not hardcoded
 - **Stateful sessions**: Persistent connections reduce overhead
@@ -155,6 +158,7 @@ Small Language Models (500M-10B parameters) now deliver 80-90% of GPT-4 quality 
 ### Hardware Makes It Real
 
 The hardware has caught up. In 2026:
+
 - **Apple A19 Pro**: ~75 TOPS, runs 8B models at 20+ tokens/second
 - **Qualcomm Snapdragon X2**: 80 TOPS, SLMs run locally on laptops without GPUs
 - **Intel Core Ultra 300**: 45-60 TOPS, Phi-4 14B at 12-15 tok/s with quantization
@@ -163,13 +167,13 @@ Over 2 billion smartphones can now run local SLMs. This isn't theoretical — it
 
 ### Models Worth Knowing
 
-| Model | Parameters | Best For |
-|---|---|---|
-| Microsoft Phi-3.5-Mini | 3.8B | Reasoning on CPU, matches GPT-3.5 at 98% less compute |
-| Google Gemma 2 | 9B | Best quality-to-size ratio for cloud deployment |
-| Mistral 7B | 7B | Most fine-tuning-friendly |
-| Meta Llama 3.2 | 1B-3B | Mobile and edge deployment |
-| Qwen 2.5 | 7B | Strongest multilingual support |
+| Model                  | Parameters | Best For                                              |
+| ---------------------- | ---------- | ----------------------------------------------------- |
+| Microsoft Phi-3.5-Mini | 3.8B       | Reasoning on CPU, matches GPT-3.5 at 98% less compute |
+| Google Gemma 2         | 9B         | Best quality-to-size ratio for cloud deployment       |
+| Mistral 7B             | 7B         | Most fine-tuning-friendly                             |
+| Meta Llama 3.2         | 1B-3B      | Mobile and edge deployment                            |
+| Qwen 2.5               | 7B         | Strongest multilingual support                        |
 
 ### The Hybrid Architecture Pattern
 
@@ -215,7 +219,7 @@ The field is moving fast. The best strategy is to stay grounded in engineering f
 
 ---
 
-*Sources and further reading:*
+_Sources and further reading:_
 
 - [Stanford HAI — AI Index 2026 Report](https://hai.stanford.edu/news/inside-the-ai-index-12-takeaways-from-the-2026-report)
 - [Microsoft — 7 AI Trends to Watch in 2026](https://news.microsoft.com/source/features/ai/whats-next-in-ai-7-trends-to-watch-in-2026/)

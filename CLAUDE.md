@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio and blog for Bosheng (Daniel) Zhang — AI/ML Engineer based in Brisbane, Australia. Previously at Vision HQ (2022-2025), now independently researching domain-specific business chatbots. Site URL: https://danielzhangau.github.io
+Personal portfolio and blog for Bosheng (Daniel) Zhang — AI/ML Engineer based in Brisbane, Australia. Previously at Vision HQ (2021-2025), now independently researching domain-specific business chatbots. Site URL: https://danielzhangau.github.io
 
 ## Tech Stack
 
@@ -20,7 +20,7 @@ Personal portfolio and blog for Bosheng (Daniel) Zhang — AI/ML Engineer based 
 ```
 src/
 ├── components/          # UI components
-│   ├── Header.astro     # Sticky nav + dark/light toggle + mobile menu
+│   ├── Header.astro     # Sticky nav + dark/light toggle + mobile menu + ScrollSpy
 │   ├── Hero.astro       # Full viewport hero with bg image + CTA
 │   ├── About.astro      # Bio section with profile picture
 │   ├── Experience.astro # Timeline (3 entries)
@@ -80,6 +80,8 @@ npm install              # Install dependencies
 npm run dev              # Dev server at localhost:4321
 npm run build            # Production build to ./dist
 npm run preview          # Preview production build locally
+npm run format           # Format all source files with Prettier
+npm run format:check     # Check formatting without writing
 ```
 
 ## Deployment
@@ -106,6 +108,13 @@ Config: `.github/workflows/deploy.yml`
 - Config file is `src/content.config.ts` (NOT `src/content/config.ts`)
 - Uses `glob()` loader from `astro/loaders` (Astro 5+ API)
 - Access post ID via `post.id` (not `post.slug`)
+
+**Header component (nav styling):**
+- `header-scrolled:` is NOT a valid Tailwind CSS 4 variant — do NOT use it in inline classes
+- All scrolled-state styling lives in `<style>` block using `:global(#site-header.scrolled)` selectors
+- Nav elements use `.nav-link`, `.nav-btn`, `.nav-logo` classes for CSS targeting
+- ScrollSpy highlights active section nav link via `.active` class (added/removed by JS)
+- Active link colors use CSS variables (`var(--color-primary-*)`) in scoped styles since `@apply` can't access custom theme in scoped context
 
 **Styling decisions with reasons:**
 - Project card image containers use `bg-white` (NOT dark-responsive) — transparent PNGs/SVGs look bad on dark backgrounds
