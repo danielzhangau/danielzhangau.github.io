@@ -88,6 +88,8 @@ Sensors observe **after** the agent acts and enable self-correction. Examples:
 
 A production-grade harness has at least seven layers:
 
+![Seven-Layer Harness Architecture](/img/blog/harness-seven-layers.svg)
+
 1. **Intent Capture** — Product requests, bug reports, customer signals flowing into the system
 2. **Spec/Issue Framing** — Bounded instructions with constraints and success criteria
 3. **Context & Instruction Layer** — Repository guidance (`CLAUDE.md`), rules, skills, documentation
