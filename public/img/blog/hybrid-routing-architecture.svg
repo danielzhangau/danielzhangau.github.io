@@ -171,15 +171,16 @@
   <text x="490" y="468" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#475569">Latency: 1-10s | Runs on: Provider API | Highest quality, reserved for hard tasks</text>
 
   <!-- ========== Bottom Stats Bar ========== -->
-  <rect x="30" y="492" width="820" height="1" fill="#e2e8f0"/>
+  <rect x="30" y="486" width="820" height="1" fill="#e2e8f0"/>
 
-  <text x="140" y="510" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#0d9488">~70% of requests</text>
-  <text x="140" y="498" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Edge handles</text>
+  <text x="140" y="500" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Edge handles</text>
+  <text x="140" y="514" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#0d9488">~70% of requests</text>
 
-  <text x="440" y="510" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#d97706">~25% of requests</text>
-  <text x="440" y="498" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Cloud SLM handles</text>
+  <text x="440" y="500" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Cloud SLM handles</text>
+  <text x="440" y="514" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#d97706">~25% of requests</text>
 
-  <text x="730" y="510" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#e11d48">~5% of requests</text>
+  <text x="730" y="500" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Frontier handles</text>
+  <text x="730" y="514" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#e11d48">~5% of requests</text>
   <text x="730" y="498" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Frontier handles</text>
 
   <!-- ========== Left side: Vertical labels ========== -->

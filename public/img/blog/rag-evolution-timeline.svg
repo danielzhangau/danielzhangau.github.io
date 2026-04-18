@@ -4,26 +4,7 @@
       <stop offset="0%" stop-color="#f8fafc"/>
       <stop offset="100%" stop-color="#f1f5f9"/>
     </linearGradient>
-    <linearGradient id="grayG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#94a3b8"/>
-      <stop offset="100%" stop-color="#64748b"/>
-    </linearGradient>
-    <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="100%" stop-color="#0284c7"/>
-    </linearGradient>
-    <linearGradient id="blueG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#3b82f6"/>
-      <stop offset="100%" stop-color="#2563eb"/>
-    </linearGradient>
-    <linearGradient id="violetG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#8b5cf6"/>
-      <stop offset="100%" stop-color="#7c3aed"/>
-    </linearGradient>
-    <linearGradient id="emeraldG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#10b981"/>
-      <stop offset="100%" stop-color="#059669"/>
-    </linearGradient>
+    <!-- Solid color IDs for headers (no gradients) -->
     <filter id="sR" x="-3%" y="-5%" width="106%" height="114%">
       <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08"/>
     </filter>
@@ -73,8 +54,8 @@
   <rect x="40" y="137" width="180" height="330" rx="10" fill="white" stroke="#94a3b8" stroke-width="1.5" filter="url(#sR)"/>
 
   <!-- Header -->
-  <rect x="40" y="137" width="180" height="36" rx="10" fill="url(#grayG)"/>
-  <rect x="40" y="160" width="180" height="13" fill="url(#grayG)"/>
+  <rect x="40" y="137" width="180" height="36" rx="10" fill="#64748b"/>
+  <rect x="40" y="160" width="180" height="13" fill="#64748b"/>
   <text x="130" y="161" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="white">Naive RAG</text>
 
   <!-- Generation badge -->
@@ -112,8 +93,8 @@
   <rect x="230" y="137" width="170" height="330" rx="10" fill="white" stroke="#0284c7" stroke-width="1.5" filter="url(#sR)"/>
 
   <!-- Header -->
-  <rect x="230" y="137" width="170" height="36" rx="10" fill="url(#skyG)"/>
-  <rect x="230" y="160" width="170" height="13" fill="url(#skyG)"/>
+  <rect x="230" y="137" width="170" height="36" rx="10" fill="#0284c7"/>
+  <rect x="230" y="160" width="170" height="13" fill="#0284c7"/>
   <text x="315" y="161" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="white">Advanced RAG</text>
 
   <!-- Generation badge -->
@@ -150,8 +131,8 @@
   <rect x="410" y="137" width="170" height="330" rx="10" fill="white" stroke="#2563eb" stroke-width="1.5" filter="url(#sR)"/>
 
   <!-- Header -->
-  <rect x="410" y="137" width="170" height="36" rx="10" fill="url(#blueG)"/>
-  <rect x="410" y="160" width="170" height="13" fill="url(#blueG)"/>
+  <rect x="410" y="137" width="170" height="36" rx="10" fill="#2563eb"/>
+  <rect x="410" y="160" width="170" height="13" fill="#2563eb"/>
   <text x="495" y="161" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="white">Modular RAG</text>
 
   <!-- Generation badge -->
@@ -195,8 +176,8 @@
   <rect x="590" y="137" width="170" height="330" rx="10" fill="white" stroke="#7c3aed" stroke-width="1.5" filter="url(#sR)"/>
 
   <!-- Header -->
-  <rect x="590" y="137" width="170" height="36" rx="10" fill="url(#violetG)"/>
-  <rect x="590" y="160" width="170" height="13" fill="url(#violetG)"/>
+  <rect x="590" y="137" width="170" height="36" rx="10" fill="#7c3aed"/>
+  <rect x="590" y="160" width="170" height="13" fill="#7c3aed"/>
   <text x="675" y="161" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="white">Graph RAG</text>
 
   <!-- Generation badge -->
@@ -244,8 +225,8 @@
   <rect x="770" y="137" width="170" height="330" rx="10" fill="white" stroke="#059669" stroke-width="2" filter="url(#sR)"/>
 
   <!-- Header -->
-  <rect x="770" y="137" width="170" height="36" rx="10" fill="url(#emeraldG)"/>
-  <rect x="770" y="160" width="170" height="13" fill="url(#emeraldG)"/>
+  <rect x="770" y="137" width="170" height="36" rx="10" fill="#059669"/>
+  <rect x="770" y="160" width="170" height="13" fill="#059669"/>
   <text x="855" y="161" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="white">Agentic RAG</text>
 
   <!-- Generation badge -->
@@ -275,9 +256,10 @@
   <rect x="782" y="328" width="146" height="20" rx="4" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="0.8"/>
   <text x="855" y="342" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7.5" font-weight="500" fill="#047857">Synthesize grounded answer</text>
 
-  <!-- Loop arrow -->
-  <path d="M 922 238 C 932 238 932 338 922 338" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arrLoop)"/>
-  <text x="934" y="292" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="6.5" font-weight="600" fill="#10b981" transform="rotate(90, 934, 292)">LOOP</text>
+  <!-- Loop arrow (right-angle) -->
+  <path d="M 928 234 L 936 234 L 936 342 L 928 342" stroke="#10b981" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+  <polygon points="930,336 928,344 924,336" fill="#10b981"/>
+  <text x="944" y="292" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" font-weight="600" fill="#10b981" transform="rotate(90, 944, 292)">LOOP</text>
 
   <!-- Note -->
   <line x1="782" y1="362" x2="928" y2="362" stroke="#e2e8f0" stroke-width="0.5"/>
