@@ -1,98 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" font-family="Inter, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" font-family="Inter, system-ui, sans-serif">
   <defs>
     <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
       <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.08" />
     </filter>
-    <marker id="arrowDown" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
-      <polygon points="0 0, 8 0, 4 6" fill="#94a3b8" />
-    </marker>
-    <marker id="arrowUp" markerWidth="8" markerHeight="6" refX="4" refY="0" orient="auto">
-      <polygon points="0 6, 8 6, 4 0" fill="#e11d48" />
-    </marker>
   </defs>
 
   <!-- Background -->
-  <rect width="720" height="520" rx="12" fill="#f8fafc" />
+  <rect width="700" height="520" rx="12" fill="#f8fafc" />
 
   <!-- Title -->
-  <text x="360" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#1e293b">Seven-Layer Harness Architecture</text>
-  <text x="360" y="50" text-anchor="middle" font-size="11" fill="#64748b">From intent to production feedback — a complete agent governance stack</text>
+  <text x="310" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#1e293b">Seven-Layer Harness Architecture</text>
+  <text x="310" y="50" text-anchor="middle" font-size="11" fill="#64748b">From intent to production feedback — a complete agent governance stack</text>
 
   <!-- Layer 1: Intent Capture -->
-  <rect x="60" y="68" width="520" height="48" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" filter="url(#shadow)" />
-  <text x="80" y="88" font-size="10" font-weight="700" fill="#92400e">1</text>
-  <circle cx="80" cy="92" r="10" fill="#f59e0b" opacity="0.2" />
-  <text x="80" y="96" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">1</text>
-  <text x="104" y="88" font-size="13" font-weight="600" fill="#92400e">Intent Capture</text>
-  <text x="104" y="104" font-size="10" fill="#78350f">Product requests, bug reports, customer signals flowing into the system</text>
+  <rect x="50" y="68" width="520" height="48" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" filter="url(#shadow)" />
+  <circle cx="72" cy="92" r="10" fill="#f59e0b" opacity="0.25" />
+  <text x="72" y="96" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">1</text>
+  <text x="96" y="88" font-size="13" font-weight="600" fill="#92400e">Intent Capture</text>
+  <text x="96" y="104" font-size="10" fill="#78350f">Product requests, bug reports, customer signals flowing into the system</text>
 
-  <!-- Down arrow -->
-  <line x1="320" y1="116" x2="320" y2="126" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowDown)" />
+  <!-- Down arrow 1→2 -->
+  <polygon points="314,118 320,128 326,118" fill="#94a3b8" />
 
   <!-- Layer 2: Spec/Issue Framing -->
-  <rect x="60" y="130" width="520" height="48" rx="8" fill="#ffedd5" stroke="#f97316" stroke-width="1.5" filter="url(#shadow)" />
-  <circle cx="80" cy="154" r="10" fill="#f97316" opacity="0.2" />
-  <text x="80" y="158" text-anchor="middle" font-size="10" font-weight="700" fill="#9a3412">2</text>
-  <text x="104" y="150" font-size="13" font-weight="600" fill="#9a3412">Spec / Issue Framing</text>
-  <text x="104" y="166" font-size="10" fill="#7c2d12">Bounded instructions with constraints and success criteria</text>
+  <rect x="50" y="132" width="520" height="48" rx="8" fill="#ffedd5" stroke="#f97316" stroke-width="1.5" filter="url(#shadow)" />
+  <circle cx="72" cy="156" r="10" fill="#f97316" opacity="0.25" />
+  <text x="72" y="160" text-anchor="middle" font-size="10" font-weight="700" fill="#9a3412">2</text>
+  <text x="96" y="152" font-size="13" font-weight="600" fill="#9a3412">Spec / Issue Framing</text>
+  <text x="96" y="168" font-size="10" fill="#7c2d12">Bounded instructions with constraints and success criteria</text>
 
-  <!-- Down arrow -->
-  <line x1="320" y1="178" x2="320" y2="188" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowDown)" />
+  <!-- Down arrow 2→3 -->
+  <polygon points="314,182 320,192 326,182" fill="#94a3b8" />
 
   <!-- Layer 3: Context & Instruction -->
-  <rect x="60" y="192" width="520" height="48" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)" />
-  <circle cx="80" cy="216" r="10" fill="#3b82f6" opacity="0.2" />
-  <text x="80" y="220" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">3</text>
-  <text x="104" y="212" font-size="13" font-weight="600" fill="#1e40af">Context &amp; Instruction Layer</text>
-  <text x="104" y="228" font-size="10" fill="#1e3a8a">CLAUDE.md, AGENTS.md, rules, skills, documentation</text>
+  <rect x="50" y="196" width="520" height="48" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)" />
+  <circle cx="72" cy="220" r="10" fill="#3b82f6" opacity="0.25" />
+  <text x="72" y="224" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">3</text>
+  <text x="96" y="216" font-size="13" font-weight="600" fill="#1e40af">Context &amp; Instruction Layer</text>
+  <text x="96" y="232" font-size="10" fill="#1e3a8a">CLAUDE.md, AGENTS.md, rules, skills, documentation</text>
 
-  <!-- Down arrow -->
-  <line x1="320" y1="240" x2="320" y2="250" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowDown)" />
+  <!-- Down arrow 3→4 -->
+  <polygon points="314,246 320,256 326,246" fill="#94a3b8" />
 
   <!-- Layer 4: Execution -->
-  <rect x="60" y="254" width="520" height="48" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5" filter="url(#shadow)" />
-  <circle cx="80" cy="278" r="10" fill="#22c55e" opacity="0.2" />
-  <text x="80" y="282" text-anchor="middle" font-size="10" font-weight="700" fill="#166534">4</text>
-  <text x="104" y="274" font-size="13" font-weight="600" fill="#166534">Execution Layer</text>
-  <text x="104" y="290" font-size="10" fill="#14532d">Agents editing code, calling tools, generating outputs</text>
+  <rect x="50" y="260" width="520" height="48" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5" filter="url(#shadow)" />
+  <circle cx="72" cy="284" r="10" fill="#22c55e" opacity="0.25" />
+  <text x="72" y="288" text-anchor="middle" font-size="10" font-weight="700" fill="#166534">4</text>
+  <text x="96" y="280" font-size="13" font-weight="600" fill="#166534">Execution Layer</text>
+  <text x="96" y="296" font-size="10" fill="#14532d">Agents editing code, calling tools, generating outputs</text>
 
-  <!-- Down arrow -->
-  <line x1="320" y1="302" x2="320" y2="312" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowDown)" />
+  <!-- Down arrow 4→5 -->
+  <polygon points="314,310 320,320 326,310" fill="#94a3b8" />
 
   <!-- Layer 5: Verification -->
-  <rect x="60" y="316" width="520" height="48" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5" filter="url(#shadow)" />
-  <circle cx="80" cy="340" r="10" fill="#8b5cf6" opacity="0.2" />
-  <text x="80" y="344" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">5</text>
-  <text x="104" y="336" font-size="13" font-weight="600" fill="#5b21b6">Verification Layer</text>
-  <text x="104" y="352" font-size="10" fill="#4c1d95">Tests, static analysis, review agents, CI gates</text>
+  <rect x="50" y="324" width="520" height="48" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5" filter="url(#shadow)" />
+  <circle cx="72" cy="348" r="10" fill="#8b5cf6" opacity="0.25" />
+  <text x="72" y="352" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">5</text>
+  <text x="96" y="344" font-size="13" font-weight="600" fill="#5b21b6">Verification Layer</text>
+  <text x="96" y="360" font-size="10" fill="#4c1d95">Tests, static analysis, review agents, CI gates</text>
 
-  <!-- Down arrow -->
-  <line x1="320" y1="364" x2="320" y2="374" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowDown)" />
+  <!-- Down arrow 5→6 -->
+  <polygon points="314,374 320,384 326,374" fill="#94a3b8" />
 
   <!-- Layer 6: Isolation & Permission -->
-  <rect x="60" y="378" width="520" height="48" rx="8" fill="#fce7f3" stroke="#ec4899" stroke-width="1.5" filter="url(#shadow)" />
-  <circle cx="80" cy="402" r="10" fill="#ec4899" opacity="0.2" />
-  <text x="80" y="406" text-anchor="middle" font-size="10" font-weight="700" fill="#9d174d">6</text>
-  <text x="104" y="398" font-size="13" font-weight="600" fill="#9d174d">Isolation &amp; Permission Layer</text>
-  <text x="104" y="414" font-size="10" fill="#831843">Git worktrees, sandboxes, approval flows, credential scoping</text>
+  <rect x="50" y="388" width="520" height="48" rx="8" fill="#fce7f3" stroke="#ec4899" stroke-width="1.5" filter="url(#shadow)" />
+  <circle cx="72" cy="412" r="10" fill="#ec4899" opacity="0.25" />
+  <text x="72" y="416" text-anchor="middle" font-size="10" font-weight="700" fill="#9d174d">6</text>
+  <text x="96" y="408" font-size="13" font-weight="600" fill="#9d174d">Isolation &amp; Permission Layer</text>
+  <text x="96" y="424" font-size="10" fill="#831843">Git worktrees, sandboxes, approval flows, credential scoping</text>
 
-  <!-- Down arrow -->
-  <line x1="320" y1="426" x2="320" y2="436" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowDown)" />
+  <!-- Down arrow 6→7 -->
+  <polygon points="314,438 320,448 326,438" fill="#94a3b8" />
 
   <!-- Layer 7: Feedback -->
-  <rect x="60" y="440" width="520" height="48" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow)" />
-  <circle cx="80" cy="464" r="10" fill="#ef4444" opacity="0.2" />
-  <text x="80" y="468" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">7</text>
-  <text x="104" y="460" font-size="13" font-weight="600" fill="#991b1b">Feedback Layer</text>
-  <text x="104" y="476" font-size="10" fill="#7f1d1d">Production telemetry, customer signals, failure analysis</text>
+  <rect x="50" y="452" width="520" height="48" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow)" />
+  <circle cx="72" cy="476" r="10" fill="#ef4444" opacity="0.25" />
+  <text x="72" y="480" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">7</text>
+  <text x="96" y="472" font-size="13" font-weight="600" fill="#991b1b">Feedback Layer</text>
+  <text x="96" y="488" font-size="10" fill="#7f1d1d">Production telemetry, customer signals, failure analysis</text>
 
-  <!-- Feedback loop arrow: Layer 7 back to Layer 1 (right side) -->
-  <path d="M 580 488 Q 600 488 620 488 C 660 488 660 460 660 430 L 660 100 C 660 76 640 68 620 68 L 584 68" fill="none" stroke="#e11d48" stroke-width="2" stroke-dasharray="6,3" />
-  <polygon points="588,62 580,68 588,74" fill="#e11d48" />
+  <!-- Feedback loop arrow: Layer 7 → Layer 1 (right side, smooth curve) -->
+  <path d="M 570 500 C 640 500 640 490 640 440 L 640 108 C 640 72 630 68 600 68 L 574 68" fill="none" stroke="#e11d48" stroke-width="2" stroke-dasharray="6,3" />
+  <polygon points="578,62 570,68 578,74" fill="#e11d48" />
 
-  <!-- Feedback loop label -->
-  <text x="672" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#e11d48" transform="rotate(90, 672, 280)">Continuous Feedback Loop</text>
-
-  <!-- Right side bracket hint -->
-  <rect x="596" y="64" width="70" height="428" rx="8" fill="none" stroke="#e11d48" stroke-width="1" stroke-dasharray="4,4" opacity="0.2" />
+  <!-- Feedback loop label (rotated, right side) -->
+  <text x="656" y="284" text-anchor="middle" font-size="9" font-weight="600" fill="#e11d48" transform="rotate(90, 656, 284)">Continuous Feedback Loop</text>
 </svg>
