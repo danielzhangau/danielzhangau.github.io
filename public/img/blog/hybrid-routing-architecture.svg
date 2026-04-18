@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" fill="none">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="880" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#e11d48"/>
+    </linearGradient>
+    <linearGradient id="indigoGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <filter id="sh" x="-4%" y="-6%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <filter id="shSm" x="-2%" y="-4%" width="104%" height="112%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M 0 0 L 8 3 L 0 6 Z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrTeal" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M 0 0 L 8 3 L 0 6 Z" fill="#14b8a6"/>
+    </marker>
+    <marker id="arrAmber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M 0 0 L 8 3 L 0 6 Z" fill="#d97706"/>
+    </marker>
+    <marker id="arrRose" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M 0 0 L 8 3 L 0 6 Z" fill="#e11d48"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="520" rx="12" fill="url(#bg2)"/>
+  <rect width="880" height="520" rx="12" stroke="#e2e8f0" stroke-width="1" fill="none"/>
+
+  <!-- Title -->
+  <text x="440" y="36" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Hybrid Model Routing Architecture</text>
+  <text x="440" y="56" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#64748b">Intelligent routing to the right model for each task — reduce cost 60-75% while maintaining quality</text>
+
+  <!-- ========== Input Layer ========== -->
+  <!-- User Request -->
+  <rect x="30" y="210" width="130" height="60" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="95" y="235" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#334155">User Request</text>
+  <text x="95" y="250" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Any task type</text>
+
+  <!-- Arrow to Router -->
+  <line x1="160" y1="240" x2="218" y2="240" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ========== Router (Central Hub) ========== -->
+  <rect x="220" y="180" width="180" height="120" rx="12" fill="white" stroke="#6366f1" stroke-width="2" filter="url(#sh)"/>
+
+  <!-- Router header bar -->
+  <rect x="220" y="180" width="180" height="32" rx="12" fill="url(#indigoGrad)"/>
+  <rect x="220" y="198" width="180" height="14" fill="url(#indigoGrad)"/>
+  <text x="310" y="202" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="white">Orchestration Router</text>
+
+  <!-- Router details -->
+  <text x="310" y="230" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#4338ca">Analyze task complexity</text>
+  <text x="310" y="244" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#4338ca">Estimate quality needs</text>
+  <text x="310" y="258" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#4338ca">Select optimal model</text>
+  <text x="310" y="275" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#6366f1">Cost / Latency / Quality</text>
+  <text x="310" y="290" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#818cf8">tradeoff optimization</text>
+
+  <!-- ========== Three Tiers ========== -->
+
+  <!-- === Tier 1: Edge SLM (Top) === -->
+  <!-- Arrow Router -> Edge -->
+  <path d="M 400 210 L 470 140" stroke="#14b8a6" stroke-width="2" marker-end="url(#arrTeal)"/>
+
+  <!-- Edge tier box -->
+  <rect x="472" y="80" width="380" height="120" rx="10" fill="white" stroke="#14b8a6" stroke-width="1.5" filter="url(#sh)"/>
+
+  <!-- Tier label -->
+  <rect x="482" y="90" width="100" height="22" rx="11" fill="url(#tealGrad)"/>
+  <text x="532" y="105" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="700" fill="white">Tier 1: Edge</text>
+
+  <!-- Cost badge -->
+  <rect x="750" y="90" width="90" height="22" rx="11" fill="#ccfbf1" stroke="#5eead4" stroke-width="1"/>
+  <text x="795" y="105" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" fill="#0f766e">$0 / call</text>
+
+  <!-- Model boxes -->
+  <rect x="490" y="120" width="80" height="34" rx="6" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1"/>
+  <text x="530" y="134" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#0d9488">Phi-3.5-Mini</text>
+  <text x="530" y="146" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#5eead4">3.8B params</text>
+
+  <rect x="580" y="120" width="80" height="34" rx="6" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1"/>
+  <text x="620" y="134" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#0d9488">Llama 3.2</text>
+  <text x="620" y="146" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#5eead4">1-3B params</text>
+
+  <rect x="670" y="120" width="80" height="34" rx="6" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1"/>
+  <text x="710" y="134" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#0d9488">Gemma 2</text>
+  <text x="710" y="146" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#5eead4">2B params</text>
+
+  <!-- Use cases -->
+  <text x="490" y="174" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#475569">Tasks: Classification, extraction, simple Q&amp;A, intent detection</text>
+  <text x="490" y="188" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#475569">Latency: &lt;50ms | Runs on: Device NPU / CPU | Zero cloud cost</text>
+
+  <!-- === Tier 2: Mid-size Model (Middle) === -->
+  <!-- Arrow Router -> Mid -->
+  <path d="M 400 240 L 470 265" stroke="#d97706" stroke-width="2" marker-end="url(#arrAmber)"/>
+
+  <!-- Mid tier box -->
+  <rect x="472" y="220" width="380" height="120" rx="10" fill="white" stroke="#d97706" stroke-width="1.5" filter="url(#sh)"/>
+
+  <!-- Tier label -->
+  <rect x="482" y="230" width="130" height="22" rx="11" fill="url(#amberGrad)"/>
+  <text x="547" y="245" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="700" fill="white">Tier 2: Cloud SLM</text>
+
+  <!-- Cost badge -->
+  <rect x="740" y="230" width="100" height="22" rx="11" fill="#fef3c7" stroke="#fcd34d" stroke-width="1"/>
+  <text x="790" y="245" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" fill="#92400e">~$0.10 / call</text>
+
+  <!-- Model boxes -->
+  <rect x="490" y="260" width="80" height="34" rx="6" fill="#fffbeb" stroke="#fcd34d" stroke-width="1"/>
+  <text x="530" y="274" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#b45309">Mistral 7B</text>
+  <text x="530" y="286" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#d97706">Fine-tuned</text>
+
+  <rect x="580" y="260" width="80" height="34" rx="6" fill="#fffbeb" stroke="#fcd34d" stroke-width="1"/>
+  <text x="620" y="274" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#b45309">DeepSeek V3</text>
+  <text x="620" y="286" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#d97706">Cost-efficient</text>
+
+  <rect x="670" y="260" width="80" height="34" rx="6" fill="#fffbeb" stroke="#fcd34d" stroke-width="1"/>
+  <text x="710" y="274" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#b45309">Gemma 2 9B</text>
+  <text x="710" y="286" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#d97706">Quality/size ratio</text>
+
+  <!-- Use cases -->
+  <text x="490" y="314" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#475569">Tasks: Summarization, RAG, domain reasoning, structured generation</text>
+  <text x="490" y="328" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#475569">Latency: 200-500ms | Runs on: Cloud / On-prem GPU | 90% quality at 1/50 cost</text>
+
+  <!-- === Tier 3: Frontier Model (Bottom) === -->
+  <!-- Arrow Router -> Frontier -->
+  <path d="M 400 280 L 470 395" stroke="#e11d48" stroke-width="2" marker-end="url(#arrRose)"/>
+
+  <!-- Frontier tier box -->
+  <rect x="472" y="360" width="380" height="120" rx="10" fill="white" stroke="#e11d48" stroke-width="1.5" filter="url(#sh)"/>
+
+  <!-- Tier label -->
+  <rect x="482" y="370" width="130" height="22" rx="11" fill="url(#roseGrad)"/>
+  <text x="547" y="385" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="700" fill="white">Tier 3: Frontier</text>
+
+  <!-- Cost badge -->
+  <rect x="740" y="370" width="100" height="22" rx="11" fill="#ffe4e6" stroke="#fda4af" stroke-width="1"/>
+  <text x="790" y="385" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="700" fill="#9f1239">~$2-5 / call</text>
+
+  <!-- Model boxes -->
+  <rect x="490" y="400" width="80" height="34" rx="6" fill="#fff1f2" stroke="#fda4af" stroke-width="1"/>
+  <text x="530" y="414" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#be123c">Claude Opus</text>
+  <text x="530" y="426" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#e11d48">Best writing</text>
+
+  <rect x="580" y="400" width="80" height="34" rx="6" fill="#fff1f2" stroke="#fda4af" stroke-width="1"/>
+  <text x="620" y="414" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#be123c">GPT-5.4</text>
+  <text x="620" y="426" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#e11d48">Best tool use</text>
+
+  <rect x="670" y="400" width="80" height="34" rx="6" fill="#fff1f2" stroke="#fda4af" stroke-width="1"/>
+  <text x="710" y="414" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#be123c">Gemini 3.1</text>
+  <text x="710" y="426" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="#e11d48">Best multimodal</text>
+
+  <!-- Use cases -->
+  <text x="490" y="454" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#475569">Tasks: Complex reasoning, multi-step agents, creative writing, code generation</text>
+  <text x="490" y="468" font-family="Inter, system-ui, sans-serif" font-size="8.5" fill="#475569">Latency: 1-10s | Runs on: Provider API | Highest quality, reserved for hard tasks</text>
+
+  <!-- ========== Bottom Stats Bar ========== -->
+  <rect x="30" y="492" width="820" height="1" fill="#e2e8f0"/>
+
+  <text x="140" y="510" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#0d9488">~70% of requests</text>
+  <text x="140" y="498" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Edge handles</text>
+
+  <text x="440" y="510" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#d97706">~25% of requests</text>
+  <text x="440" y="498" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Cloud SLM handles</text>
+
+  <text x="730" y="510" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="600" fill="#e11d48">~5% of requests</text>
+  <text x="730" y="498" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#94a3b8">Frontier handles</text>
+
+  <!-- ========== Left side: Vertical labels ========== -->
+  <text x="45" y="100" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#94a3b8" font-weight="500">ZERO LATENCY</text>
+  <text x="45" y="112" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#94a3b8" font-weight="500">ZERO COST</text>
+
+  <rect x="30" y="124" width="1" height="330" fill="#e2e8f0"/>
+
+  <!-- Cost arrow -->
+  <text x="20" y="295" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#94a3b8" font-weight="500" transform="rotate(-90, 20, 295)">COST &amp; QUALITY</text>
+  <line x1="12" y1="140" x2="12" y2="450" stroke="#cbd5e1" stroke-width="1" marker-end="url(#arr)"/>
+
+  <text x="45" y="460" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#94a3b8" font-weight="500">HIGHEST QUALITY</text>
+  <text x="45" y="472" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#94a3b8" font-weight="500">HIGHEST COST</text>
+</svg>
