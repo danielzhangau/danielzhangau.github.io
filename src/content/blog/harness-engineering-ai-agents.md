@@ -15,13 +15,13 @@ tags:
 
 If 2025 was the year of the AI agent, 2026 is the year of the **harness**.
 
-The industry has learned a hard lesson: building an agent is the easy part. Making it reliable, cost-predictable, and safe in production is where the real engineering happens. An estimated **88% of AI agent projects never reach production** — and that number has not improved as models have gotten more capable. The bottleneck is not the model. It is the absence of a production-grade harness.
+The industry has learned a hard lesson: building an agent is the easy part. Making it reliable, cost-predictable, and safe in production is where the real engineering happens. According to IDC research, **88% of AI agent projects never reach production** — and that number has not improved as models have gotten more capable. The bottleneck is not the model. It is the absence of a production-grade harness.
 
 This post explores **harness engineering** — the hottest emerging discipline in AI engineering — what it is, why it matters, how it works, and how to start implementing it today.
 
 ## What Is Harness Engineering?
 
-The term was popularized by Mitchell Hashimoto (co-creator of Terraform) in February 2026. He described a habit of engineering permanent fixes into the agent's environment every time it made a mistake — he called it "engineering the harness." Within weeks, [OpenAI](https://openai.com/index/harness-engineering/) and [Anthropic](https://martinfowler.com/articles/harness-engineering.html) published articles expanding on the idea, and the term had arrived.
+The term was popularized by Mitchell Hashimoto (co-creator of Terraform) in February 2026. He described a habit of engineering permanent fixes into the agent's environment every time it made a mistake — he called it "engineering the harness." Within weeks, [OpenAI](https://openai.com/index/harness-engineering/) published their take, and Martin Fowler published [a detailed analysis](https://martinfowler.com/articles/harness-engineering.html) exploring the concept in depth. The term had arrived.
 
 The core equation:
 

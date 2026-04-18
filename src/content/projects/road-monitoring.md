@@ -14,7 +14,7 @@ Road infrastructure deterioration poses significant safety risks to drivers and 
 
 ## Solution
 
-I designed and built an AI-powered road monitoring system that leverages the regular coverage patterns of waste collection trucks. By mounting cameras on these vehicles, the system captures imagery of every road in a council's service area during routine collection rounds, then processes the data through a deep learning pipeline:
+As the primary ML engineer, I developed the computer vision pipeline and was deeply involved in architecting the overall system. The system leverages the regular coverage patterns of waste collection trucks — by mounting cameras on these vehicles, it captures imagery of every road in a council's service area during routine collection rounds, then processes the data through a deep learning pipeline:
 
 - **Object Detection Pipeline**: Built with PyTorch, trained to identify and classify multiple types of road defects including potholes, cracking, edge deterioration, and surface deformation
 - **Cloud Processing**: Deployed on Google Cloud Platform with containerized inference services (Docker) for scalable batch processing of daily image captures
@@ -25,7 +25,7 @@ I designed and built an AI-powered road monitoring system that leverages the reg
 
 - Deployed across **5+ Australian local government areas**, monitoring over **5,000 km** of road network using existing waste collection fleet — eliminating the need for dedicated survey vehicle passes
 - Achieved **95% detection accuracy** with high precision tuning to minimize false positives, ensuring councils can trust automated alerts without manual verification overhead
-- Reduced road condition survey costs by an estimated **60–70%** by replacing specialized survey vehicle deployments ($5–15/km) and manual data processing with automated, continuous AI-driven monitoring
+- Significantly reduced road condition survey costs by replacing specialized survey vehicle deployments and manual data processing with automated, continuous AI-driven monitoring
 - Transformed road maintenance from reactive complaint-driven to proactive data-driven, enabling councils to identify and prioritize emerging defects before they escalate into safety hazards
 
 ## Technical Highlights

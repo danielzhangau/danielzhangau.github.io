@@ -14,7 +14,7 @@ IoT device fleets generate massive volumes of telemetry data — GPS signals, ca
 
 ## Solution
 
-I built an LLM-powered monitoring platform deployed on Google Cloud Platform that automates telemetry analysis through intelligent tool orchestration:
+As the primary developer, I designed and built the core components of an LLM-powered monitoring platform deployed on Google Cloud Platform, automating telemetry analysis through intelligent tool orchestration:
 
 - **LLM Function Calling Orchestration**: Designed the core agent loop where the LLM dynamically selects and invokes the right tools based on the analysis context — deciding which data to fetch, how to process it, and what to report
 - **Tool Suite**: Built a set of callable tools including Elasticsearch data retrieval (querying device metrics across time ranges), data cleaning and aggregation pipelines, anomaly detection routines, and report formatting functions
@@ -41,7 +41,7 @@ Elasticsearch (telemetry data)
 
 ## Impact
 
-- Reduced daily telemetry review from **~2 hours of manual dashboard querying** to automated reports generated in minutes, freeing operations staff to focus on remediation
+- Significantly reduced daily telemetry review time by replacing manual dashboard querying with automated reports, freeing operations staff to focus on remediation
 - Multiple orchestrated tool functions (ES query, data cleaning, aggregation, anomaly detection, report formatting) dynamically selected by the LLM based on analysis context
 - Improved early fault detection through multi-signal correlation — catching cross-device anomaly patterns that manual review consistently missed
 

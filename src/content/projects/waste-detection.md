@@ -14,7 +14,7 @@ Urban councils struggle to maintain consistent street cleanliness across large s
 
 ## Solution
 
-I developed a computer vision-based street waste detection system that integrates with the waste truck camera network to generate a **Cleanliness Index** — a quantitative, street-by-street assessment of urban cleanliness:
+As the primary model developer, I built the detection pipeline and designed the Cleanliness Index scoring methodology. The system integrates with the waste truck camera network to generate a quantitative, street-by-street assessment of urban cleanliness:
 
 - **Detection Model**: PyTorch-based object detection pipeline trained to identify various types of street-level waste including litter, illegal dumping, overflowing bins, and road debris
 - **Cleanliness Index**: Each street segment receives a cleanliness score based on detected waste density and severity, visualized as a color-coded map (green → clean, yellow → moderate, red → requires attention) with individual waste markers
