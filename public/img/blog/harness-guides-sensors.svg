@@ -114,10 +114,10 @@
   <line x1="560" y1="240" x2="606" y2="240" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrowGreen)" />
   <text x="584" y="232" text-anchor="middle" font-size="10" font-weight="600" fill="#16a34a">validate</text>
 
-  <!-- Feedback arrow: Sensors → Agent (smooth curve below) -->
-  <path d="M 740 400 C 740 456 600 456 450 456 C 300 456 380 456 380 360" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-dasharray="8,4" />
+  <!-- Feedback arrow: Sensors → Agent (right-angle path) -->
+  <path d="M 740 400 L 740 450 L 380 450 L 380 360" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-dasharray="8,4" stroke-linejoin="round" />
   <!-- Arrowhead pointing UP -->
   <polygon points="373,366 380,348 387,366" fill="#e11d48" />
-  <!-- Label below the curve, offset to avoid overlap -->
-  <text x="560" y="470" text-anchor="middle" font-size="10" font-weight="600" fill="#e11d48">Feedback Loop: Error signals trigger self-correction</text>
+  <!-- Label on horizontal segment -->
+  <text x="560" y="468" text-anchor="middle" font-size="10" font-weight="600" fill="#e11d48">Feedback Loop: Error signals trigger self-correction</text>
 </svg>
