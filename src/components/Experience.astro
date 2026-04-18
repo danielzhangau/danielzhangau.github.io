@@ -1,0 +1,97 @@
+---
+// Experience data - update dates and details as needed
+const experiences = [
+  {
+    company: "Independent",
+    role: "AI Engineer & Researcher",
+    period: "2026 - Present",
+    location: "Brisbane, AU",
+    highlights: [
+      "Researching and developing domain-specific business chatbots powered by LLMs, focusing on practical enterprise applications",
+      "Tracking and experimenting with cutting-edge AI developments including agent frameworks, RAG architectures, and multi-modal models",
+      "Building open-source tools and prototypes to explore emerging AI patterns and best practices",
+    ],
+  },
+  {
+    company: "Vision HQ",
+    role: "AI/ML Engineer",
+    period: "2022 - 2025",
+    location: "Brisbane, AU",
+    highlights: [
+      "Built an AI-powered road monitoring system using waste truck-mounted cameras, enabling automated city-wide infrastructure defect detection across all serviced roads",
+      "Developed a computer vision-based street waste detection system for urban cleanliness assessment, providing councils with actionable geospatial data for cleanup prioritization",
+      "Built an LLM-powered IoT monitoring platform on GCP using function calling to orchestrate Elasticsearch data retrieval, anomaly detection, and automated daily report generation",
+      // <!-- TODO: Please add quantified metrics like "reduced inspection time by X%", "processing X images per day", etc. -->
+    ],
+  },
+  {
+    company: "University of Queensland",
+    role: "Bachelor of Engineering (Honours) / IT",
+    period: "2018 - 2021", // <!-- Please confirm dates -->
+    location: "Brisbane, AU",
+    highlights: [
+      "Specialized in machine learning, computer vision, and software engineering",
+      "Completed research projects in medical image segmentation and reinforcement learning",
+    ],
+  },
+];
+---
+
+<section id="experience" class="py-20 sm:py-28 bg-slate-50 dark:bg-slate-900">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <h2
+      class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-12 text-center"
+    >
+      Experience
+    </h2>
+
+    <div class="relative">
+      <!-- Timeline line -->
+      <div
+        class="absolute left-0 sm:left-8 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-700"
+      >
+      </div>
+
+      <div class="space-y-12">
+        {
+          experiences.map((exp, idx) => (
+            <div class="relative pl-8 sm:pl-20">
+              {/* Timeline dot */}
+              <div class="absolute left-0 sm:left-8 -translate-x-1/2 w-3 h-3 rounded-full bg-primary-500 border-2 border-white dark:border-slate-900 shadow-sm mt-1.5" />
+
+              <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-4">
+                  <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">
+                      {exp.role}
+                    </h3>
+                    <p class="text-primary-600 dark:text-primary-400 font-medium">
+                      {exp.company}
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+                    <span>{exp.period}</span>
+                    <span class="hidden sm:inline">|</span>
+                    <span>{exp.location}</span>
+                  </div>
+                </div>
+                <ul class="space-y-2">
+                  {exp.highlights.map((highlight) => (
+                    <li class="flex gap-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <span class="text-primary-500 mt-1 shrink-0">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+{
+  "name": "danielzhangau.github.io",
+  "version": "1.0.0",
+  "description": "[![Live Site](https://img.shields.io/badge/Live-danielzhangau.github.io-blue)](https://danielzhangau.github.io/)",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielzhangau/danielzhangau.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielzhangau/danielzhangau.github.io/issues"
+  },
+  "homepage": "https://github.com/danielzhangau/danielzhangau.github.io#readme",
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.3",
+    "@astrojs/sitemap": "^3.7.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.7",
+    "tailwindcss": "^4.2.2"
+  }
+}

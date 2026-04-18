@@ -1,0 +1,78 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<BaseLayout title="Blog | Bosheng Zhang" description="Thoughts on AI/ML engineering, production systems, and technical deep-dives.">
+  <div class="pt-24 pb-20 bg-white dark:bg-slate-950 min-h-screen">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <!-- Header -->
+      <div class="mb-16">
+        <a
+          href="/"
+          class="inline-flex items-center gap-1 text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 mb-6 transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Home
+        </a>
+        <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+          Blog
+        </h1>
+        <p class="text-lg text-slate-500 dark:text-slate-400">
+          Thoughts on AI/ML engineering, production systems, and building things.
+        </p>
+      </div>
+
+      <!-- Posts -->
+      {posts.length === 0 && (
+        <p class="text-slate-500 dark:text-slate-400 text-center py-12">
+          No posts yet. Check back soon!
+        </p>
+      )}
+
+      <div class="space-y-8">
+        {posts.map((post) => (
+          <article>
+            <a
+              href={`/blog/${post.id}`}
+              class="group block"
+            >
+              <time class="text-sm text-slate-400 dark:text-slate-500">
+                {formatDate(post.data.pubDate)}
+              </time>
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white mt-1 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                {post.data.title}
+              </h2>
+              <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+                {post.data.description}
+              </p>
+              {post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-1.5">
+                  {post.data.tags.map((tag: string) => (
+                    <span class="inline-block px-2 py-0.5 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

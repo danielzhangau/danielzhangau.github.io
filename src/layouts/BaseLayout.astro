@@ -1,0 +1,111 @@
+---
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = "Bosheng (Daniel) Zhang | AI/ML Engineer",
+  description = "AI/ML Engineer with 4+ years of experience building intelligent automation systems. Specialized in computer vision, LLM-powered analytics, and production ML solutions.",
+  image = "/img/portfolio-picture.jpg",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="all,follow" />
+    <meta name="author" content="Bosheng (Daniel) Zhang" />
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="AI Engineer, Machine Learning Engineer, Computer Vision, LLM, PyTorch, Google Cloud Platform, Brisbane, Australia, Deep Learning, MLOps"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:site_name" content="Bosheng Zhang Portfolio" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/png" href="/img/emoji.png" />
+
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Bosheng Zhang",
+        "alternateName": "Daniel Zhang",
+        "url": "https://danielzhangau.github.io/",
+        "image": "https://danielzhangau.github.io/img/portfolio-picture.jpg",
+        "jobTitle": "AI/ML Engineer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Vision HQ"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "University of Queensland"
+        },
+        "knowsAbout": [
+          "Artificial Intelligence",
+          "Machine Learning",
+          "Computer Vision",
+          "Large Language Models",
+          "PyTorch",
+          "Google Cloud Platform"
+        ],
+        "sameAs": [
+          "https://github.com/danielzhangau",
+          "https://www.linkedin.com/in/bosheng-zhang-7b7036149/"
+        ]
+      }
+    </script>
+
+    <!-- Theme initialization (prevent flash) -->
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem("theme");
+        if (stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
