@@ -18,7 +18,7 @@ const navItems = [
       <!-- Logo -->
       <a
         href="/"
-        class="text-lg font-bold text-white header-scrolled:text-slate-900 dark:text-white transition-colors"
+        class="nav-logo text-lg font-bold text-white dark:text-white transition-colors"
       >
         Daniel Zhang
       </a>
@@ -29,7 +29,7 @@ const navItems = [
           navItems.map((item) => (
             <a
               href={item.href}
-              class="px-3 py-2 text-sm font-medium text-white/90 hover:text-white header-scrolled:text-slate-600 header-scrolled:hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors rounded-lg hover:bg-white/10 header-scrolled:hover:bg-slate-100 dark:hover:bg-slate-800"
+              class="nav-link px-3 py-2 text-sm font-medium text-white/90 hover:text-white dark:text-slate-300 dark:hover:text-white transition-colors rounded-lg hover:bg-white/10 dark:hover:bg-white/10"
             >
               {item.label}
             </a>
@@ -38,7 +38,7 @@ const navItems = [
         <!-- Theme Toggle -->
         <button
           id="theme-toggle"
-          class="ml-2 p-2 rounded-lg text-white/90 hover:text-white header-scrolled:text-slate-600 header-scrolled:hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-white/10 header-scrolled:hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          class="nav-btn ml-2 p-2 rounded-lg text-white/90 hover:text-white dark:text-slate-300 dark:hover:text-white hover:bg-white/10 dark:hover:bg-white/10 transition-colors"
           aria-label="Toggle theme"
         >
           <!-- Sun icon (shown in dark mode) -->
@@ -71,7 +71,7 @@ const navItems = [
       <div class="flex items-center gap-2 md:hidden">
         <button
           id="theme-toggle-mobile"
-          class="p-2 rounded-lg text-white/90 header-scrolled:text-slate-600 dark:text-slate-300 transition-colors"
+          class="nav-btn p-2 rounded-lg text-white/90 dark:text-slate-300 transition-colors"
           aria-label="Toggle theme"
         >
           <svg
@@ -99,7 +99,7 @@ const navItems = [
         </button>
         <button
           id="mobile-menu-btn"
-          class="p-2 rounded-lg text-white/90 header-scrolled:text-slate-600 dark:text-slate-300 transition-colors"
+          class="nav-btn p-2 rounded-lg text-white/90 dark:text-slate-300 transition-colors"
           aria-label="Toggle menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -120,14 +120,14 @@ const navItems = [
     <!-- Mobile Nav -->
     <div
       id="mobile-menu"
-      class="hidden md:hidden pb-4 border-t border-white/10 header-scrolled:border-slate-200 dark:border-slate-700"
+      class="hidden md:hidden pb-4 border-t border-white/10 dark:border-slate-700"
     >
       <nav class="flex flex-col gap-1 pt-3">
         {
           navItems.map((item) => (
             <a
               href={item.href}
-              class="mobile-nav-link px-3 py-2.5 text-sm font-medium text-white/90 header-scrolled:text-slate-600 dark:text-slate-300 hover:bg-white/10 header-scrolled:hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              class="mobile-nav-link nav-link px-3 py-2.5 text-sm font-medium text-white/90 dark:text-slate-300 hover:bg-white/10 dark:hover:bg-white/10 rounded-lg transition-colors"
             >
               {item.label}
             </a>
@@ -141,15 +141,46 @@ const navItems = [
 <style>
   @reference "tailwindcss";
 
+  /* Scrolled header background */
   :global(#site-header.scrolled) {
     @apply bg-white/95 dark:bg-slate-950/95 backdrop-blur-md shadow-sm;
   }
-  :global(#site-header.scrolled) a:not([href="/"]),
-  :global(#site-header.scrolled) button {
-    @apply text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white;
-  }
-  :global(#site-header.scrolled) a[href="/"] {
+
+  /* Scrolled: logo */
+  :global(#site-header.scrolled) .nav-logo {
     @apply text-slate-900 dark:text-white;
+  }
+
+  /* Scrolled: nav links & buttons base */
+  :global(#site-header.scrolled) .nav-link,
+  :global(#site-header.scrolled) .nav-btn {
+    @apply text-slate-600 dark:text-slate-400;
+  }
+
+  /* Scrolled: nav link hover */
+  :global(#site-header.scrolled) .nav-link:hover,
+  :global(#site-header.scrolled) .nav-btn:hover {
+    @apply text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800;
+  }
+
+  /* Scrolled: active nav link (ScrollSpy) */
+  :global(#site-header.scrolled) .nav-link.active {
+    color: var(--color-primary-600);
+    background-color: var(--color-primary-50);
+  }
+  :global(.dark #site-header.scrolled) .nav-link.active {
+    color: var(--color-primary-400);
+    background-color: color-mix(in srgb, var(--color-primary-900) 30%, transparent);
+  }
+
+  /* Non-scrolled: active nav link */
+  :global(#site-header:not(.scrolled)) .nav-link.active {
+    @apply text-white bg-white/20;
+  }
+
+  /* Scrolled: mobile menu border */
+  :global(#site-header.scrolled) #mobile-menu {
+    @apply border-slate-200 dark:border-slate-700;
   }
 </style>
 
@@ -183,6 +214,34 @@ const navItems = [
       menuBtn?.setAttribute("aria-expanded", "false");
     });
   });
+
+  // ScrollSpy: highlight active section in nav
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
+
+  function updateActiveNav() {
+    const scrollY = window.scrollY + 120;
+    let currentId = "";
+
+    sections.forEach((section) => {
+      const el = section as HTMLElement;
+      if (scrollY >= el.offsetTop) {
+        currentId = el.id;
+      }
+    });
+
+    navLinks.forEach((link) => {
+      const href = link.getAttribute("href") || "";
+      if (href === `/#${currentId}`) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", updateActiveNav, { passive: true });
+  updateActiveNav();
 
   // Theme toggle
   function toggleTheme() {
