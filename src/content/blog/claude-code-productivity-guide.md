@@ -29,7 +29,7 @@ Claude Code's configuration follows a clear hierarchy. Understanding this is the
 | **Hooks** | Run scripts on lifecycle events | 100% — executes every time | `~/.claude/settings.json` + `~/.claude/hooks/` |
 | **MCP Servers** | Connect external tools and data | On-demand | `~/.claude.json` or `.mcp.json` |
 | **Plugins** | Packaged extensions with skills/hooks | On-demand | `~/.claude/settings.json` |
-| **CLAUDE.md** | Natural language instructions | ~70% compliance | `~/.claude/CLAUDE.md` or project root |
+| **CLAUDE.md** | Natural language instructions | Probabilistic — high but not guaranteed | `~/.claude/CLAUDE.md` or project root |
 | **Skills** | On-demand knowledge injection | When triggered | `.claude/skills/` |
 | **Memory** | Cross-session persistent notes | Loaded at start | `~/.claude/projects/.../memory/` |
 
@@ -294,7 +294,7 @@ CLAUDE.md is the most well-known configuration, but also the most misunderstood.
 
 Boris Cherny's (Claude Code creator) CLAUDE.md is approximately 100 lines. Every line should pass this test: **"Would Claude make a mistake if I removed this?"** If not, delete it.
 
-The reasoning: frontier models can reasonably follow ~150-200 instructions. The system prompt already consumes ~50 of that budget. Overloading CLAUDE.md with obvious rules wastes your instruction budget on things the model would do correctly anyway.
+The reasoning: the model's attention to instructions is finite. The more rules you pile into CLAUDE.md, the less reliably each individual rule gets followed. Overloading it with obvious rules wastes instruction capacity on things the model would do correctly anyway.
 
 ### Structure That Works
 
@@ -334,7 +334,7 @@ Over time, this file becomes a project-specific knowledge base that eliminates r
 
 ## Context Management: The Hidden Skill
 
-Context window management is the most underrated productivity skill. Quality degrades significantly when context exceeds 40-60% capacity, yet most developers never think about it.
+Context window management is the most underrated productivity skill. Quality degrades as context fills up — the longer the conversation, the more the model's attention gets diluted — yet most developers never think about it.
 
 ### Essential Commands
 
@@ -353,9 +353,9 @@ The most common mistake: using a single long-running session for everything. A s
 
 **Rule of thumb:** one session, one objective. Use `/clear` between unrelated tasks. Use `/compact` with a focus hint when context grows within a single task.
 
-### UltraThink
+### Deep Reasoning
 
-For complex architectural decisions or difficult debugging, add `ultrathink` to your prompt. This triggers the maximum 31,999-token thinking budget — significantly deeper reasoning than the default. Reserve this for genuinely hard problems where the extra thinking time is worth it.
+Claude Code has extended thinking enabled by default. For complex architectural decisions or difficult debugging, use phrases like `think hard` or `think deeply` in your prompt to encourage more thorough reasoning. Reserve this for genuinely hard problems where the extra thinking time is worth it.
 
 ## Worktree: Parallel Development at Scale
 
@@ -456,7 +456,7 @@ Here is the complete `settings.json` structure with all layers configured:
 
 ## Key Takeaways
 
-1. **CLAUDE.md is advice (~70%), hooks are law (100%).** Put formatting, safety, and notifications in hooks.
+1. **CLAUDE.md is advice (probabilistic), hooks are law (100%).** Put formatting, safety, and notifications in hooks.
 2. **The instruction budget is finite.** Keep CLAUDE.md lean. Every unnecessary line displaces a useful one.
 3. **Context management is a skill.** One session per objective. `/clear` between tasks. `/compact` with hints.
 4. **Worktree parallelism is the #1 lever.** Multiple Claude sessions on independent branches can 3-5x throughput.
