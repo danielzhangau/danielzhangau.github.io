@@ -13,7 +13,7 @@ tags:
   ]
 ---
 
-Most developers using Claude Code treat it like a smart chatbot in the terminal — ask questions, get code, copy-paste. That leaves roughly 80% of its capability on the table.
+Most developers using Claude Code treat it like a smart chatbot in the terminal — ask questions, get code, copy-paste. That leaves most of its capability on the table.
 
 Claude Code is not a chatbot. It is a **configurable agent runtime** with a layered architecture of hooks, permissions, MCP integrations, plugins, custom agents, and skills. The difference between a default install and a tuned setup is the difference between a junior developer who needs constant supervision and a senior engineer who operates autonomously within well-defined guardrails.
 
@@ -39,7 +39,9 @@ The critical insight: **CLAUDE.md is advice, hooks are law.** If you need someth
 
 Hooks are shell scripts that execute on specific lifecycle events. They are the most underused and most powerful configuration mechanism in Claude Code.
 
-### Available Hook Events
+### Key Hook Events
+
+The most commonly used hook events (Claude Code supports additional lifecycle events — see the [official docs](https://docs.anthropic.com/en/docs/claude-code/hooks) for the full list):
 
 | Event | When It Fires | Use Case |
 | ----- | ------------- | -------- |
@@ -259,15 +261,15 @@ After adding an MCP server, add it to the allow list to avoid per-call approval 
 
 ## Plugins: Community Extensions
 
-Plugins package skills, hooks, and agents into installable units. The primary marketplace is `claude-code-plugins` from Anthropic's official repository.
+Plugins package skills, hooks, and agents into installable units. The official marketplace is `claude-plugins-official` from Anthropic's repository.
 
 ### Installing Plugins
 
 ```bash
 # Install from the official marketplace
-claude plugin install code-review@claude-code-plugins
-claude plugin install security-guidance@claude-code-plugins
-claude plugin install frontend-design@claude-code-plugins
+claude plugin install code-review@claude-plugins-official
+claude plugin install security-guidance@claude-plugins-official
+claude plugin install frontend-design@claude-plugins-official
 ```
 
 ### Worth Installing
@@ -275,16 +277,16 @@ claude plugin install frontend-design@claude-code-plugins
 | Plugin | What It Does |
 | ------ | ------------ |
 | **code-review** | Structured code review with quality metrics |
-| **security-guidance** | OWASP Top 10 security scanning |
+| **security-guidance** | Security best practices and vulnerability scanning |
 | **frontend-design** | High-quality UI component generation |
 
 ### Community Resources
 
 The plugin ecosystem is growing fast:
 
-- [ClaudeMarketplaces.com](https://claudemarketplaces.com/) — 4,200+ skills aggregated
-- [ClaudeSkills.info](https://claudeskills.info/) — 140+ free open-source skills
-- [awesome-claude-code-toolkit](https://github.com/rohitg00/awesome-claude-code-toolkit) — curated list of 176+ plugins
+- [ClaudeMarketplaces.com](https://claudemarketplaces.com/) — Skills aggregation directory
+- [ClaudeSkills.info](https://claudeskills.info/) — Free open-source skills collection
+- [awesome-claude-code-toolkit](https://github.com/rohitg00/awesome-claude-code-toolkit) — Curated plugin and tool list
 
 ## CLAUDE.md: The Guide Layer
 
@@ -292,7 +294,7 @@ CLAUDE.md is the most well-known configuration, but also the most misunderstood.
 
 ### Keep It Lean
 
-Boris Cherny's (Claude Code creator) CLAUDE.md is approximately 100 lines. Every line should pass this test: **"Would Claude make a mistake if I removed this?"** If not, delete it.
+The Claude Code team's shared CLAUDE.md (for the Claude Code project itself) is approximately 100 lines. Every line should pass this test: **"Would Claude make a mistake if I removed this?"** If not, delete it.
 
 The reasoning: the model's attention to instructions is finite. The more rules you pile into CLAUDE.md, the less reliably each individual rule gets followed. Overloading it with obvious rules wastes instruction capacity on things the model would do correctly anyway.
 
@@ -343,7 +345,7 @@ Context window management is the most underrated productivity skill. Quality deg
 | `/clear` | Switching to an unrelated task |
 | `/compact focus on API changes` | Context getting large — compress with preservation hints |
 | `/rewind` | Code went wrong — rollback conversation and file state |
-| `Shift+Tab` | Toggle Plan Mode for read-only analysis |
+| `Shift+Tab` | Cycle through modes: Normal -> Auto-Accept -> Plan Mode |
 | `Ctrl+S` | Stash current prompt, ask a quick question, then restore |
 | `Ctrl+B` | Send a long-running bash command to background |
 
@@ -359,7 +361,7 @@ Claude Code has extended thinking enabled by default. For complex architectural 
 
 ## Worktree: Parallel Development at Scale
 
-This is the **single biggest productivity lever** in Claude Code, according to its creator who routinely runs 10-15 parallel sessions.
+This is the **single biggest productivity lever** in Claude Code, according to its creator who routinely runs 10-15 parallel sessions across terminals, browser, and mobile.
 
 ### The Concept
 
@@ -445,9 +447,9 @@ Here is the complete `settings.json` structure with all layers configured:
     ]
   },
   "enabledPlugins": {
-    "frontend-design@claude-code-plugins": true,
-    "code-review@claude-code-plugins": true,
-    "security-guidance@claude-code-plugins": true
+    "frontend-design@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true
   },
   "outputStyle": "engineer-professional",
   "effortLevel": "high"
@@ -459,7 +461,7 @@ Here is the complete `settings.json` structure with all layers configured:
 1. **CLAUDE.md is advice (probabilistic), hooks are law (100%).** Put formatting, safety, and notifications in hooks.
 2. **The instruction budget is finite.** Keep CLAUDE.md lean. Every unnecessary line displaces a useful one.
 3. **Context management is a skill.** One session per objective. `/clear` between tasks. `/compact` with hints.
-4. **Worktree parallelism is the #1 lever.** Multiple Claude sessions on independent branches can 3-5x throughput.
+4. **Worktree parallelism is the #1 lever.** Multiple Claude sessions on independent branches can significantly multiply throughput.
 5. **Build a self-improving loop.** `lessons.md` turns every mistake into a permanent fix.
 6. **Defense in depth.** Deny rules + hooks + CLAUDE.md = three layers of protection with different enforcement levels.
 7. **MCP servers eliminate copy-paste.** Direct database queries, GitHub operations, and design file access inside the conversation.
@@ -474,6 +476,6 @@ The gap between a default Claude Code install and a configured one is not increm
 2. [Claude Code Official Documentation — MCP](https://docs.anthropic.com/en/docs/claude-code/mcp)
 3. [Claude Code Official Documentation — Skills](https://docs.anthropic.com/en/docs/claude-code/skills)
 4. [awesome-claude-code-toolkit](https://github.com/rohitg00/awesome-claude-code-toolkit) — Comprehensive tool collection
-5. [Claude Code Best Practices](https://github.com/shanraisshan/claude-code-best-practice) — 84 practical tips
+5. [Claude Code Best Practices](https://github.com/shanraisshan/claude-code-best-practice) — Practical tips collection
 6. [Writing a Good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)
 7. [Claude Code Creator's 100-Line Workflow](https://mindwiredai.com/2026/03/25/claude-code-creator-workflow-claudemd/)

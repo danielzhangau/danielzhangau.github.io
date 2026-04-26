@@ -5,7 +5,7 @@ pubDate: 2026-04-17
 tags: ["General"]
 ---
 
-Hi, I'm Daniel — an AI/ML engineer based in Brisbane, Australia. Over the past 4+ years I've been building production AI systems: computer vision pipelines for road and waste monitoring deployed across Australian councils, LLM-powered IoT analytics platforms, and more recently, domain-specific business chatbots.
+Hi, I'm Daniel — an AI/ML engineer based in Brisbane, Australia. Over the past 4+ years I've been building production AI systems: computer vision pipelines for road and waste monitoring deployed across Australian councils, an LLM-powered IoT monitoring platform, and more recently, researching domain-specific business chatbots.
 
 This blog is where I share what I learn along the way.
 

@@ -15,23 +15,23 @@ The "Big Three" — Anthropic, OpenAI, and Google — are now in a genuine three
 
 | Provider      | Model                               | Highlights                                                                           |
 | ------------- | ----------------------------------- | ------------------------------------------------------------------------------------ |
-| **Anthropic** | Claude Opus 4.6                     | Top-tier on Humanity's Last Exam (~50%), 128K output tokens, strongest natural prose |
-| **OpenAI**    | GPT-5.4 (Standard / Thinking / Pro) | Unified general-purpose + coding line, native computer use                           |
-| **Google**    | Gemini 3.1 Pro                      | Leads SWE-bench Verified (78.8%), GPQA Diamond (94.3%), native multimodal reasoning  |
-| **Meta**      | Llama 4 Scout                       | 10M context window, MoE architecture, open-weight                                    |
-| **DeepSeek**  | V4                                  | 1T parameters on Huawei Ascend chips, $0.28/M input tokens                           |
+| **Anthropic** | Claude Opus 4.6                     | Strong on HLE (53% with agentic tools), SWE-bench Verified (80.8%), 128K output tokens |
+| **OpenAI**    | GPT-5.4 (Standard / Thinking / Pro) | Unified general-purpose + coding line, native computer use                             |
+| **Google**    | Gemini 3.1 Pro                      | SWE-bench Verified (78.8%), GPQA Diamond (94.3%), native multimodal reasoning          |
+| **Meta**      | Llama 4 Scout                       | 10M context window, MoE architecture, open-weight                                      |
+| **DeepSeek**  | V4                                  | 1.6T parameters, competitive pricing, Ascend NPU inference support                     |
 
-The key takeaway: **no single model wins everything.** Claude excels at writing and instruction following, GPT-5.4 at tool use and computer interaction, Gemini at multimodal reasoning and code, and open models like Llama 4 and DeepSeek V4 now reach 90%+ of frontier performance at a fraction of the cost.
+The key takeaway: **no single model wins everything.** Claude excels at writing and instruction following, GPT-5.4 at tool use and computer interaction, Gemini at multimodal reasoning and code, and open models like Llama 4 and DeepSeek V4 are closing the gap at a fraction of the cost.
 
 ### Cost Collapse
 
-What cost $500/month in API calls last year can now be done for $50. DeepSeek V3.2 delivers roughly 90% of GPT-5.4 quality at 1/50th the price. This has profound implications for architecture decisions — you can now afford to run multi-model pipelines where different models handle different subtasks.
+API costs have dropped dramatically year-over-year, with open-source models like DeepSeek V3.2 offering competitive quality at a fraction of frontier model pricing. This has profound implications for architecture decisions — you can now afford to run multi-model pipelines where different models handle different subtasks.
 
 ### Benchmarks Worth Watching
 
-- **Humanity's Last Exam**: The hardest general knowledge benchmark. Top models jumped from 8.8% (2025) to over 50% in one year.
-- **SWE-bench Verified**: Real software engineering tasks. Gemini 3.1 Pro leads at 78.8%.
-- **ARC-AGI-2**: Novel reasoning under constraints. Still below 50% for all models, indicating fundamental reasoning gaps remain.
+- **Humanity's Last Exam**: The hardest general knowledge benchmark. Top models jumped from 8.8% (late 2024, o1 without tools) to over 50% with agentic tool setups, though without-tools scores remain in the 30-44% range.
+- **SWE-bench Verified**: Real software engineering tasks. Claude Opus 4.6 leads at 80.8%, with Gemini 3.1 Pro close at 78.8%.
+- **ARC-AGI-2**: Novel reasoning under constraints. Scores have improved significantly — Gemini 3.1 Pro reached 77.1% — but the benchmark continues to reveal gaps in abstract reasoning.
 
 ## 2. Agentic AI: From Chatbots to Autonomous Workers
 
@@ -99,11 +99,11 @@ LLM ↔ MCP Client ↔ MCP Server (tools, resources, prompts) ↔ External Syste
 - **Dynamic discovery**: Tools are discovered at runtime via `tools/list`, not hardcoded
 - **Stateful sessions**: Persistent connections reduce overhead
 - **Credential isolation**: Authentication handled at the server level, not in prompts
-- **40-60% lower token usage** in tool-heavy workflows (community benchmarks)
+- **Lower token overhead** in tool-heavy workflows through dynamic discovery and stateful sessions
 
 ### The Numbers
 
-By April 2026, MCP has reached 97 million monthly SDK downloads, 20,000+ servers, and 28% Fortune 500 adoption. Gartner projects 75% of API gateway vendors will have MCP features by end of 2026.
+By April 2026, MCP has reached 97 million monthly SDK downloads (per Anthropic) and thousands of community-built servers. Gartner projects 75% of API gateway vendors will have MCP features by end of 2026.
 
 ### When to Use Which?
 
@@ -153,23 +153,23 @@ Perhaps the most practically significant trend for 2026: AI is moving to the edg
 
 ### The SLM Revolution
 
-Small Language Models (500M-10B parameters) now deliver 80-90% of GPT-4 quality on focused tasks at 10-30x lower serving cost. The economic argument is compelling — annual hosting for a private SLM serving 10K daily queries costs $500-2,000/month vs. $5,000-50,000/month for equivalent LLM API usage.
+Small Language Models (500M-10B parameters) can approach frontier model quality on focused, domain-specific tasks at significantly lower serving cost. The economic argument is compelling — self-hosted SLMs for targeted workloads can cost a fraction of equivalent frontier model API usage, though exact savings vary widely by use case.
 
 ### Hardware Makes It Real
 
 The hardware has caught up. In 2026:
 
-- **Apple A19 Pro**: ~75 TOPS, runs 8B models at 20+ tokens/second
+- **Apple A19 Pro**: ~38 TOPS Neural Engine, runs 8B models at 20+ tokens/second (with GPU Neural Accelerators)
 - **Qualcomm Snapdragon X2**: 80 TOPS, SLMs run locally on laptops without GPUs
-- **Intel Core Ultra 300**: 45-60 TOPS, Phi-4 14B at 12-15 tok/s with quantization
+- **Intel Core Ultra 300**: ~50 TOPS NPU (180 TOPS platform total), growing SLM support
 
-Over 2 billion smartphones can now run local SLMs. This isn't theoretical — it's shipping.
+A growing number of modern smartphones with NPU hardware can run local SLMs, and on-device inference is shipping in production apps.
 
 ### Models Worth Knowing
 
 | Model                  | Parameters | Best For                                              |
 | ---------------------- | ---------- | ----------------------------------------------------- |
-| Microsoft Phi-3.5-Mini | 3.8B       | Reasoning on CPU, matches GPT-3.5 at 98% less compute |
+| Microsoft Phi-3.5-Mini | 3.8B       | Reasoning on CPU, approaches GPT-3.5 quality with far fewer parameters |
 | Google Gemma 2         | 9B         | Best quality-to-size ratio for cloud deployment       |
 | Mistral 7B             | 7B         | Most fine-tuning-friendly                             |
 | Meta Llama 3.2         | 1B-3B      | Mobile and edge deployment                            |
@@ -185,7 +185,7 @@ The winning pattern in 2026 isn't "edge vs cloud" — it's intelligent routing. 
 - **Domain-specific reasoning** → Fine-tuned mid-size model (cloud or on-prem)
 - **Complex multi-step reasoning** → Frontier model API (highest quality)
 
-This pattern reduces costs by 60-75% compared to routing everything through a frontier model, while maintaining quality where it matters.
+This pattern can significantly reduce costs compared to routing everything through a frontier model, while maintaining quality where it matters.
 
 ## 6. What This Means for AI Engineers
 
@@ -207,13 +207,13 @@ This pattern reduces costs by 60-75% compared to routing everything through a fr
 
 ### The Workforce Reality
 
-Employment among junior software developers (22-25) has declined nearly 20% since 2024, even as senior headcount grows. Amazon announced 16,000 corporate layoffs citing AI-driven automation. The uncomfortable truth: AI is compressing the junior-to-senior pipeline. The engineers who thrive will be those who can architect, evaluate, and operate AI systems — not just use them.
+Employment among junior software developers (22-25) has declined nearly 20% from the late 2022 peak (per Stanford Digital Economy Lab), even as senior headcount grows. Amazon announced 16,000 corporate layoffs, with AI-driven restructuring cited among multiple factors. The uncomfortable truth: AI is compressing the junior-to-senior pipeline. The engineers who thrive will be those who can architect, evaluate, and operate AI systems — not just use them.
 
 ## Closing Thoughts
 
-The spring 2026 AI landscape is simultaneously exciting and sobering. We have more capable models than ever, genuine agentic capabilities emerging, and a maturing infrastructure layer with MCP. But we also have legitimate bubble concerns, workforce disruption, and environmental costs of 30x compute growth since 2021.
+The spring 2026 AI landscape is simultaneously exciting and sobering. We have more capable models than ever, genuine agentic capabilities emerging, and a maturing infrastructure layer with MCP. But we also have legitimate bubble concerns, workforce disruption, and the environmental costs of rapidly escalating compute demands.
 
-As AI engineers, our job is to cut through the hype and build systems that actually work. That means understanding the tools deeply — knowing when a $0.28/M-token open-source model is the right choice over a frontier API, when function calling beats MCP (and vice versa), and when an "agentic" system is just an overcomplicated pipeline.
+As AI engineers, our job is to cut through the hype and build systems that actually work. That means understanding the tools deeply — knowing when a low-cost open-source model is the right choice over a frontier API, when function calling beats MCP (and vice versa), and when an "agentic" system is just an overcomplicated pipeline.
 
 The field is moving fast. The best strategy is to stay grounded in engineering fundamentals while continuously updating your mental model of what's possible. I hope this post serves as a useful snapshot of where we are.
 

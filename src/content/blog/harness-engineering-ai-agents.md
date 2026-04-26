@@ -15,13 +15,13 @@ tags:
 
 If 2025 was the year of the AI agent, 2026 is the year of the **harness**.
 
-The industry has learned a hard lesson: building an agent is the easy part. Making it reliable, cost-predictable, and safe in production is where the real engineering happens. According to IDC research, **88% of AI agent projects never reach production** — and that number has not improved as models have gotten more capable. The bottleneck is not the model. It is the absence of a production-grade harness.
+The industry has learned a hard lesson: building an agent is the easy part. Making it reliable, cost-predictable, and safe in production is where the real engineering happens. According to IDC research, **88% of AI proof-of-concept projects historically fail to reach production** — though more recent data shows improvement, with 46% of AI POCs now advancing to deployment. The bottleneck is not the model. It is the absence of a production-grade harness.
 
 This post explores **harness engineering** — the hottest emerging discipline in AI engineering — what it is, why it matters, how it works, and how to start implementing it today.
 
 ## What Is Harness Engineering?
 
-The term was popularized by Mitchell Hashimoto (co-creator of Terraform) in February 2026. He described a habit of engineering permanent fixes into the agent's environment every time it made a mistake — he called it "engineering the harness." Within weeks, [OpenAI](https://openai.com/index/harness-engineering/) published their take, and Martin Fowler published [a detailed analysis](https://martinfowler.com/articles/harness-engineering.html) exploring the concept in depth. The term had arrived.
+The term was popularized by Mitchell Hashimoto (co-founder of HashiCorp and creator of Terraform) in February 2026. He described a habit of engineering permanent fixes into the agent's environment every time it made a mistake — he called it "engineering the harness." Within weeks, [OpenAI](https://openai.com/index/harness-engineering/) published their take, and Birgitta Bockeler published [a detailed analysis](https://martinfowler.com/articles/harness-engineering.html) on martinfowler.com exploring the concept in depth. The term had arrived.
 
 The core equation:
 
@@ -45,15 +45,15 @@ These aren't competing approaches — they're a **progression**. Prompt engineer
 
 ## Why the Harness Matters More Than the Model
 
-The most compelling evidence: **LangChain improved their coding agent from 52.8% to 66.5% on Terminal Bench 2.0** — jumping from outside the Top 30 to **Top 5** — by changing nothing about the model. They only changed the harness. Same model. Different harness. Dramatically better results.
+The most compelling evidence: **LangChain improved their coding agent from 52.8% to 66.5% on Terminal Bench 2.0** — a massive ranking jump — by changing nothing about the model. They only changed the harness. Same model. Different harness. Dramatically better results.
 
 Their modifications were purely harness-level: self-verification loops, better context engineering, loop detection, and reasoning optimization.
 
-This validates the central thesis of harness engineering: **the moat is the harness, not the model**. OpenAI even shipped a Codex plugin inside Claude Code — a competitor's tool — because they understand that model interoperability is inevitable, but harness design is the defensible advantage.
+This validates the central thesis of harness engineering: **the moat is the harness, not the model**. OpenAI even shipped a Codex plugin inside Claude Code — a competitor's tool — underscoring that model interoperability is increasingly the norm, while harness design becomes the key differentiator.
 
 ## Core Architecture: Guides and Sensors
 
-Martin Fowler's [detailed article on harness engineering](https://martinfowler.com/articles/harness-engineering.html) introduces a cybernetic framework built on two control mechanisms:
+Birgitta Bockeler's [detailed article on harness engineering](https://martinfowler.com/articles/harness-engineering.html) (published on martinfowler.com) introduces a cybernetic framework built on two control mechanisms:
 
 ![Harness Engineering Architecture: Guides and Sensors](/img/blog/harness-guides-sensors.svg)
 
@@ -98,13 +98,13 @@ A production-grade harness has at least seven layers:
 6. **Isolation & Permission Layer** — Git worktrees, sandboxes, approval flows, credential scoping
 7. **Feedback Layer** — Production telemetry, customer signals, failure analysis feeding back into layers 1-3
 
-This is not theoretical. OpenAI's Codex team, Stripe's agent infrastructure, and Anthropic's multi-agent systems all implement variations of this architecture.
+This is a synthesis of patterns observed across production agent systems. OpenAI's Codex team, Stripe's agent infrastructure, and Anthropic's multi-agent systems all implement elements of this layered approach, though each with their own specific architecture.
 
 ## Real-World Case Studies
 
 ### OpenAI Codex: 1 Million Lines, Zero Human-Written
 
-A three-person team started with an empty repository in August 2025. For five months, they wrote no code themselves — every line was generated by Codex. The result: **1 million lines of production code** and **1,500 merged pull requests**.
+A team that started with three people (later growing to seven) began with an empty repository in August 2025. For five months, they wrote no code themselves — every line was generated by Codex. The result: **1 million lines of production code** and **1,500 merged pull requests**.
 
 Crucially, it did not work well at the start. Early productivity was low due to missing environment setup, weak tool integration, and poor recovery logic. Performance rose sharply **only as the harness was improved step by step**.
 
@@ -119,13 +119,13 @@ Their key harness decisions:
 
 Microsoft's Azure SRE Agent has handled **35,000+ production incidents** autonomously, reducing Azure App Service time-to-mitigation from **40.5 hours to 3 minutes**. The harness integrates MCP tools, telemetry, code repositories, and incident management platforms into a unified system with human-in-the-loop governance.
 
-This is the most data-backed production harness case study published in 2026.
+This is one of the most data-backed production harness case studies published to date.
 
 ### Anthropic's Multi-Agent Harness
 
 Anthropic described a harness where a **Planner** expands a short prompt into a full product spec, a **Generator** implements features in sprints with a "sprint contract," and an **Evaluator** tests the application using Playwright like a real user.
 
-A solo agent produced a broken game. The three-agent harness produced a **fully playable game** with AI-assisted level generation and sound effects. Same model. Different harness. Dramatically different outcome — the pattern keeps repeating.
+A solo agent produced a broken game. The three-agent harness produced a **working game** with an AI-assisted sprite generator and level designer. Same model. Different harness. Dramatically different outcome — the pattern keeps repeating.
 
 ## The Harness Engineer Role
 
