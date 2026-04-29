@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="340" rx="12" fill="#f8fafc" />
+
+  <!-- Title -->
+  <text x="360" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">claude-ds Architecture</text>
+  <text x="360" y="48" text-anchor="middle" font-size="11" fill="#64748b">Default Claude Code vs DeepSeek backend</text>
+
+  <!-- === Top Row: Default Claude Code === -->
+  <text x="40" y="82" font-size="12" font-weight="600" fill="#64748b">Default</text>
+
+  <!-- User -->
+  <rect x="100" y="68" width="100" height="44" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="150" y="86" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">User</text>
+  <text x="150" y="100" text-anchor="middle" font-size="9" fill="#1e3a8a">Terminal</text>
+
+  <!-- Arrow -->
+  <line x1="200" y1="90" x2="240" y2="90" stroke="#94a3b8" stroke-width="1.5" />
+  <polygon points="240,86 250,90 240,94" fill="#94a3b8" />
+
+  <!-- Claude Code -->
+  <rect x="250" y="68" width="120" height="44" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="310" y="86" text-anchor="middle" font-size="11" font-weight="600" fill="#4338ca">Claude Code</text>
+  <text x="310" y="100" text-anchor="middle" font-size="9" fill="#3730a3">CLI Agent Runtime</text>
+
+  <!-- Arrow -->
+  <line x1="370" y1="90" x2="440" y2="90" stroke="#94a3b8" stroke-width="1.5" />
+  <polygon points="440,86 450,90 440,94" fill="#94a3b8" />
+
+  <!-- Anthropic API -->
+  <rect x="450" y="68" width="140" height="44" rx="8" fill="#fce7f3" stroke="#ec4899" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="520" y="86" text-anchor="middle" font-size="11" font-weight="600" fill="#be185d">Anthropic API</text>
+  <text x="520" y="100" text-anchor="middle" font-size="9" fill="#9d174d">Claude Opus  $25/M</text>
+
+  <!-- === Divider === -->
+  <line x1="40" y1="138" x2="680" y2="138" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="6,4" />
+
+  <!-- === Bottom Row: claude-ds === -->
+  <text x="40" y="178" font-size="12" font-weight="600" fill="#16a34a">claude-ds</text>
+
+  <!-- User -->
+  <rect x="100" y="164" width="100" height="44" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="150" y="182" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">User</text>
+  <text x="150" y="196" text-anchor="middle" font-size="9" fill="#1e3a8a">Terminal</text>
+
+  <!-- Arrow -->
+  <line x1="200" y1="186" x2="240" y2="186" stroke="#94a3b8" stroke-width="1.5" />
+  <polygon points="240,182 250,186 240,190" fill="#94a3b8" />
+
+  <!-- claude-ds wrapper -->
+  <rect x="250" y="156" width="120" height="60" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="310" y="176" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">claude-ds</text>
+  <text x="310" y="192" text-anchor="middle" font-size="9" fill="#166534">Env vars + claude</text>
+  <text x="310" y="205" text-anchor="middle" font-size="8" fill="#166534" opacity="0.7">ANTHROPIC_BASE_URL</text>
+
+  <!-- Arrow -->
+  <line x1="370" y1="186" x2="440" y2="186" stroke="#94a3b8" stroke-width="1.5" />
+  <polygon points="440,182 450,186 440,190" fill="#94a3b8" />
+
+  <!-- DeepSeek API -->
+  <rect x="450" y="164" width="140" height="44" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" filter="url(#shadow)" />
+  <text x="520" y="182" text-anchor="middle" font-size="11" font-weight="600" fill="#15803d">DeepSeek API</text>
+  <text x="520" y="196" text-anchor="middle" font-size="9" fill="#166534">V4-Pro  $3.48/M</text>
+
+  <!-- === Model Tier Routing === -->
+  <text x="360" y="250" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">Model Tier Routing (Pro Mode)</text>
+
+  <!-- Main conversation -->
+  <rect x="60" y="264" width="180" height="36" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1" filter="url(#shadow)" />
+  <text x="150" y="278" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">Main Conversation</text>
+  <text x="150" y="292" text-anchor="middle" font-size="9" fill="#1e3a8a">V4-Pro (1M context)</text>
+
+  <!-- Subagents -->
+  <rect x="270" y="264" width="180" height="36" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1" filter="url(#shadow)" />
+  <text x="360" y="278" text-anchor="middle" font-size="10" font-weight="600" fill="#854d0e">Subagents</text>
+  <text x="360" y="292" text-anchor="middle" font-size="9" fill="#713f12">V4-Flash</text>
+
+  <!-- Internal tasks -->
+  <rect x="480" y="264" width="180" height="36" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1" filter="url(#shadow)" />
+  <text x="570" y="278" text-anchor="middle" font-size="10" font-weight="600" fill="#854d0e">Internal Tasks</text>
+  <text x="570" y="292" text-anchor="middle" font-size="9" fill="#713f12">V4-Flash</text>
+
+  <!-- Arrow labels on top row -->
+  <text x="220" y="82" text-anchor="middle" font-size="8" fill="#94a3b8">runs</text>
+  <text x="405" y="82" text-anchor="middle" font-size="8" fill="#94a3b8">API calls</text>
+
+  <!-- Arrow labels on bottom row -->
+  <text x="220" y="178" text-anchor="middle" font-size="8" fill="#94a3b8">runs</text>
+  <text x="405" y="178" text-anchor="middle" font-size="8" fill="#94a3b8">redirected</text>
+</svg>

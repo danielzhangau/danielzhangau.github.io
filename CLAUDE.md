@@ -128,6 +128,14 @@ Config: `.github/workflows/deploy.yml`
 
 **Path aliases:** `@/*` → `src/*` (tsconfig.json)
 
+**Blog post publishing checklist (MANDATORY before any commit of blog content):**
+- Verify every factual claim (numbers, dates, pricing, specs) against primary sources — use WebSearch if unsure
+- Remove or qualify any statement that is a guess, extrapolation, or unverified inference
+- Check all code snippets against actual source files — they must match or be clearly marked as simplified
+- Confirm no outdated information (expired promotions, deprecated APIs, old version numbers)
+- Verify all URLs are reachable
+- Run `npm run build` to confirm the post renders without errors
+
 ## Contact Info (for site content)
 
 - Email: ddaniel.zhang0413@gmail.com
