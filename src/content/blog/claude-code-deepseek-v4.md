@@ -96,6 +96,8 @@ An MCP server that routes image analysis to any OpenAI-compatible vision model (
 
 This gives the text-only model two tools: `see_image` (analyze a file on disk) and `see_clipboard` (analyze the current clipboard contents).
 
+Importantly, this config is stored in a standalone file (`~/.claude/claude-ds-vision-mcp.json`) and loaded only by the `claude-ds` shell functions via `--mcp-config`. This ensures native Claude never sees these tools and continues using its built-in multimodal vision.
+
 ### Vision Guard Hook
 
 The MCP server alone is not enough — you need to intercept image reads deterministically. A Claude Code `PreToolUse` hook does this:
@@ -127,7 +129,7 @@ exit 0
 
 Exit code 2 tells Claude Code to block the tool call and show the message to the model. The model then (usually) calls `see_image` instead.
 
-I say "usually" because this is where model quality matters. Claude Opus follows hook redirect instructions reliably. DeepSeek V4 sometimes ignores the redirect and says "I cannot view images" instead. Adding few-shot examples to `CLAUDE.md` improved compliance significantly, but it is not 100%.
+I say "usually" because this is where model quality matters. Claude Opus follows hook redirect instructions reliably. DeepSeek V4 sometimes ignores the redirect and says "I cannot view images" instead. In practice, compliance is high but not 100%.
 
 **This is the fundamental tradeoff**: hooks provide deterministic interception, but model behavior after interception is probabilistic. Stronger models follow redirect instructions more reliably.
 
@@ -193,7 +195,7 @@ claude-ds          # V4-Pro mode
 claude-ds-flash    # V4-Flash mode
 ```
 
-The installer handles everything: shell functions, Vision MCP setup, hook configuration, and `CLAUDE.md` instructions. You need a [DeepSeek API key](https://platform.deepseek.com/api_keys) and optionally a vision API key for image support.
+The installer handles everything: shell functions, Vision MCP setup, and hook configuration. You need a [DeepSeek API key](https://platform.deepseek.com/api_keys) and optionally a vision API key for image support.
 
 ## What This Means for AI Engineering
 
