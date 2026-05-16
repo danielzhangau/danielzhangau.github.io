@@ -184,16 +184,34 @@ sudo ~/scripts/vpn-split-tunnel.sh install    # One-time setup
 
 ## Results
 
-Tested on the same network, same VPN connection, before and after:
+Tested on the same network, same VPN connection. The gains depend on which category a site falls into:
+
+**Sites with regional IPs (route splitting only):**
 
 | Target | Before | After | Improvement |
 |--------|--------|-------|-------------|
-| Local website (domestic IP) | 31ms, 0% loss | 29ms, 0% loss | Marginal (already direct via IP routing) |
-| Documentation site (has nearby CDN) | 312ms, 33% loss | **36ms, 0% loss** | **8.7x faster** (DNS returned nearby CDN node) |
-| LinkedIn | 267ms, 20% loss | **28ms, 0% loss** | **9.5x faster** (DNS returned regional CDN node) |
-| YouTube | 240ms, 66% loss | 227ms, 0% loss | Same latency (must use VPN), **0% packet loss** |
+| Baidu | 31ms, 0% loss | **29ms, 0% loss** | Marginal -- already a regional IP, route splitting bypasses VPN |
 
-The LinkedIn result is the most interesting. The VPN DNS was returning a server IP on a different continent. Switching to a geographically appropriate DNS returned a nearby CDN node, which our route splitting then sent **direct** instead of through the VPN. Same website, 9.5x faster, because DNS resolution location determines CDN node selection.
+These sites benefit from route splitting alone. Their IPs are in the regional list, so traffic goes direct regardless of DNS.
+
+**Sites with CDN that responds to DNS location (route + DNS splitting):**
+
+| Target | Before | After | Improvement |
+|--------|--------|-------|-------------|
+| CDN-backed docs site | 312ms, 33% loss | **36ms, 0% loss** | **8.7x faster** |
+
+This is the sweet spot. The VPN DNS was returning a CDN node on another continent (312ms). Local DNS returned a nearby CDN node instead. That IP happened to fall in the regional IP ranges, so route splitting sent it direct. Two optimizations compounding: better DNS resolution + direct routing.
+
+**Sites that must stay on VPN DNS (no improvement):**
+
+| Target | Before | After | Why no change |
+|--------|--------|-------|---------------|
+| YouTube | 240ms | ~227ms | Requires VPN DNS for correct resolution |
+| LinkedIn | 267ms | ~300ms | Requires VPN DNS to avoid geo-redirect to localized version |
+
+Some services must stay on VPN DNS -- they're listed in `vpn-domains.txt` and routed through the VPN tunnel. These can't benefit from CDN optimization. This is a deliberate trade-off: correctness over speed.
+
+**The takeaway:** the biggest wins come from CDN-backed sites that aren't in your VPN DNS exception list. Many content sites, documentation portals, and media platforms use CDNs that respond to DNS geolocation -- and there are a lot of them.
 
 ## File Structure
 
@@ -207,22 +225,12 @@ The LinkedIn result is the most interesting. The VPN DNS was returning a server 
     vpn-domains.txt            # Domains requiring VPN DNS (~25 entries)
 ```
 
-## Trade-offs and Limitations
+## Limitations
 
-**What this solves:**
-- Local/regional websites load at native speed regardless of VPN state
-- CDN-enabled international sites (with regional nodes) get optimal routing
-- Fully automatic -- no manual intervention after `install`
-
-**What this doesn't solve:**
-- VPN tunnel quality. If your VPN has 250ms latency to its server, sites without regional CDN nodes will still be 250ms. This is physics, not software.
-- Enterprise DNS requirements. If your organization uses internal domains that only resolve on the VPN DNS, you need to add them to `vpn-domains.txt`. The system defaults to "everything uses local DNS unless explicitly listed."
-
-**Why not Clash/Surge?**
-These are proxy clients designed to manage your own tunnel. If you're on a VPN you can't replace, they'll compete for the same routing table and virtual interfaces. The route-table approach operates at a lower layer and coexists cleanly with any VPN client.
-
-**The right fix:**
-Ask your IT department to enable server-side split tunneling. One configuration change on the VPN server eliminates the need for all of this. But if that's not happening soon, this is a robust Plan B.
+- **VPN tunnel quality is unchanged.** Sites that must use VPN DNS still go through the tunnel. This optimizes what *can* go direct, not what *must* stay on VPN.
+- **Internal domains need manual listing.** If your organization has internal domains that only resolve on VPN DNS, add them to `vpn-domains.txt`.
+- **Why not Clash/Surge?** They're proxy clients that compete for the routing table. This operates at a lower layer and coexists with any VPN client.
+- **The proper fix** is server-side split tunneling -- one config change on the VPN server. This is a client-side Plan B for when that's not an option.
 
 ## Commands Reference
 
