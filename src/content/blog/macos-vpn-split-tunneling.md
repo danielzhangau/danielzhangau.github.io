@@ -66,18 +66,18 @@ Solving all three problems requires a layered approach.
                             |
 +----------+    +-----------+------------+    +----------+
 |  Local   | -> | macOS DNS Resolution   | <- | Specific |
-|  Sites   |    +------------+-----------+    | Domains  |
-+----------+                 |                +----------+
-      |              Default: local DNS               |
-      |              (fast, nearby)                    |
-      v                                               v
-+-----+------+                            +--------+-------+
-| Wi-Fi GW   |                            | VPN Tunnel     |
-| (direct)   |                            | (encrypted)    |
-+-----+------+                            +--------+-------+
-      |                                            |
-  Regional IPs                                Everything
-  ~7,400 CIDR                                    else
+|  Sites   |    +-----------+--—---------+    | Domains  |
++----------+                |                 +----------+
+      |              Default: local DNS             |
+      |              (fast, nearby)                 |
+      v                                             v
++-----+------+                             +--------+-------+
+| Wi-Fi GW   |                             | VPN Tunnel     |
+| (direct)   |                             | (encrypted)    |
++-----+------+                             +--------+-------+
+      |                                             |
+  Regional IPs                                 Everything
+  ~7,400 CIDR                                     else
 ```
 
 **Layer 1 -- Route Splitting:** Download regional IP ranges from [APNIC](https://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest) or a [pre-compiled list](https://github.com/17mon/china_ip_list) (~7,400 CIDR blocks) and add routes pointing them to the Wi-Fi gateway, bypassing the VPN tunnel.
