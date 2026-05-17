@@ -1,6 +1,6 @@
 ---
 title: "macOS VPN Split Tunneling: From 267ms to 28ms Without Touching Your VPN Config"
-description: "How I built a client-side split tunneling system for macOS that routes local traffic direct and keeps international traffic on VPN. Covers IP-based route splitting, DNS override, per-domain resolver configuration, and a launchd auto-watch daemon."
+description: "How I built a client-side split tunneling system for macOS that routes local traffic direct and keeps international traffic on VPN. Covers IP-based route splitting, reversed DNS splitting (clean DNS via VPN tunnel + local DNS for CDN optimization), and a launchd auto-watch daemon."
 pubDate: 2026-05-17
 tags:
   [
@@ -18,8 +18,8 @@ VPNs love to route **everything** through their tunnel. Every DNS query, every H
 This post documents a client-side split tunneling system I built for macOS that:
 
 1. **Routes local/regional IPs directly** via the Wi-Fi gateway (~7,400 CIDR ranges)
-2. **Overrides VPN DNS** with a faster, geographically closer DNS for CDN optimization
-3. **Preserves VPN DNS for specific domains** via macOS `/etc/resolver/`
+2. **Uses clean DNS via VPN tunnel** as the system default (no pollution, no hijacking)
+3. **Optimizes regional domains with local DNS** via macOS `/etc/resolver/` for CDN performance
 4. **Runs automatically** via a launchd daemon that detects VPN connect/reconnect
 
 The result: a CDN-backed website went from 267ms/20% packet loss to **28ms/0% loss**. Same VPN, same network, no IT ticket required.
@@ -48,41 +48,52 @@ The VPN pushes its own DNS servers as the system's primary resolver. This means:
 
 This is the sneaky one. Even if you fix the routes, DNS misconfiguration silently degrades performance by returning geographically suboptimal server IPs.
 
-### 3. DNS Inconsistency
+### 3. DNS Pollution
 
-If you naively switch to a local public DNS to fix problem #2, some domains may return different IPs than expected -- certain services detect your region via the DNS resolver location and may redirect you to a localized version, or return IPs that don't serve the content you need.
+This is the problem that killed my first architecture. If you naively override the VPN DNS with a local public DNS (like many split tunneling guides suggest), you may walk straight into DNS pollution: ISPs or network firewalls intercepting DNS queries and returning **fake IP addresses** for certain domains.
 
-Solving all three problems requires a layered approach.
-
-## Architecture: Two-Layer Split
+My first attempt used a local public DNS as the default, with a whitelist of ~30 domains that needed VPN DNS. The failure mode was catastrophic: **any domain not on the whitelist that was subject to DNS pollution became completely unreachable.** And you can't enumerate every polluted domain -- the list is unbounded and changes constantly.
 
 ```
-                   +------------------+
-                   |  VPN DNS         |
-                   |  (pushed by VPN) |
-                   +--------+---------+
-                            |
-                   /etc/resolver/*    <-- specific domains that need VPN DNS
-                            |
-+----------+    +-----------+------------+    +----------+
-|  Local   | -> | macOS DNS Resolution   | <- | Specific |
-|  Sites   |    +-----------+--—---------+    | Domains  |
-+----------+                |                 +----------+
-      |              Default: local DNS             |
-      |              (fast, nearby)                 |
-      v                                             v
-+-----+------+                             +--------+-------+
-| Wi-Fi GW   |                             | VPN Tunnel     |
-| (direct)   |                             | (encrypted)    |
-+-----+------+                             +--------+-------+
-      |                                             |
-  Regional IPs                                 Everything
-  ~7,400 CIDR                                     else
+# What DNS pollution looks like:
+$ nslookup example.com <local-dns>
+Name:    example.com
+Address: 192.0.0.88          <-- fake IP, not the real server
+
+$ nslookup example.com 8.8.8.8   # via VPN tunnel
+Name:    example.com
+Address: 142.251.32.174      <-- real IP
 ```
 
-**Layer 1 -- Route Splitting:** Download regional IP ranges from [APNIC](https://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest) or a [pre-compiled list](https://github.com/17mon/china_ip_list) (~7,400 CIDR blocks) and add routes pointing them to the Wi-Fi gateway, bypassing the VPN tunnel.
+Solving all three problems requires a layered approach -- and crucially, the right **direction** for DNS splitting.
 
-**Layer 2 -- DNS Splitting:** Override the VPN's DNS with a faster local DNS for CDN-optimized resolution, then create `/etc/resolver/` entries for specific domains that must use VPN DNS.
+## Architecture: Reversed DNS Split
+
+The key insight: **the default DNS must be clean (unpolluted), and regional optimization is the exception, not the rule.**
+
+If you miss a domain in the optimization list, the penalty is slightly suboptimal CDN routing (acceptable). In my first approach, missing a domain in the VPN DNS whitelist meant that domain was completely broken (unacceptable). Reversing the direction eliminates the catastrophic failure mode.
+
+```
+                     +------------------+
+                     |  macOS Resolver  |
+                     +--------+---------+
+                              |
+              +---------------+----------------+
+              |                                |
+     /etc/resolver/ match?               No match (default)
+              |                                |
+              v                                v
+      Local DNS                       Clean DNS (e.g. Google 8.8.8.8)
+      (direct, fast CDN)             (via VPN tunnel, unpolluted)
+              |                                |
+    e.g. regional sites              e.g. international sites
+         country-code TLD                 any unlisted domain
+         major local CDNs
+```
+
+**Layer 1 -- Route Splitting:** Download regional IP ranges from [APNIC](https://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest) (~7,400 CIDR blocks for a typical country allocation) and add routes pointing them to the Wi-Fi gateway, bypassing the VPN tunnel.
+
+**Layer 2 -- DNS Splitting (reversed):** Override the VPN's DNS with a clean DNS like Google (8.8.8.8) that's routed through the VPN tunnel -- queries are encrypted inside the tunnel, immune to local DNS pollution. Then create `/etc/resolver/` entries for regional domains pointing to a fast local DNS for CDN optimization.
 
 ## Implementation
 
@@ -90,7 +101,7 @@ The entire system is a single Bash script (`vpn-split-tunnel.sh`) with six comma
 
 ### Route Splitting
 
-The IP list is sourced from GitHub (pre-compiled CIDR format, ~7,400 entries) with APNIC as fallback. Routes are added in parallel using `xargs -P`:
+The IP list is sourced from APNIC (parsed to CIDR format, ~7,400 entries for a typical country). Routes are added in parallel using `xargs -P`:
 
 ```bash
 PARALLEL_JOBS=50
@@ -107,11 +118,11 @@ Sequential `route` calls take ~80 seconds for 7,400 entries. With 50 parallel wo
 
 The IP list auto-updates every 7 days. A `custom-direct.txt` file allows adding specific IPs that should always bypass VPN.
 
-### DNS Splitting
+### DNS Splitting (Reversed)
 
-This is the part that made the biggest difference. The VPN pushes DNS via macOS's `scutil` configuration system. Simply calling `networksetup -setdnsservers` doesn't work -- the VPN's DNS takes priority in the resolver chain.
+This is the part that made the biggest difference -- and the part I had to redesign.
 
-**Step 1:** Find and overwrite the VPN's DNS key in `scutil`:
+**Step 1:** Find and overwrite the VPN's DNS key in `scutil` with a clean DNS:
 
 ```bash
 # Find VPN DNS service key (the one bound to the VPN interface)
@@ -121,26 +132,40 @@ quit
 EOF
 )
 
-# Override it with a faster DNS
+# Override with clean DNS (routed through VPN tunnel, immune to pollution)
 scutil <<-EOF
 d.init
-d.add ServerAddresses * <LOCAL_DNS_PRIMARY> <LOCAL_DNS_SECONDARY>
+d.add ServerAddresses * <CLEAN_DNS_PRIMARY> <CLEAN_DNS_SECONDARY>
 set ${vpn_dns_key}
 quit
 EOF
 ```
 
-**Step 2:** Create per-domain resolver overrides for domains that need VPN DNS:
+Since the clean DNS IP (e.g. 8.8.8.8) is not a regional IP, it's **not** in the route-splitting bypass list. Queries to it travel through the VPN tunnel, encrypted end-to-end, arriving at Google's DNS servers unpolluted. This is the key trick: the VPN tunnel that slows down regular traffic becomes an asset for DNS -- it shields queries from local interference.
+
+**Step 2:** Create per-domain resolver overrides for regional domains:
 
 ```bash
-# /etc/resolver/example.com
-nameserver <VPN_DNS_PRIMARY>
-nameserver <VPN_DNS_SECONDARY>
+# /etc/resolver/<country-code-tld>  -- covers the entire ccTLD
+nameserver <LOCAL_DNS_PRIMARY>
+nameserver <LOCAL_DNS_SECONDARY>
+
+# /etc/resolver/example-regional-site.com  -- major regional .com domain
+nameserver <LOCAL_DNS_PRIMARY>
+nameserver <LOCAL_DNS_SECONDARY>
 ```
 
-macOS reads `/etc/resolver/<domain>` files and uses the specified nameservers for matching domains (including subdomains). This is a native macOS mechanism -- no third-party DNS proxy needed.
+macOS reads `/etc/resolver/<domain>` files and uses the specified nameservers for matching domains (including subdomains). A country-code TLD entry (e.g., `/etc/resolver/de` for `.de` domains) alone covers thousands of regional domains. A curated list of ~100 major non-ccTLD regional domains handles the rest.
 
-The domain list (`vpn-domains.txt`) is small and stable (~25 entries): domains that must be resolved through VPN DNS for correct routing or content access. These rarely change.
+The script tracks which resolver entries it creates in a marker file for exact cleanup on `stop` -- no stale entries left behind.
+
+**Why this direction is better:**
+
+| | Old approach (local DNS default) | New approach (clean DNS default) |
+|---|---|---|
+| Missing from list | Domain is unreachable (DNS pollution) | Domain works, slightly slower CDN |
+| Failure severity | **Catastrophic** | **Graceful degradation** |
+| List maintenance | Must track every polluted domain (unbounded) | Only need major regional domains (~100) |
 
 ### Auto-Watch Daemon
 
@@ -190,7 +215,7 @@ Tested on the same network, same VPN connection. The gains depend on which categ
 
 | Target | Before | After | Improvement |
 |--------|--------|-------|-------------|
-| Baidu | 31ms, 0% loss | **29ms, 0% loss** | Marginal -- already a regional IP, route splitting bypasses VPN |
+| Popular local search engine | 31ms, 0% loss | **29ms, 0% loss** | Marginal -- already a regional IP, route splitting bypasses VPN |
 
 These sites benefit from route splitting alone. Their IPs are in the regional list, so traffic goes direct regardless of DNS.
 
@@ -202,16 +227,16 @@ These sites benefit from route splitting alone. Their IPs are in the regional li
 
 This is the sweet spot. The VPN DNS was returning a CDN node on another continent (312ms). Local DNS returned a nearby CDN node instead. That IP happened to fall in the regional IP ranges, so route splitting sent it direct. Two optimizations compounding: better DNS resolution + direct routing.
 
-**Sites that must stay on VPN DNS (no improvement):**
+**International sites (clean DNS via VPN tunnel):**
 
-| Target | Before | After | Why no change |
-|--------|--------|-------|---------------|
-| YouTube | 240ms | ~227ms | Requires VPN DNS for correct resolution |
-| LinkedIn | 267ms | ~300ms | Requires VPN DNS to avoid geo-redirect to localized version |
+| Target | Before (old arch) | After (new arch) | Why |
+|--------|--------|-------|-------------|
+| YouTube | Broken (DNS pollution) | ~230ms, working | Clean DNS resolves correctly, traffic via VPN |
+| LinkedIn | Broken (DNS pollution) | ~280ms, working | Clean DNS resolves correctly, traffic via VPN |
 
-Some services must stay on VPN DNS -- they're listed in `vpn-domains.txt` and routed through the VPN tunnel. These can't benefit from CDN optimization. This is a deliberate trade-off: correctness over speed.
+In the old architecture with local DNS as default, these sites would silently break whenever they weren't in the VPN DNS whitelist. Now they just work -- the default clean DNS handles them correctly via the VPN tunnel.
 
-**The takeaway:** the biggest wins come from CDN-backed sites that aren't in your VPN DNS exception list. Many content sites, documentation portals, and media platforms use CDNs that respond to DNS geolocation -- and there are a lot of them.
+**The takeaway:** the biggest wins come from CDN-backed sites that are in your region. The architecture change from V1 to V2 eliminated an entire class of failures (DNS pollution) at the cost of slightly slower DNS lookups for regional sites not in the optimization list -- a trade-off that's clearly worth it.
 
 ## File Structure
 
@@ -221,14 +246,15 @@ Some services must stay on VPN DNS -- they're listed in `vpn-domains.txt` and ro
   README.md
   data/
     regional-ip-list.txt       # ~7,400 regional CIDR ranges (auto-updated weekly)
+    regional-domains.txt       # Regional domains for local DNS CDN optimization (~100)
     custom-direct.txt          # User-defined IPs to bypass VPN
-    vpn-domains.txt            # Domains requiring VPN DNS (~25 entries)
 ```
 
 ## Limitations
 
-- **VPN tunnel quality is unchanged.** Sites that must use VPN DNS still go through the tunnel. This optimizes what *can* go direct, not what *must* stay on VPN.
-- **Internal domains need manual listing.** If your organization has internal domains that only resolve on VPN DNS, add them to `vpn-domains.txt`.
+- **VPN tunnel quality is unchanged.** International sites still go through the tunnel. This optimizes what *can* go direct, not what *must* stay on VPN.
+- **Regional domain list is best-effort.** Unlisted regional domains still work (via clean DNS through VPN), just without CDN optimization. The ccTLD entry covers the majority automatically.
+- **Clean DNS adds a hop.** DNS queries for non-regional domains go through the VPN tunnel to reach Google DNS -- about 50-100ms extra per lookup compared to a local DNS. This is cached after the first query and is a worthwhile trade-off for correctness.
 - **Why not Clash/Surge?** They're proxy clients that compete for the routing table. This operates at a lower layer and coexists with any VPN client.
 - **The proper fix** is server-side split tunneling -- one config change on the VPN server. This is a client-side Plan B for when that's not an option.
 
@@ -250,11 +276,11 @@ Status output:
 Wi-Fi gateway:  192.168.x.1
 VPN interface:  ipsec0 (active)
 Split tunnel:   ACTIVE (gateway: 192.168.x.1)
-DNS primary:    <LOCAL_DNS>
-VPN DNS domains: 25
+DNS primary:    8.8.8.8
+Regional DNS:   82 domains -> local DNS
 Regional IPs:   7456 ranges
 Custom direct:  3 entries
 Routes via GW:  ~7464
 ```
 
-The approach is generic -- while I built this for routing domestic traffic in a specific region, the same architecture works anywhere you have a VPN that routes everything through a distant server. Swap the IP list for your region's APNIC allocation, point DNS to your nearest public resolver, and the rest stays the same.
+The approach is generic -- while I built this for routing domestic traffic in a specific region, the same architecture works anywhere you have a VPN that routes everything through a distant server. Swap the IP list for your region's APNIC allocation, point the clean DNS to any reliable public resolver reachable through your VPN tunnel, and the rest stays the same.
