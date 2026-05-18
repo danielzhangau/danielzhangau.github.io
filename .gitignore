@@ -23,3 +23,8 @@ Thumbs.db
 
 # Logs
 npm-debug.log*
+
+# AI agent configurations (local only)
+.claude/
+.codex/
+AGENTS.md

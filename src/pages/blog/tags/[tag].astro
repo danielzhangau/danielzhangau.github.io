@@ -1,0 +1,86 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { formatDate } from "@/utils/format";
+import { tagToSlug } from "@/utils/slug";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).filter((post) => !post.data.draft);
+  const tagMap = new Map<string, typeof posts>();
+
+  for (const post of posts) {
+    for (const tag of post.data.tags ?? []) {
+      const slug = tagToSlug(tag);
+      if (!tagMap.has(slug)) tagMap.set(slug, []);
+      tagMap.get(slug)!.push(post);
+    }
+  }
+
+  return Array.from(tagMap.entries()).map(([slug, postsForTag]) => {
+    const original = postsForTag[0].data.tags!.find((t) => tagToSlug(t) === slug)!;
+    const sorted = [...postsForTag].sort(
+      (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    );
+    return {
+      params: { tag: slug },
+      props: { tag: original, posts: sorted },
+    };
+  });
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`Posts tagged "${tag}" | Bosheng Zhang`}
+  description={`All blog posts tagged ${tag} by Bosheng (Daniel) Zhang.`}
+>
+  <div class="pt-24 pb-20 bg-white dark:bg-slate-950 min-h-screen">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-1 text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 mb-6 transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7"></path>
+        </svg>
+        All Posts
+      </a>
+
+      <div class="mb-12">
+        <p
+          class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2"
+        >
+          Tag
+        </p>
+        <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-3">
+          {tag}
+        </h1>
+        <p class="text-base text-slate-500 dark:text-slate-400">
+          {posts.length}
+          {posts.length === 1 ? "post" : "posts"}
+        </p>
+      </div>
+
+      <div class="space-y-8">
+        {
+          posts.map((post) => (
+            <article>
+              <a href={`/blog/${post.id}`} class="group block">
+                <time class="text-sm text-slate-400 dark:text-slate-500">
+                  {formatDate(post.data.pubDate)}
+                </time>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white mt-1 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {post.data.description}
+                </p>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

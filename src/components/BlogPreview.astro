@@ -1,17 +1,11 @@
 ---
 import { getCollection } from "astro:content";
+import { formatDateShort as formatDate } from "@/utils/format";
 
 const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
-
-function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
 ---
 
 {

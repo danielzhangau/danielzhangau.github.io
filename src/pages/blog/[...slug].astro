@@ -1,28 +1,39 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
+import { formatDate, estimateReadingTime } from "@/utils/format";
+import { tagToSlug } from "@/utils/slug";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
+  const posts = (await getCollection("blog"))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return posts.map((post, index) => ({
     params: { slug: post.id },
-    props: post,
+    props: {
+      post,
+      prev: index < posts.length - 1 ? posts[index + 1] : null,
+      next: index > 0 ? posts[index - 1] : null,
+    },
   }));
 }
 
-const post = Astro.props;
-const { Content } = await render(post);
-
-function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
+const { post, prev, next } = Astro.props;
+const { Content, headings } = await render(post);
+const readingTime = estimateReadingTime(post.body ?? "");
+const tocItems = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 ---
 
-<BaseLayout title={`${post.data.title} | Bosheng Zhang`} description={post.data.description}>
+<BaseLayout
+  title={`${post.data.title} | Bosheng Zhang`}
+  description={post.data.description}
+  article={{
+    pubDate: post.data.pubDate,
+    updatedDate: post.data.updatedDate,
+    tags: post.data.tags,
+  }}
+>
   <article class="pt-24 pb-20 bg-white dark:bg-slate-950">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
       <!-- Navigation -->
@@ -38,9 +49,11 @@ function formatDate(date: Date): string {
 
       <!-- Header -->
       <header class="mb-10">
-        <time class="text-sm text-slate-400 dark:text-slate-500">
-          {formatDate(post.data.pubDate)}
-        </time>
+        <div class="flex items-center gap-3 text-sm text-slate-400 dark:text-slate-500">
+          <time>{formatDate(post.data.pubDate)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{readingTime} min read</span>
+        </div>
         <h1
           class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-2 mb-4 leading-tight"
         >
@@ -50,22 +63,92 @@ function formatDate(date: Date): string {
           post.data.tags.length > 0 && (
             <div class="flex flex-wrap gap-1.5">
               {post.data.tags.map((tag: string) => (
-                <span class="inline-block px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">
+                <a
+                  href={`/blog/tags/${tagToSlug(tag)}`}
+                  class="inline-block px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md hover:bg-primary-50 dark:hover:bg-primary-950 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                >
                   {tag}
-                </span>
+                </a>
               ))}
             </div>
           )
         }
       </header>
 
+      <!-- Table of Contents (only when 3+ headings) -->
+      {
+        tocItems.length >= 3 && (
+          <nav
+            aria-label="Table of contents"
+            class="mb-10 p-5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800"
+          >
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+              Contents
+            </p>
+            <ul class="space-y-1.5">
+              {tocItems.map((h) => (
+                <li class={h.depth === 3 ? "pl-4" : ""}>
+                  <a
+                    href={`#${h.slug}`}
+                    class="text-sm text-slate-700 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                  >
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+
       <!-- Content -->
       <div class="prose max-w-none">
         <Content />
       </div>
 
+      <!-- Prev / Next -->
+      {
+        (prev || next) && (
+          <nav
+            aria-label="Post navigation"
+            class="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 grid sm:grid-cols-2 gap-4"
+          >
+            {prev ? (
+              <a
+                href={`/blog/${prev.id}`}
+                class="group block p-5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
+              >
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Previous
+                </p>
+                <p class="text-sm font-medium text-slate-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
+                  {prev.data.title}
+                </p>
+              </a>
+            ) : (
+              <div />
+            )}
+            {next ? (
+              <a
+                href={`/blog/${next.id}`}
+                class="group block p-5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary-300 dark:hover:border-primary-700 transition-colors sm:text-right"
+              >
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Next
+                </p>
+                <p class="text-sm font-medium text-slate-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
+                  {next.data.title}
+                </p>
+              </a>
+            ) : (
+              <div />
+            )}
+          </nav>
+        )
+      }
+
       <!-- Back link -->
-      <div class="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800">
+      <div class="mt-10">
         <a
           href="/blog"
           class="inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
@@ -84,4 +167,40 @@ function formatDate(date: Date): string {
       </div>
     </div>
   </article>
+
+  <script>
+    // Code block copy button — attach after DOM ready
+    document.querySelectorAll<HTMLPreElement>(".prose pre").forEach((pre) => {
+      const code = pre.querySelector("code");
+      if (!code) return;
+
+      pre.classList.add("relative", "group");
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.setAttribute("aria-label", "Copy code");
+      btn.className =
+        "absolute top-2 right-2 px-2 py-1 text-xs font-medium rounded bg-slate-700 hover:bg-slate-600 text-slate-200 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity";
+      btn.textContent = "Copy";
+
+      btn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(code.innerText);
+          btn.textContent = "Copied";
+          btn.classList.add("bg-green-600", "hover:bg-green-600");
+          setTimeout(() => {
+            btn.textContent = "Copy";
+            btn.classList.remove("bg-green-600", "hover:bg-green-600");
+          }, 1500);
+        } catch {
+          btn.textContent = "Failed";
+          setTimeout(() => {
+            btn.textContent = "Copy";
+          }, 1500);
+        }
+      });
+
+      pre.appendChild(btn);
+    });
+  </script>
 </BaseLayout>
