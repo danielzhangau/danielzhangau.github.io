@@ -181,18 +181,26 @@ const navItems = [
 </style>
 
 <script>
-  // Sticky header
   const header = document.getElementById("site-header");
-  function updateHeader() {
-    if (!header) return;
-    if (window.scrollY > 80) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
+
+  // Sticky header background via IntersectionObserver.
+  // A 1px sentinel is placed 80px from the top of the document;
+  // when it scrolls out, the header gets the "scrolled" class.
+  // Avoids reading scrollY on every scroll event.
+  if (header) {
+    const sentinel = document.createElement("div");
+    sentinel.setAttribute("aria-hidden", "true");
+    sentinel.style.cssText =
+      "position:absolute;top:80px;left:0;width:1px;height:1px;pointer-events:none;";
+    document.body.prepend(sentinel);
+
+    new IntersectionObserver(
+      ([entry]) => {
+        header.classList.toggle("scrolled", !entry.isIntersecting);
+      },
+      { threshold: 0 },
+    ).observe(sentinel);
   }
-  window.addEventListener("scroll", updateHeader, { passive: true });
-  updateHeader();
 
   // Mobile menu toggle
   const menuBtn = document.getElementById("mobile-menu-btn");
@@ -211,33 +219,48 @@ const navItems = [
     });
   });
 
-  // ScrollSpy: highlight active section in nav
-  const sections = document.querySelectorAll("section[id]");
+  // ScrollSpy via IntersectionObserver.
+  // Each section reports intersection state; we activate the link
+  // whose section is currently in the upper-middle band of the viewport.
+  // No offsetTop reads, no forced reflows.
+  const sections = document.querySelectorAll<HTMLElement>("section[id]");
   const navLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
 
-  function updateActiveNav() {
-    const scrollY = window.scrollY + 120;
-    let currentId = "";
-
-    sections.forEach((section) => {
-      const el = section as HTMLElement;
-      if (scrollY >= el.offsetTop) {
-        currentId = el.id;
-      }
-    });
-
+  if (sections.length > 0 && navLinks.length > 0) {
+    const linkByHref = new Map<string, HTMLAnchorElement>();
     navLinks.forEach((link) => {
-      const href = link.getAttribute("href") || "";
-      if (href === `/#${currentId}`) {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
+      const href = link.getAttribute("href");
+      if (href) linkByHref.set(href, link);
     });
-  }
 
-  window.addEventListener("scroll", updateActiveNav, { passive: true });
-  updateActiveNav();
+    const intersecting = new Set<string>();
+    const setActive = (id: string | null) => {
+      navLinks.forEach((link) => link.classList.remove("active"));
+      if (!id) return;
+      const link = linkByHref.get(`/#${id}`);
+      link?.classList.add("active");
+    };
+
+    const spyObserver = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) intersecting.add(e.target.id);
+          else intersecting.delete(e.target.id);
+        }
+        // Pick the first section in document order that is intersecting.
+        let active: string | null = null;
+        for (const section of sections) {
+          if (intersecting.has(section.id)) {
+            active = section.id;
+            break;
+          }
+        }
+        setActive(active);
+      },
+      { rootMargin: "-25% 0px -60% 0px", threshold: 0 },
+    );
+    sections.forEach((s) => spyObserver.observe(s));
+  }
 
   // Theme toggle
   function toggleTheme() {
