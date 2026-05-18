@@ -125,11 +125,15 @@ const posts = (await getCollection("blog"))
   </div>
 
   <script>
-    const input = document.getElementById("blog-search") as HTMLInputElement | null;
-    const list = document.getElementById("blog-list");
-    const status = document.getElementById("blog-search-status");
-    const empty = document.getElementById("blog-empty");
-    if (input && list && status && empty) {
+    function initBlogSearch() {
+      const input = document.getElementById("blog-search") as HTMLInputElement | null;
+      const list = document.getElementById("blog-list");
+      const status = document.getElementById("blog-search-status");
+      const empty = document.getElementById("blog-empty");
+      if (!input || !list || !status || !empty) return;
+      if (input.dataset.searchAttached === "true") return;
+      input.dataset.searchAttached = "true";
+
       const articles = Array.from(list.querySelectorAll<HTMLElement>("article[data-search]"));
       const total = articles.length;
 
@@ -156,5 +160,7 @@ const posts = (await getCollection("blog"))
         }
       });
     }
+    initBlogSearch();
+    document.addEventListener("astro:page-load", initBlogSearch);
   </script>
 </BaseLayout>

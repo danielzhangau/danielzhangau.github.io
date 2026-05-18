@@ -191,63 +191,77 @@ const tocItems = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
   </article>
 
   <script>
-    // Reading progress bar — drives a CSS transform via scroll position.
-    // Uses rAF to coalesce updates and avoid forced reflow.
-    const bar = document.getElementById("reading-progress");
-    if (bar) {
+    // Both the progress bar and the copy buttons target DOM that is
+    // brand new on every client-side navigation, so re-run on every
+    // astro:page-load (which also fires on the initial load).
+
+    function initReadingProgress() {
+      const bar = document.getElementById("reading-progress");
+      if (!bar) return; // not a blog post page
+
+      const doc = document.documentElement;
       let ticking = false;
       const update = () => {
         ticking = false;
-        const doc = document.documentElement;
         const max = doc.scrollHeight - doc.clientHeight;
         const ratio = max > 0 ? Math.min(1, Math.max(0, doc.scrollTop / max)) : 0;
         bar.style.transform = `scaleX(${ratio})`;
       };
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (!ticking) {
-            requestAnimationFrame(update);
-            ticking = true;
-          }
-        },
-        { passive: true },
-      );
+      const onScroll = () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      };
+      // Replace any previously-registered listener (avoid duplicates after
+      // multiple navigations). We use the bar element as a stable owner.
+      window.removeEventListener("scroll", (window as any).__rpScroll);
+      (window as any).__rpScroll = onScroll;
+      window.addEventListener("scroll", onScroll, { passive: true });
       update();
     }
 
-    // Code block copy button — attach after DOM ready
-    document.querySelectorAll<HTMLPreElement>(".prose pre").forEach((pre) => {
-      const code = pre.querySelector("code");
-      if (!code) return;
+    function initCopyButtons() {
+      document.querySelectorAll<HTMLPreElement>(".prose pre").forEach((pre) => {
+        if (pre.dataset.copyAttached === "true") return;
+        const code = pre.querySelector("code");
+        if (!code) return;
+        pre.dataset.copyAttached = "true";
+        pre.classList.add("relative", "group");
 
-      pre.classList.add("relative", "group");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.setAttribute("aria-label", "Copy code");
+        btn.className =
+          "absolute top-2 right-2 px-2 py-1 text-xs font-medium rounded bg-slate-700 hover:bg-slate-600 text-slate-200 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity";
+        btn.textContent = "Copy";
 
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.setAttribute("aria-label", "Copy code");
-      btn.className =
-        "absolute top-2 right-2 px-2 py-1 text-xs font-medium rounded bg-slate-700 hover:bg-slate-600 text-slate-200 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity";
-      btn.textContent = "Copy";
+        btn.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(code.innerText);
+            btn.textContent = "Copied";
+            btn.classList.add("bg-green-600", "hover:bg-green-600");
+            setTimeout(() => {
+              btn.textContent = "Copy";
+              btn.classList.remove("bg-green-600", "hover:bg-green-600");
+            }, 1500);
+          } catch {
+            btn.textContent = "Failed";
+            setTimeout(() => {
+              btn.textContent = "Copy";
+            }, 1500);
+          }
+        });
 
-      btn.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(code.innerText);
-          btn.textContent = "Copied";
-          btn.classList.add("bg-green-600", "hover:bg-green-600");
-          setTimeout(() => {
-            btn.textContent = "Copy";
-            btn.classList.remove("bg-green-600", "hover:bg-green-600");
-          }, 1500);
-        } catch {
-          btn.textContent = "Failed";
-          setTimeout(() => {
-            btn.textContent = "Copy";
-          }, 1500);
-        }
+        pre.appendChild(btn);
       });
+    }
 
-      pre.appendChild(btn);
-    });
+    function initBlogPost() {
+      initReadingProgress();
+      initCopyButtons();
+    }
+    initBlogPost();
+    document.addEventListener("astro:page-load", initBlogPost);
   </script>
 </BaseLayout>

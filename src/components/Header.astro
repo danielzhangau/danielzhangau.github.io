@@ -11,6 +11,7 @@ const navItems = [
 
 <header
   id="site-header"
+  transition:persist
   class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent"
 >
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -181,72 +182,80 @@ const navItems = [
 </style>
 
 <script>
-  const header = document.getElementById("site-header");
+  // The header element is transition:persist'd, so this script's one-time
+  // wiring (sticky observer, theme toggle, mobile menu listeners) stays
+  // valid across client-side navigations. Only ScrollSpy needs to retarget
+  // the sections of the newly-loaded page on each astro:page-load.
 
-  // Sticky header background via IntersectionObserver.
-  // A 1px sentinel is placed 80px from the top of the document;
-  // when it scrolls out, the header gets the "scrolled" class.
-  // Avoids reading scrollY on every scroll event.
-  if (header) {
-    const sentinel = document.createElement("div");
-    sentinel.setAttribute("aria-hidden", "true");
-    sentinel.style.cssText =
-      "position:absolute;top:80px;left:0;width:1px;height:1px;pointer-events:none;";
-    document.body.prepend(sentinel);
+  type SpyState = { observer: IntersectionObserver | null };
+  const spyState: SpyState = { observer: null };
 
-    new IntersectionObserver(
-      ([entry]) => {
-        header.classList.toggle("scrolled", !entry.isIntersecting);
-      },
-      { threshold: 0 },
-    ).observe(sentinel);
+  function setupHeaderOnce() {
+    const header = document.getElementById("site-header");
+    if (!header) return;
+
+    // Sticky sentinel — placed once.
+    if (!document.getElementById("site-header-sentinel")) {
+      const sentinel = document.createElement("div");
+      sentinel.id = "site-header-sentinel";
+      sentinel.setAttribute("aria-hidden", "true");
+      sentinel.style.cssText =
+        "position:absolute;top:80px;left:0;width:1px;height:1px;pointer-events:none;";
+      document.body.prepend(sentinel);
+
+      new IntersectionObserver(
+        ([entry]) => {
+          header.classList.toggle("scrolled", !entry.isIntersecting);
+        },
+        { threshold: 0 },
+      ).observe(sentinel);
+    }
+
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const setMobileMenu = (open: boolean) => {
+      if (!mobileMenu || !menuBtn) return;
+      mobileMenu.classList.toggle("hidden", !open);
+      menuBtn.setAttribute("aria-expanded", String(open));
+    };
+
+    menuBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setMobileMenu(mobileMenu?.classList.contains("hidden") ?? true);
+    });
+    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+      link.addEventListener("click", () => setMobileMenu(false));
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !mobileMenu?.classList.contains("hidden")) {
+        setMobileMenu(false);
+        menuBtn?.focus();
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (mobileMenu?.classList.contains("hidden")) return;
+      if (!header.contains(e.target as Node)) setMobileMenu(false);
+    });
+
+    const toggleTheme = () => {
+      const isDark = document.documentElement.classList.toggle("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    };
+    document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
+    document.getElementById("theme-toggle-mobile")?.addEventListener("click", toggleTheme);
   }
 
-  // Mobile menu toggle with full keyboard + click-outside dismissal
-  const menuBtn = document.getElementById("mobile-menu-btn");
-  const mobileMenu = document.getElementById("mobile-menu");
+  function setupScrollSpy() {
+    spyState.observer?.disconnect();
+    spyState.observer = null;
 
-  const setMobileMenu = (open: boolean) => {
-    if (!mobileMenu || !menuBtn) return;
-    mobileMenu.classList.toggle("hidden", !open);
-    menuBtn.setAttribute("aria-expanded", String(open));
-  };
-
-  menuBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    setMobileMenu(mobileMenu?.classList.contains("hidden") ?? true);
-  });
-
-  // Close on link click (so anchor jumps work cleanly)
-  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-    link.addEventListener("click", () => setMobileMenu(false));
-  });
-
-  // Close on Escape
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !mobileMenu?.classList.contains("hidden")) {
-      setMobileMenu(false);
-      menuBtn?.focus();
+    const sections = document.querySelectorAll<HTMLElement>("section[id]");
+    const navLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
+    if (sections.length === 0 || navLinks.length === 0) {
+      navLinks.forEach((link) => link.classList.remove("active"));
+      return;
     }
-  });
 
-  // Close on click outside the header
-  document.addEventListener("click", (e) => {
-    if (mobileMenu?.classList.contains("hidden")) return;
-    const header = document.getElementById("site-header");
-    if (header && !header.contains(e.target as Node)) {
-      setMobileMenu(false);
-    }
-  });
-
-  // ScrollSpy via IntersectionObserver.
-  // Each section reports intersection state; we activate the link
-  // whose section is currently in the upper-middle band of the viewport.
-  // No offsetTop reads, no forced reflows.
-  const sections = document.querySelectorAll<HTMLElement>("section[id]");
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
-
-  if (sections.length > 0 && navLinks.length > 0) {
     const linkByHref = new Map<string, HTMLAnchorElement>();
     navLinks.forEach((link) => {
       const href = link.getAttribute("href");
@@ -257,17 +266,15 @@ const navItems = [
     const setActive = (id: string | null) => {
       navLinks.forEach((link) => link.classList.remove("active"));
       if (!id) return;
-      const link = linkByHref.get(`/#${id}`);
-      link?.classList.add("active");
+      linkByHref.get(`/#${id}`)?.classList.add("active");
     };
 
-    const spyObserver = new IntersectionObserver(
+    spyState.observer = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) intersecting.add(e.target.id);
           else intersecting.delete(e.target.id);
         }
-        // Pick the first section in document order that is intersecting.
         let active: string | null = null;
         for (const section of sections) {
           if (intersecting.has(section.id)) {
@@ -279,14 +286,12 @@ const navItems = [
       },
       { rootMargin: "-25% 0px -60% 0px", threshold: 0 },
     );
-    sections.forEach((s) => spyObserver.observe(s));
+    sections.forEach((s) => spyState.observer!.observe(s));
   }
 
-  // Theme toggle
-  function toggleTheme() {
-    const isDark = document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }
-  document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
-  document.getElementById("theme-toggle-mobile")?.addEventListener("click", toggleTheme);
+  // Run once for the initial bundle load; reattach ScrollSpy on every
+  // client-side navigation.
+  setupHeaderOnce();
+  setupScrollSpy();
+  document.addEventListener("astro:page-load", setupScrollSpy);
 </script>

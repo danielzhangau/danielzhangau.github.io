@@ -1,6 +1,7 @@
 ---
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import { ClientRouter } from "astro:transitions";
 import "@/styles/fonts.css";
 import "@/styles/global.css";
 import inter400Url from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
@@ -142,6 +143,7 @@ const articleJsonLd = article
     />
 
     <title>{title}</title>
+    <ClientRouter />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd ?? personJsonLd)} />
