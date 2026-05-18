@@ -6,7 +6,8 @@ featured: false
 order: 13
 category: "academic"
 github: "https://github.com/danielzhangau/Artificial-Intelligence/tree/master/ass2"
-image: "/img/robot_arm.gif"
+image: "/img/robot_arm_cover.webp"
+video: "/img/robot_arm"
 ---
 
 ## Overview

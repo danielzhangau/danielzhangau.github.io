@@ -5,7 +5,7 @@ tags: ["PyTorch", "Computer Vision", "Object Detection", "GCP", "Geospatial Anal
 featured: true
 order: 2
 category: "production"
-image: "/img/visionhq-cleanliness-index.png"
+image: "/img/visionhq-cleanliness-index.webp"
 ---
 
 ## Problem

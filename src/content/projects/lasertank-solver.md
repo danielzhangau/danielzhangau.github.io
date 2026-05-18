@@ -6,7 +6,8 @@ featured: false
 order: 12
 category: "academic"
 github: "https://github.com/danielzhangau/Artificial-Intelligence"
-image: "/img/laser_tank.gif"
+image: "/img/laser_tank_cover.webp"
+video: "/img/laser_tank"
 ---
 
 ## Overview

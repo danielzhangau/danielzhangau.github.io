@@ -84,9 +84,27 @@ const { Content } = await render(project);
         </div>
       </header>
 
-      <!-- Cover Image -->
+      <!-- Cover (video preferred over still image when available) -->
       {
-        project.data.image && (
+        project.data.video && (
+          <div class="mb-10 rounded-xl overflow-hidden shadow-lg bg-white">
+            <video
+              class="w-full"
+              autoplay
+              loop
+              muted
+              playsinline
+              preload="metadata"
+              poster={project.data.image}
+            >
+              <source src={`${project.data.video}.webm`} type="video/webm" />
+              <source src={`${project.data.video}.mp4`} type="video/mp4" />
+            </video>
+          </div>
+        )
+      }
+      {
+        !project.data.video && project.data.image && (
           <div class="mb-10 rounded-xl overflow-hidden shadow-lg bg-white">
             <img src={project.data.image} alt={project.data.title} class="w-full" loading="lazy" />
           </div>

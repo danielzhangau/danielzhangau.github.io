@@ -14,7 +14,12 @@
     "type": "git",
     "url": "git+https://github.com/danielzhangau/danielzhangau.github.io.git"
   },
-  "keywords": ["portfolio", "ai-engineer", "astro", "tailwindcss"],
+  "keywords": [
+    "portfolio",
+    "ai-engineer",
+    "astro",
+    "tailwindcss"
+  ],
   "author": "Bosheng (Daniel) Zhang <ddaniel.zhang0413@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -23,7 +28,10 @@
   "homepage": "https://danielzhangau.github.io",
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
+    "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.7",
     "tailwindcss": "^4.2.2"
@@ -31,5 +39,8 @@
   "devDependencies": {
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }

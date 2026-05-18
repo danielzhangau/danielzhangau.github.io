@@ -6,7 +6,7 @@ featured: false
 order: 10
 category: "academic"
 github: "https://github.com/danielzhangau/PatternFlow/tree/topic-recognition/recognition/ISIC_skin_cancer#readme"
-image: "/img/isic_project.png"
+image: "/img/isic_project.webp"
 ---
 
 ## Overview

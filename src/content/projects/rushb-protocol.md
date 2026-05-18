@@ -6,7 +6,7 @@ featured: false
 order: 14
 category: "academic"
 github: "https://github.com/danielzhangau/Computer-Networks"
-image: "/img/network_layer_mapping.png"
+image: "/img/network_layer_mapping.webp"
 ---
 
 ## Overview
