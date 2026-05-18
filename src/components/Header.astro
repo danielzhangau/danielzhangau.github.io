@@ -202,21 +202,41 @@ const navItems = [
     ).observe(sentinel);
   }
 
-  // Mobile menu toggle
+  // Mobile menu toggle with full keyboard + click-outside dismissal
   const menuBtn = document.getElementById("mobile-menu-btn");
   const mobileMenu = document.getElementById("mobile-menu");
-  menuBtn?.addEventListener("click", () => {
-    mobileMenu?.classList.toggle("hidden");
-    const isOpen = !mobileMenu?.classList.contains("hidden");
-    menuBtn?.setAttribute("aria-expanded", String(isOpen));
+
+  const setMobileMenu = (open: boolean) => {
+    if (!mobileMenu || !menuBtn) return;
+    mobileMenu.classList.toggle("hidden", !open);
+    menuBtn.setAttribute("aria-expanded", String(open));
+  };
+
+  menuBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setMobileMenu(mobileMenu?.classList.contains("hidden") ?? true);
   });
 
-  // Close mobile menu on link click
+  // Close on link click (so anchor jumps work cleanly)
   document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileMenu?.classList.add("hidden");
-      menuBtn?.setAttribute("aria-expanded", "false");
-    });
+    link.addEventListener("click", () => setMobileMenu(false));
+  });
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !mobileMenu?.classList.contains("hidden")) {
+      setMobileMenu(false);
+      menuBtn?.focus();
+    }
+  });
+
+  // Close on click outside the header
+  document.addEventListener("click", (e) => {
+    if (mobileMenu?.classList.contains("hidden")) return;
+    const header = document.getElementById("site-header");
+    if (header && !header.contains(e.target as Node)) {
+      setMobileMenu(false);
+    }
   });
 
   // ScrollSpy via IntersectionObserver.
