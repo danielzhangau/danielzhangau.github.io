@@ -3,14 +3,7 @@ title: "Claude Code Power User Guide: Hooks, MCP, Plugins, and the Configuration
 description: "A practical guide to configuring Claude Code for maximum productivity — covering the layered configuration architecture, hooks for 100% enforcement, MCP server integrations, plugin ecosystem, context management, and worktree-based parallel development."
 pubDate: 2026-04-24
 tags:
-  [
-    "Claude Code",
-    "AI Tools",
-    "Developer Productivity",
-    "MCP",
-    "Agentic AI",
-    "Harness Engineering",
-  ]
+  ["Claude Code", "AI Tools", "Developer Productivity", "MCP", "Agentic AI", "Harness Engineering"]
 ---
 
 Most developers using Claude Code treat it like a smart chatbot in the terminal — ask questions, get code, copy-paste. That leaves most of its capability on the table.
@@ -23,15 +16,15 @@ This post documents the configuration stack I built over several months of daily
 
 Claude Code's configuration follows a clear hierarchy. Understanding this is the foundation for everything else:
 
-| Layer | What It Does | Enforcement | Where It Lives |
-| ----- | ------------ | ----------- | -------------- |
-| **Deny rules** | Hard-block dangerous operations | 100% — cannot be overridden | `~/.claude/settings.json` |
-| **Hooks** | Run scripts on lifecycle events | 100% — executes every time | `~/.claude/settings.json` + `~/.claude/hooks/` |
-| **MCP Servers** | Connect external tools and data | On-demand | `~/.claude.json` or `.mcp.json` |
-| **Plugins** | Packaged extensions with skills/hooks | On-demand | `~/.claude/settings.json` |
-| **CLAUDE.md** | Natural language instructions | Probabilistic — high but not guaranteed | `~/.claude/CLAUDE.md` or project root |
-| **Skills** | On-demand knowledge injection | When triggered | `.claude/skills/` |
-| **Memory** | Cross-session persistent notes | Loaded at start | `~/.claude/projects/.../memory/` |
+| Layer           | What It Does                          | Enforcement                             | Where It Lives                                 |
+| --------------- | ------------------------------------- | --------------------------------------- | ---------------------------------------------- |
+| **Deny rules**  | Hard-block dangerous operations       | 100% — cannot be overridden             | `~/.claude/settings.json`                      |
+| **Hooks**       | Run scripts on lifecycle events       | 100% — executes every time              | `~/.claude/settings.json` + `~/.claude/hooks/` |
+| **MCP Servers** | Connect external tools and data       | On-demand                               | `~/.claude.json` or `.mcp.json`                |
+| **Plugins**     | Packaged extensions with skills/hooks | On-demand                               | `~/.claude/settings.json`                      |
+| **CLAUDE.md**   | Natural language instructions         | Probabilistic — high but not guaranteed | `~/.claude/CLAUDE.md` or project root          |
+| **Skills**      | On-demand knowledge injection         | When triggered                          | `.claude/skills/`                              |
+| **Memory**      | Cross-session persistent notes        | Loaded at start                         | `~/.claude/projects/.../memory/`               |
 
 The critical insight: **CLAUDE.md is advice, hooks are law.** If you need something to happen every single time — formatting, safety checks, notifications — it belongs in a hook, not in CLAUDE.md.
 
@@ -43,13 +36,13 @@ Hooks are shell scripts that execute on specific lifecycle events. They are the 
 
 The most commonly used hook events (Claude Code supports additional lifecycle events — see the [official docs](https://docs.anthropic.com/en/docs/claude-code/hooks) for the full list):
 
-| Event | When It Fires | Use Case |
-| ----- | ------------- | -------- |
-| `PreToolUse` | Before any tool executes | Block dangerous commands, log operations |
-| `PostToolUse` | After a tool completes | Auto-format code, validate output |
-| `Stop` | When Claude finishes generating | Desktop notifications for long tasks |
-| `PreCompact` | Before context compression | Preserve critical information |
-| `SessionStart` | When a session begins | Load project context, set environment |
+| Event          | When It Fires                   | Use Case                                 |
+| -------------- | ------------------------------- | ---------------------------------------- |
+| `PreToolUse`   | Before any tool executes        | Block dangerous commands, log operations |
+| `PostToolUse`  | After a tool completes          | Auto-format code, validate output        |
+| `Stop`         | When Claude finishes generating | Desktop notifications for long tasks     |
+| `PreCompact`   | Before context compression      | Preserve critical information            |
+| `SessionStart` | When a session begins           | Load project context, set environment    |
 
 ### Safety Guard (PreToolUse)
 
@@ -226,14 +219,14 @@ MCP (Model Context Protocol) servers give Claude access to external tools and da
 
 ### Recommended MCP Servers
 
-| Server | What It Does | Scope | Install Command |
-| ------ | ------------ | ----- | --------------- |
-| **GitHub** | Issues, PRs, workflows, repo management | User (global) | `claude mcp add -s user --transport http github https://api.githubcopilot.com/mcp/` |
-| **Figma** | Read designs, components, tokens | User (global) | `claude mcp add -s user --transport http figma https://mcp.figma.com/mcp` |
-| **Context7** | Real-time library documentation | User (global) | `claude mcp add -s user -- context7 npx -y @upstash/context7-mcp@latest` |
-| **Playwright** | Browser automation and testing | User (global) | `claude mcp add -s user -- playwright npx -y @playwright/mcp@latest` |
-| **Database** | Query databases, inspect schemas | Project | `claude mcp add -s project --transport stdio db -- npx -y @bytebase/dbhub --dsn "mysql://..."` |
-| **Sentry** | Error tracking, stack traces | Local | `claude mcp add -s local --transport http sentry https://mcp.sentry.dev/mcp` |
+| Server         | What It Does                            | Scope         | Install Command                                                                                |
+| -------------- | --------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------- |
+| **GitHub**     | Issues, PRs, workflows, repo management | User (global) | `claude mcp add -s user --transport http github https://api.githubcopilot.com/mcp/`            |
+| **Figma**      | Read designs, components, tokens        | User (global) | `claude mcp add -s user --transport http figma https://mcp.figma.com/mcp`                      |
+| **Context7**   | Real-time library documentation         | User (global) | `claude mcp add -s user -- context7 npx -y @upstash/context7-mcp@latest`                       |
+| **Playwright** | Browser automation and testing          | User (global) | `claude mcp add -s user -- playwright npx -y @playwright/mcp@latest`                           |
+| **Database**   | Query databases, inspect schemas        | Project       | `claude mcp add -s project --transport stdio db -- npx -y @bytebase/dbhub --dsn "mysql://..."` |
+| **Sentry**     | Error tracking, stack traces            | Local         | `claude mcp add -s local --transport http sentry https://mcp.sentry.dev/mcp`                   |
 
 ### Scope Strategy
 
@@ -250,11 +243,7 @@ After adding an MCP server, add it to the allow list to avoid per-call approval 
 ```json
 {
   "permissions": {
-    "allow": [
-      "mcp__github",
-      "mcp__figma",
-      "mcp__context7"
-    ]
+    "allow": ["mcp__github", "mcp__figma", "mcp__context7"]
   }
 }
 ```
@@ -274,11 +263,11 @@ claude plugin install frontend-design@claude-plugins-official
 
 ### Worth Installing
 
-| Plugin | What It Does |
-| ------ | ------------ |
-| **code-review** | Structured code review with quality metrics |
+| Plugin                | What It Does                                       |
+| --------------------- | -------------------------------------------------- |
+| **code-review**       | Structured code review with quality metrics        |
 | **security-guidance** | Security best practices and vulnerability scanning |
-| **frontend-design** | High-quality UI component generation |
+| **frontend-design**   | High-quality UI component generation               |
 
 ### Community Resources
 
@@ -304,20 +293,24 @@ The reasoning: the model's attention to instructions is finite. The more rules y
 # CLAUDE.md
 
 ## Tech Stack
+
 - Framework, language, key dependencies
 
 ## Project Structure
+
 - Directory layout (especially for monorepos)
 
 ## Build / Test / Lint Commands
+
 - Exact commands, not general patterns
 
 ## Critical Conventions
+
 - Things the model gets wrong without explicit instruction
 - Non-obvious patterns specific to your project
 
-@docs/architecture.md    <!-- Deep details via @import -->
-@lessons.md              <!-- Self-improvement loop -->
+@docs/architecture.md <!-- Deep details via @import -->
+@lessons.md <!-- Self-improvement loop -->
 ```
 
 ### The Self-Improvement Loop
@@ -328,6 +321,7 @@ Create a `lessons.md` file referenced by CLAUDE.md. Every time Claude makes a mi
 # Lessons Learned
 
 ### 2026-04-20 Tailwind v4 scoped styles
+
 - **Problem**: Used `@apply` in scoped `<style>` blocks, which fails in Tailwind v4
 - **Fix**: Use `@reference "tailwindcss";` at top of scoped style blocks
 ```
@@ -340,14 +334,14 @@ Context window management is the most underrated productivity skill. Quality deg
 
 ### Essential Commands
 
-| Command | When to Use |
-| ------- | ----------- |
-| `/clear` | Switching to an unrelated task |
+| Command                         | When to Use                                              |
+| ------------------------------- | -------------------------------------------------------- |
+| `/clear`                        | Switching to an unrelated task                           |
 | `/compact focus on API changes` | Context getting large — compress with preservation hints |
-| `/rewind` | Code went wrong — rollback conversation and file state |
-| `Shift+Tab` | Cycle through modes: Normal -> Auto-Accept -> Plan Mode |
-| `Ctrl+S` | Stash current prompt, ask a quick question, then restore |
-| `Ctrl+B` | Send a long-running bash command to background |
+| `/rewind`                       | Code went wrong — rollback conversation and file state   |
+| `Shift+Tab`                     | Cycle through modes: Normal -> Auto-Accept -> Plan Mode  |
+| `Ctrl+S`                        | Stash current prompt, ask a quick question, then restore |
+| `Ctrl+B`                        | Send a long-running bash command to background           |
 
 ### The "Kitchen Sink" Anti-Pattern
 
@@ -421,8 +415,15 @@ Here is the complete `settings.json` structure with all layers configured:
 {
   "permissions": {
     "allow": [
-      "Bash", "Edit", "Read", "Write", "Glob", "Grep",
-      "mcp__github", "mcp__figma", "mcp__context7"
+      "Bash",
+      "Edit",
+      "Read",
+      "Write",
+      "Glob",
+      "Grep",
+      "mcp__github",
+      "mcp__figma",
+      "mcp__context7"
     ],
     "deny": [
       "Bash(rm -rf *)",
@@ -433,17 +434,32 @@ Here is the complete `settings.json` structure with all layers configured:
   },
   "hooks": {
     "PreToolUse": [
-      { "matcher": "Bash", "hooks": [{ "type": "command", "command": "~/.claude/hooks/safety-guard.sh", "timeout": 5 }] },
-      { "matcher": "", "hooks": [{ "type": "command", "command": "~/.claude/hooks/mark-start.sh", "timeout": 2 }] }
+      {
+        "matcher": "Bash",
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/safety-guard.sh", "timeout": 5 }]
+      },
+      {
+        "matcher": "",
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/mark-start.sh", "timeout": 2 }]
+      }
     ],
     "PostToolUse": [
-      { "matcher": "Edit|Write", "hooks": [{ "type": "command", "command": "~/.claude/hooks/format.sh", "timeout": 30 }] }
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/format.sh", "timeout": 30 }]
+      }
     ],
     "Stop": [
-      { "matcher": "", "hooks": [{ "type": "command", "command": "~/.claude/hooks/notify-done.sh", "timeout": 5 }] }
+      {
+        "matcher": "",
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/notify-done.sh", "timeout": 5 }]
+      }
     ],
     "PreCompact": [
-      { "matcher": "", "hooks": [{ "type": "command", "command": "~/.claude/hooks/pre-compact.sh", "timeout": 5 }] }
+      {
+        "matcher": "",
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/pre-compact.sh", "timeout": 5 }]
+      }
     ]
   },
   "enabledPlugins": {

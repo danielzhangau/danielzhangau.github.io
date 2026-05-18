@@ -13,8 +13,8 @@ The "Big Three" — Anthropic, OpenAI, and Google — are now in a genuine three
 
 ### Current Frontier Models (April 2026)
 
-| Provider      | Model                               | Highlights                                                                           |
-| ------------- | ----------------------------------- | ------------------------------------------------------------------------------------ |
+| Provider      | Model                               | Highlights                                                                             |
+| ------------- | ----------------------------------- | -------------------------------------------------------------------------------------- |
 | **Anthropic** | Claude Opus 4.6                     | Strong on HLE (53% with agentic tools), SWE-bench Verified (80.8%), 128K output tokens |
 | **OpenAI**    | GPT-5.4 (Standard / Thinking / Pro) | Unified general-purpose + coding line, native computer use                             |
 | **Google**    | Gemini 3.1 Pro                      | SWE-bench Verified (78.8%), GPQA Diamond (94.3%), native multimodal reasoning          |
@@ -167,13 +167,13 @@ A growing number of modern smartphones with NPU hardware can run local SLMs, and
 
 ### Models Worth Knowing
 
-| Model                  | Parameters | Best For                                              |
-| ---------------------- | ---------- | ----------------------------------------------------- |
+| Model                  | Parameters | Best For                                                               |
+| ---------------------- | ---------- | ---------------------------------------------------------------------- |
 | Microsoft Phi-3.5-Mini | 3.8B       | Reasoning on CPU, approaches GPT-3.5 quality with far fewer parameters |
-| Google Gemma 2         | 9B         | Best quality-to-size ratio for cloud deployment       |
-| Mistral 7B             | 7B         | Most fine-tuning-friendly                             |
-| Meta Llama 3.2         | 1B-3B      | Mobile and edge deployment                            |
-| Qwen 2.5               | 7B         | Strongest multilingual support                        |
+| Google Gemma 2         | 9B         | Best quality-to-size ratio for cloud deployment                        |
+| Mistral 7B             | 7B         | Most fine-tuning-friendly                                              |
+| Meta Llama 3.2         | 1B-3B      | Mobile and edge deployment                                             |
+| Qwen 2.5               | 7B         | Strongest multilingual support                                         |
 
 ### The Hybrid Architecture Pattern
 

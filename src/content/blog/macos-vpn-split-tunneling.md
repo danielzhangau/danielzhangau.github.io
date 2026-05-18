@@ -2,15 +2,7 @@
 title: "macOS VPN Split Tunneling: From 267ms to 28ms Without Touching Your VPN Config"
 description: "How I built a client-side split tunneling system for macOS that routes local traffic direct and keeps international traffic on VPN. Covers IP-based route splitting, reversed DNS splitting (clean DNS via VPN tunnel + local DNS for CDN optimization), and a launchd auto-watch daemon."
 pubDate: 2026-05-17
-tags:
-  [
-    "macOS",
-    "Networking",
-    "VPN",
-    "Split Tunneling",
-    "Shell Scripting",
-    "DevOps",
-  ]
+tags: ["macOS", "Networking", "VPN", "Split Tunneling", "Shell Scripting", "DevOps"]
 ---
 
 VPNs love to route **everything** through their tunnel. Every DNS query, every HTTPS request, every ping -- all funneled through a server that might be on another continent. If you're working remotely and your VPN server is far away, this means your local traffic takes a round trip overseas and back, when a direct connection would take 30ms.
@@ -161,11 +153,11 @@ The script tracks which resolver entries it creates in a marker file for exact c
 
 **Why this direction is better:**
 
-| | Old approach (local DNS default) | New approach (clean DNS default) |
-|---|---|---|
-| Missing from list | Domain is unreachable (DNS pollution) | Domain works, slightly slower CDN |
-| Failure severity | **Catastrophic** | **Graceful degradation** |
-| List maintenance | Must track every polluted domain (unbounded) | Only need major regional domains (~100) |
+|                   | Old approach (local DNS default)             | New approach (clean DNS default)        |
+| ----------------- | -------------------------------------------- | --------------------------------------- |
+| Missing from list | Domain is unreachable (DNS pollution)        | Domain works, slightly slower CDN       |
+| Failure severity  | **Catastrophic**                             | **Graceful degradation**                |
+| List maintenance  | Must track every polluted domain (unbounded) | Only need major regional domains (~100) |
 
 ### Auto-Watch Daemon
 
@@ -213,26 +205,26 @@ Tested on the same network, same VPN connection. The gains depend on which categ
 
 **Sites with regional IPs (route splitting only):**
 
-| Target | Before | After | Improvement |
-|--------|--------|-------|-------------|
+| Target                      | Before        | After             | Improvement                                                     |
+| --------------------------- | ------------- | ----------------- | --------------------------------------------------------------- |
 | Popular local search engine | 31ms, 0% loss | **29ms, 0% loss** | Marginal -- already a regional IP, route splitting bypasses VPN |
 
 These sites benefit from route splitting alone. Their IPs are in the regional list, so traffic goes direct regardless of DNS.
 
 **Sites with CDN that responds to DNS location (route + DNS splitting):**
 
-| Target | Before | After | Improvement |
-|--------|--------|-------|-------------|
+| Target               | Before          | After             | Improvement     |
+| -------------------- | --------------- | ----------------- | --------------- |
 | CDN-backed docs site | 312ms, 33% loss | **36ms, 0% loss** | **8.7x faster** |
 
 This is the sweet spot. The VPN DNS was returning a CDN node on another continent (312ms). Local DNS returned a nearby CDN node instead. That IP happened to fall in the regional IP ranges, so route splitting sent it direct. Two optimizations compounding: better DNS resolution + direct routing.
 
 **International sites (clean DNS via VPN tunnel):**
 
-| Target | Before (old arch) | After (new arch) | Why |
-|--------|--------|-------|-------------|
-| YouTube | Broken (DNS pollution) | ~230ms, working | Clean DNS resolves correctly, traffic via VPN |
-| LinkedIn | Broken (DNS pollution) | ~280ms, working | Clean DNS resolves correctly, traffic via VPN |
+| Target   | Before (old arch)      | After (new arch) | Why                                           |
+| -------- | ---------------------- | ---------------- | --------------------------------------------- |
+| YouTube  | Broken (DNS pollution) | ~230ms, working  | Clean DNS resolves correctly, traffic via VPN |
+| LinkedIn | Broken (DNS pollution) | ~280ms, working  | Clean DNS resolves correctly, traffic via VPN |
 
 In the old architecture with local DNS as default, these sites would silently break whenever they weren't in the VPN DNS whitelist. Now they just work -- the default clean DNS handles them correctly via the VPN tunnel.
 
@@ -252,7 +244,7 @@ In the old architecture with local DNS as default, these sites would silently br
 
 ## Limitations
 
-- **VPN tunnel quality is unchanged.** International sites still go through the tunnel. This optimizes what *can* go direct, not what *must* stay on VPN.
+- **VPN tunnel quality is unchanged.** International sites still go through the tunnel. This optimizes what _can_ go direct, not what _must_ stay on VPN.
 - **Regional domain list is best-effort.** Unlisted regional domains still work (via clean DNS through VPN), just without CDN optimization. The ccTLD entry covers the majority automatically.
 - **Clean DNS adds a hop.** DNS queries for non-regional domains go through the VPN tunnel to reach Google DNS -- about 50-100ms extra per lookup compared to a local DNS. This is cached after the first query and is a worthwhile trade-off for correctness.
 - **Why not Clash/Surge?** They're proxy clients that compete for the routing table. This operates at a lower layer and coexists with any VPN client.
@@ -270,6 +262,7 @@ sudo ~/scripts/vpn-split-tunnel.sh uninstall  # Remove auto-watch daemon
 ```
 
 Status output:
+
 ```
 === VPN Split Tunneling Status ===
 

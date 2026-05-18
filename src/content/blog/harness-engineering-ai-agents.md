@@ -2,15 +2,7 @@
 title: "Harness Engineering: The Discipline That Makes AI Agents Actually Work"
 description: "A deep dive into harness engineering — the emerging discipline of designing systems, constraints, and feedback loops that make AI agents reliable in production. Covers core architecture, real-world case studies, and practical implementation."
 pubDate: 2026-04-18
-tags:
-  [
-    "Harness Engineering",
-    "AI Agents",
-    "LLM",
-    "Context Engineering",
-    "Production AI",
-    "MLOps",
-  ]
+tags: ["Harness Engineering", "AI Agents", "LLM", "Context Engineering", "Production AI", "MLOps"]
 ---
 
 If 2025 was the year of the AI agent, 2026 is the year of the **harness**.
@@ -35,10 +27,10 @@ The analogy comes from horse tack — reins, saddle, bit — the complete set of
 
 Harness engineering didn't emerge in isolation. It builds on two prior disciplines:
 
-| Layer | What It Optimizes | Scope |
-| ----- | ----------------- | ----- |
-| **Prompt Engineering** | What you say to the model | Single turn quality |
-| **Context Engineering** | What the model sees | Multi-turn information flow |
+| Layer                   | What It Optimizes         | Scope                           |
+| ----------------------- | ------------------------- | ------------------------------- |
+| **Prompt Engineering**  | What you say to the model | Single turn quality             |
+| **Context Engineering** | What the model sees       | Multi-turn information flow     |
 | **Harness Engineering** | The execution environment | Hours of unsupervised operation |
 
 These aren't competing approaches — they're a **progression**. Prompt engineering shapes a single request. Context engineering manages what the model knows across interactions. Harness engineering designs the entire system that lets an agent operate autonomously for extended periods.
@@ -79,10 +71,10 @@ Sensors observe **after** the agent acts and enable self-correction. Examples:
 
 **Feedforward alone** creates agents that encode rules without validation — they follow instructions but can't detect when they've gone wrong. **Feedback alone** creates agents that repeat identical mistakes — they can detect failures but keep making the same errors. A production harness needs both, working together.
 
-| Control Type | Speed | Reliability | Best For |
-| ------------ | ----- | ----------- | -------- |
+| Control Type                       | Speed        | Reliability         | Best For                           |
+| ---------------------------------- | ------------ | ------------------- | ---------------------------------- |
 | **Computational** (tests, linters) | Milliseconds | High, deterministic | Structural issues, style, coverage |
-| **Inferential** (LLM-as-judge) | Seconds | Non-deterministic | Semantic judgment, design quality |
+| **Inferential** (LLM-as-judge)     | Seconds      | Non-deterministic   | Semantic judgment, design quality  |
 
 ## Seven-Layer Harness Architecture
 
@@ -131,11 +123,11 @@ A solo agent produced a broken game. The three-agent harness produced a **workin
 
 A new role is crystallizing around these practices:
 
-| Role | Focus | Key Question |
-| ---- | ----- | ------------ |
-| Software Engineer | HOW to implement | "How do I write this code?" |
-| Product Manager | WHAT to build | "What should we build?" |
-| DevOps Engineer | WHERE to deploy | "How do we ship this?" |
+| Role                 | Focus                     | Key Question                                                           |
+| -------------------- | ------------------------- | ---------------------------------------------------------------------- |
+| Software Engineer    | HOW to implement          | "How do I write this code?"                                            |
+| Product Manager      | WHAT to build             | "What should we build?"                                                |
+| DevOps Engineer      | WHERE to deploy           | "How do we ship this?"                                                 |
 | **Harness Engineer** | HOW agents operate safely | "How do I design an environment where an agent can do this correctly?" |
 
 ### Five Core Skills
@@ -178,12 +170,12 @@ Based on the [Escape.tech field report from SF](https://escape.tech/blog/everyth
 
 Not all tasks need the same level of human oversight:
 
-| Tier | Task Type | Review Level |
-| ---- | --------- | ------------ |
-| **Full autonomy** | Typo fixes, test additions, dependency bumps | CI + automated review only |
-| **Light review** | Feature work within established patterns | < 5 min human skim |
-| **Full review** | New endpoints, data model changes | Thorough human review |
-| **Human-led** | Migrations, infrastructure, security-critical paths | Human writes, agent assists |
+| Tier              | Task Type                                           | Review Level                |
+| ----------------- | --------------------------------------------------- | --------------------------- |
+| **Full autonomy** | Typo fixes, test additions, dependency bumps        | CI + automated review only  |
+| **Light review**  | Feature work within established patterns            | < 5 min human skim          |
+| **Full review**   | New endpoints, data model changes                   | Thorough human review       |
+| **Human-led**     | Migrations, infrastructure, security-critical paths | Human writes, agent assists |
 
 ### Key Metrics to Track
 

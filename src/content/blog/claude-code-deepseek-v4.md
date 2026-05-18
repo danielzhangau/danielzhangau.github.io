@@ -2,14 +2,7 @@
 title: "Running Claude Code on DeepSeek V4: Same Tool, 7-89x Cheaper"
 description: "How I built claude-ds — a drop-in wrapper that runs Claude Code with DeepSeek V4 as the backend. Covers the architecture, environment variable reverse-engineering, vision workarounds, and honest tradeoffs from daily use."
 pubDate: 2026-04-29
-tags:
-  [
-    "Claude Code",
-    "DeepSeek",
-    "AI Tools",
-    "Open Source",
-    "Cost Optimization",
-  ]
+tags: ["Claude Code", "DeepSeek", "AI Tools", "Open Source", "Cost Optimization"]
 ---
 
 DeepSeek V4 dropped on April 24, 2026 — a 1.6 trillion parameter MoE model trained entirely on Huawei Ascend chips, released under MIT license. Within days, it became the top trending topic in the AI engineering community. Not because of benchmarks (though those are competitive), but because of what it means for cost.
@@ -40,6 +33,7 @@ claude-ds() {
 ```
 
 Two modes:
+
 - **`claude-ds`** (Pro mode): V4-Pro for the main conversation (1M context), V4-Flash for internal tasks like subagents and lightweight operations.
 - **`claude-ds-flash`** (Flash mode): V4-Flash for everything. Maximum cost savings.
 
@@ -47,15 +41,15 @@ Two modes:
 
 The Anthropic docs mention `ANTHROPIC_BASE_URL` and `ANTHROPIC_MODEL`, but Claude Code internally uses several more model-tier variables that are not documented. I found these by examining the Claude Code binary:
 
-| Variable | Purpose | What Happens If Unset |
-|----------|---------|----------------------|
-| `ANTHROPIC_MODEL` | Primary conversation model | Uses `claude-opus-*` (API error) |
-| `ANTHROPIC_DEFAULT_OPUS_MODEL` | Opus tier mapping | Falls back to Claude model name |
-| `ANTHROPIC_DEFAULT_SONNET_MODEL` | Sonnet tier mapping | Falls back to Claude model name |
-| `ANTHROPIC_DEFAULT_HAIKU_MODEL` | Haiku tier mapping | Falls back to Claude model name |
-| **`ANTHROPIC_SMALL_FAST_MODEL`** | Internal lightweight tasks | **Uses `claude-haiku-*` -- silent failures** |
-| `CLAUDE_CODE_SUBAGENT_MODEL` | Agent tool subagents | Falls back to Sonnet tier |
-| `CLAUDE_CODE_DISABLE_LEGACY_MODEL_REMAP` | Prevent model name remapping | May corrupt `deepseek-v4-*` names |
+| Variable                                 | Purpose                      | What Happens If Unset                        |
+| ---------------------------------------- | ---------------------------- | -------------------------------------------- |
+| `ANTHROPIC_MODEL`                        | Primary conversation model   | Uses `claude-opus-*` (API error)             |
+| `ANTHROPIC_DEFAULT_OPUS_MODEL`           | Opus tier mapping            | Falls back to Claude model name              |
+| `ANTHROPIC_DEFAULT_SONNET_MODEL`         | Sonnet tier mapping          | Falls back to Claude model name              |
+| `ANTHROPIC_DEFAULT_HAIKU_MODEL`          | Haiku tier mapping           | Falls back to Claude model name              |
+| **`ANTHROPIC_SMALL_FAST_MODEL`**         | Internal lightweight tasks   | **Uses `claude-haiku-*` -- silent failures** |
+| `CLAUDE_CODE_SUBAGENT_MODEL`             | Agent tool subagents         | Falls back to Sonnet tier                    |
+| `CLAUDE_CODE_DISABLE_LEGACY_MODEL_REMAP` | Prevent model name remapping | May corrupt `deepseek-v4-*` names            |
 
 The critical one is `ANTHROPIC_SMALL_FAST_MODEL`. Claude Code references this frequently in its binary for various internal operations. If you don't set it, Claude Code silently tries to call `claude-haiku-*` through DeepSeek's endpoint, which either fails or gets remapped to `deepseek-v4-flash` (depending on endpoint behavior). Most third-party Claude Code wrapper guides miss this variable entirely.
 
@@ -149,6 +143,7 @@ The cost difference is dramatic for heavy use. A session that would cost $5-10 o
 Being honest about the limitations:
 
 **Instruction following**: DeepSeek V4 is noticeably weaker at following complex system prompt instructions. Claude Opus treats `CLAUDE.md` rules as near-mandatory; DeepSeek V4 treats them as suggestions. This manifests in:
+
 - Ignoring hook redirect messages (the vision problem above)
 - Occasionally using tools in ways that violate stated rules
 - Less consistent adherence to output formatting constraints
@@ -167,11 +162,11 @@ Being honest about the limitations:
 
 Rough output-token-only cost estimates (input tokens add to the total, but output is the dominant cost factor):
 
-| Scenario | Claude Opus | DeepSeek V4-Pro | V4-Flash |
-|----------|-------------|-----------------|----------|
-| Light day (~500K output tokens) | $12.50 | $1.74 | $0.14 |
-| Heavy day (~2M output tokens) | $50.00 | $6.96 | $0.56 |
-| Monthly (20 heavy days) | $1,000 | $139 | $11.20 |
+| Scenario                        | Claude Opus | DeepSeek V4-Pro | V4-Flash |
+| ------------------------------- | ----------- | --------------- | -------- |
+| Light day (~500K output tokens) | $12.50      | $1.74           | $0.14    |
+| Heavy day (~2M output tokens)   | $50.00      | $6.96           | $0.56    |
+| Monthly (20 heavy days)         | $1,000      | $139            | $11.20   |
 
 V4-Pro gives roughly 7x savings at the standard rate. V4-Flash gives 89x. If you are on a Claude Max subscription ($100-200/month depending on tier), the calculus changes — but if you are on API billing or hitting rate limits, the savings are significant.
 
@@ -216,6 +211,7 @@ The AI tooling ecosystem is entering a phase where the **interface** (Claude Cod
 Source code: [github.com/danielzhangau/claude-ds](https://github.com/danielzhangau/claude-ds)
 
 References:
+
 - [DeepSeek V4 Preview Release Notes](https://api-docs.deepseek.com/news/news260424)
 - [DeepSeek Anthropic API Guide](https://api-docs.deepseek.com/guides/anthropic_api)
 - [DeepSeek Models & Pricing](https://api-docs.deepseek.com/quick_start/pricing)
