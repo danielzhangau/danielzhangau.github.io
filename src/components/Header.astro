@@ -21,7 +21,7 @@ const navItems = [
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-1">
+      <nav aria-label="Primary" class="hidden md:flex items-center gap-1">
         {
           navItems.map((item) => (
             <a
@@ -118,7 +118,7 @@ const navItems = [
       id="mobile-menu"
       class="hidden md:hidden pb-4 border-t border-white/10 dark:border-slate-700"
     >
-      <nav class="flex flex-col gap-1 pt-3">
+      <nav aria-label="Mobile" class="flex flex-col gap-1 pt-3">
         {
           navItems.map((item) => (
             <a
