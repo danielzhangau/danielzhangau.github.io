@@ -43,7 +43,7 @@ const posts = (await getCollection("blog"))
         <label for="blog-search" class="sr-only">Search posts</label>
         <div class="relative">
           <span
-            class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 dark:text-slate-500"
+            class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 dark:text-slate-400"
             aria-hidden="true"
           >
             <svg
@@ -61,12 +61,12 @@ const posts = (await getCollection("blog"))
             type="search"
             autocomplete="off"
             placeholder="Search posts by title, description, or tag…"
-            class="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
+            class="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
           />
         </div>
         <p
           id="blog-search-status"
-          class="mt-2 text-xs text-slate-400 dark:text-slate-500"
+          class="mt-2 text-xs text-slate-500 dark:text-slate-400"
           aria-live="polite"
         >
         </p>
@@ -90,7 +90,7 @@ const posts = (await getCollection("blog"))
             return (
               <article data-search={haystack}>
                 <a href={`/blog/${post.id}`} class="group block">
-                  <time class="text-sm text-slate-400 dark:text-slate-500">
+                  <time class="text-sm text-slate-500 dark:text-slate-400">
                     {formatDate(post.data.pubDate)}
                   </time>
                   <h2 class="text-xl font-bold text-slate-900 dark:text-white mt-1 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">

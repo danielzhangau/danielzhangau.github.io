@@ -67,7 +67,7 @@ const { tag, posts } = Astro.props;
           posts.map((post) => (
             <article>
               <a href={`/blog/${post.id}`} class="group block">
-                <time class="text-sm text-slate-400 dark:text-slate-500">
+                <time class="text-sm text-slate-500 dark:text-slate-400">
                   {formatDate(post.data.pubDate)}
                 </time>
                 <h2 class="text-xl font-bold text-slate-900 dark:text-white mt-1 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">

@@ -44,6 +44,16 @@
   h6 {
     @apply font-bold tracking-tight;
   }
+
+  /* Visible focus ring for keyboard navigation */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-500 rounded-sm;
+  }
+
+  /* Skip-link: hidden until keyboard-focused */
+  .skip-link {
+    @apply absolute left-2 top-2 px-3 py-2 rounded-md bg-primary-600 text-white text-sm font-medium z-[100] -translate-y-20 focus:translate-y-0 transition-transform;
+  }
 }
 
 /* Scrollbar styling */

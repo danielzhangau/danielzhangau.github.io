@@ -3,6 +3,8 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import "@/styles/fonts.css";
 import "@/styles/global.css";
+import inter400Url from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
+import inter700Url from "@fontsource/inter/files/inter-latin-700-normal.woff2?url";
 
 interface ArticleData {
   pubDate: Date;
@@ -128,6 +130,10 @@ const articleJsonLd = article
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+
+    <!-- Preload critical fonts to reduce render-blocking on first paint -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={inter400Url} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={inter700Url} />
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -155,8 +161,9 @@ const articleJsonLd = article
     </script>
   </head>
   <body class="min-h-screen flex flex-col">
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <Header />
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
       <slot />
     </main>
     <Footer />
