@@ -93,22 +93,28 @@ The entire system is a single Bash script (`vpn-split-tunnel.sh`) with six comma
 
 ### Route Splitting
 
-The IP list is sourced from APNIC (parsed to CIDR format, ~7,400 entries for a typical country). Routes are added in parallel using `xargs -P`:
+The IP list is sourced from APNIC (parsed to CIDR format, ~7,400 entries for a typical country). `detect_gateway` returns both the Wi-Fi gateway IP and its interface name; both are needed for `-ifscope` (explained in the next section). Routes are added in parallel using `xargs -P`:
 
 ```bash
 PARALLEL_JOBS=50
 
 add_routes() {
-    local gw="$1" ip_file="$2" label="$3"
+    local gw="$1" iface="$2" ip_file="$3" label="$4"
     grep -v '^\s*$\|^\s*#' "$ip_file" | \
         xargs -P "$PARALLEL_JOBS" -I {} \
-        route -n add -net {} "$gw" 2>/dev/null || true
+        route -n add -net {} "$gw" -ifscope "$iface" 2>/dev/null || true
 }
 ```
 
 Sequential `route` calls take ~80 seconds for 7,400 entries. With 50 parallel workers, it finishes in under 10 seconds.
 
 The IP list auto-updates every 7 days. A `custom-direct.txt` file allows adding specific IPs that should always bypass VPN.
+
+### Why `-ifscope`?
+
+Without `-ifscope`, the route says "go via Wi-Fi" but macOS **source-IP selection runs independently of route selection**. When the VPN interface ranks above Wi-Fi in NWI (Network Interface ranking), the socket gets the VPN's inner IP as source, but the packet exits via Wi-Fi -- a mismatch that fails with `EADDRNOTAVAIL` ("Can't assign requested address"). Every browser, `curl`, and JDK call to a regional IP breaks instantly.
+
+`-ifscope <iface>` binds the route to that interface for source selection too, so it works regardless of NWI ranking. Skip it and the script may "just work" for a few days, then break the moment NWI ranking flips during a reconnect or VPN node change -- no warning, no log line, just universal `EADDRNOTAVAIL`. This is the difference between "works on my Mac" and "works on any Mac, any day".
 
 ### DNS Splitting (Reversed)
 
@@ -165,32 +171,43 @@ VPN reconnections reset the routing table and DNS configuration. A launchd daemo
 
 ```bash
 cmd_watch() {
+    local last="unknown"
     while true; do
         sleep "$CHECK_INTERVAL"
 
-        # Skip if no VPN
-        if ! netstat -rn | grep -q "^default.*ipsec\|^default.*utun"; then
+        # Detect VPN by interface address, not by parsing default routes -- the
+        # latter races during reconnect and IPv6 link-local utun defaults can
+        # confuse a naive grep.
+        if ! ifconfig ipsec0 2>/dev/null | grep -q "inet "; then
+            [[ "$last" != "down" ]] && log "VPN down" && last="down"
+            [[ -f "$ROUTE_MARKER" ]] && rm -f "$ROUTE_MARKER"
             continue
         fi
 
-        # Check actual routing table, not just marker file
         if routes_actually_applied; then
+            [[ "$last" != "ok" ]] && log "Split tunnel healthy" && last="ok"
             continue
         fi
 
-        # VPN active but routes missing -> apply
-        cmd_start
+        log "VPN up but routes stale -- re-applying"
+        cmd_start && last="applied"
     done
 }
 
 routes_actually_applied() {
-    local gw=$(detect_gateway) || return 1
-    # Probe: does a known regional IP route through Wi-Fi gateway?
-    route -n get <KNOWN_REGIONAL_IP> | grep -q "gateway: $gw"
+    local gw iface
+    read -r gw iface <<< "$(detect_gateway 2>/dev/null)" || return 1
+    # Count ifscope-marked routes via the Wi-Fi interface. Healthy state
+    # has thousands; threshold well below real count is immune to stray
+    # auto-cloned host routes that would fool a single-IP probe.
+    local count
+    count=$(netstat -rn -f inet 2>/dev/null \
+        | awk -v if_="$iface" '$NF == if_ && $3 ~ /I/ {c++} END {print c+0}')
+    [[ "${count:-0}" -ge 1000 ]]
 }
 ```
 
-Key design choice: `routes_actually_applied()` checks the **real routing table** by probing a known regional IP, rather than trusting a marker file. This handles VPN reconnections that clear routes but leave stale state files.
+Two robustness choices worth calling out. **VPN detection** uses interface address rather than default-route parsing -- the routing table races during reconnect, and the `grep "^default.*utun"` pattern also matches IPv6 link-local default routes on inactive `utun*` interfaces. **Health check** counts ifscope-marked routes rather than probing a single known IP -- macOS occasionally creates an auto-cloned host route (flag `W`) that overrides a CIDR more specifically, ignoring `-ifscope`, which would make a single-IP probe falsely report "routes missing" and trigger an infinite re-apply loop.
 
 The daemon is a standard launchd plist with `RunAtLoad` and `KeepAlive`:
 
@@ -247,6 +264,7 @@ In the old architecture with local DNS as default, these sites would silently br
 - **VPN tunnel quality is unchanged.** International sites still go through the tunnel. This optimizes what _can_ go direct, not what _must_ stay on VPN.
 - **Regional domain list is best-effort.** Unlisted regional domains still work (via clean DNS through VPN), just without CDN optimization. The ccTLD entry covers the majority automatically.
 - **Clean DNS adds a hop.** DNS queries for non-regional domains go through the VPN tunnel to reach Google DNS -- about 50-100ms extra per lookup compared to a local DNS. This is cached after the first query and is a worthwhile trade-off for correctness.
+- **Split DNS pitfall.** If a `/etc/resolver/<domain>` entry points at a DNS server that isn't directly reachable, `getaddrinfo()` times out on that domain while `nslookup <domain>` (which queries the system primary) still works -- a confusing asymmetry between applications and command-line tools. Fix by adding the DNS server IP to `custom-direct.txt` so it gets a direct ifscoped route, or temporarily put the target domain in `/etc/hosts`.
 - **Why not Clash/Surge?** They're proxy clients that compete for the routing table. This operates at a lower layer and coexists with any VPN client.
 - **The proper fix** is server-side split tunneling -- one config change on the VPN server. This is a client-side Plan B for when that's not an option.
 
