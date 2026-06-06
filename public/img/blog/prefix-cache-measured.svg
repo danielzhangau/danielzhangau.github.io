@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect width="720" height="300" rx="12" fill="#f8fafc" />
+
+  <text x="360" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">Prefix Cache: The Same 10,342-Token Prompt, Every Request</text>
+  <text x="360" y="48" text-anchor="middle" font-size="11" fill="#64748b">Measured on the live DeepSeek API with the production system prompt</text>
+
+  <!-- Section A: input tokens -->
+  <text x="40" y="80" font-size="11" font-weight="700" fill="#334155">Input tokens per request</text>
+
+  <!-- Cold -->
+  <text x="40" y="104" font-size="10" fill="#475569">Cold · 1st</text>
+  <rect x="150" y="92" width="380" height="22" rx="4" fill="#fca5a5" filter="url(#shadow)" />
+  <text x="545" y="107" font-size="9.5" fill="#b91c1c">10,342 miss (cold cache)</text>
+
+  <!-- Warm -->
+  <text x="40" y="138" font-size="10" fill="#475569">Warm</text>
+  <rect x="150" y="126" width="376" height="22" rx="4" fill="#86efac" filter="url(#shadow)" />
+  <rect x="526" y="126" width="4" height="22" fill="#fca5a5" />
+  <text x="158" y="141" font-size="9.5" font-weight="700" fill="#15803d">99% cache hit</text>
+  <text x="545" y="141" font-size="9.5" fill="#475569">10,240 hit · 102 miss</text>
+
+  <!-- Section B: input cost -->
+  <text x="40" y="186" font-size="11" font-weight="700" fill="#334155">Input cost per request (USD)</text>
+
+  <!-- No caching -->
+  <text x="40" y="210" font-size="10" fill="#475569">No cache</text>
+  <rect x="150" y="198" width="380" height="22" rx="4" fill="#cbd5e1" filter="url(#shadow)" />
+  <text x="545" y="213" font-size="9.5" fill="#475569">$0.001448</text>
+
+  <!-- With caching -->
+  <text x="40" y="244" font-size="10" fill="#475569">Cached</text>
+  <rect x="150" y="232" width="11" height="22" rx="3" fill="#22c55e" filter="url(#shadow)" />
+  <text x="170" y="247" font-size="9.5" fill="#15803d">$0.000043</text>
+  <rect x="240" y="233" width="86" height="20" rx="10" fill="#dcfce7" />
+  <text x="283" y="247" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">97% cheaper</text>
+
+  <!-- Footnote -->
+  <text x="360" y="284" text-anchor="middle" font-size="10" fill="#475569">DeepSeek bills cache-hit input at $0.0028/M vs $0.14/M for a miss — a 50x gap (pricing as of June 2026).</text>
+</svg>
