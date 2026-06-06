@@ -10,7 +10,7 @@ image: "/img/iot-monitoring-concept.svg"
 
 ## Problem
 
-IoT device fleets generate large volumes of telemetry — GPS signals, camera status, CPU load, temperature readings, and error logs — stored across Elasticsearch indices. Operations teams monitored this by hand, running queries and reading dashboards. Traditional dashboards (Datadog, GCP Cloud Monitoring) can surface a single-signal threshold breach, but the time-consuming work was everything after: correlating signals across devices, separating real faults from benign patterns, and judging whether a fleet going quiet meant an outage or simply a public holiday. That reasoning stayed manual, and subtle cross-signal patterns preceding device failures were often missed.
+IoT device fleets generate large volumes of telemetry — GPS signals, camera status, CPU load, temperature readings, and error logs — stored across Elasticsearch indices. Our operations engineers monitored this by hand in Kibana, running queries and reading dashboards. That surfaces a single-signal threshold breach easily enough, but the time-consuming work was everything after: correlating signals across devices, separating real faults from benign patterns, and judging whether a fleet going quiet meant an outage or simply a public holiday. That reasoning stayed manual, and subtle cross-signal patterns preceding device failures were often missed.
 
 ## Solution
 
@@ -27,12 +27,12 @@ As the primary developer, I designed and built the core components of an LLM-pow
 Elasticsearch (telemetry data)
         |
   Predefined Tool Functions ── get_device_metrics(device_id, time_range, signal_type)
-        |                    ── data cleaning / aggregation
-        |                    ── report formatting
+        |                   ── data cleaning / aggregation
+        |                   ── report formatting
         |
-  Claude Orchestrator (function calling)   ── multi-step loop
-        |── selects tool & fills parameters      (each result
-        |── decides the next step from results     drives the next)
+  Claude Orchestrator (function calling)   ── multi-step loop (each result drives the next)
+        |── selects tool & fills parameters
+        |── decides the next step from results
         |── accumulates cross-device context
         |
   Daily Report ── classified & priority-ranked issues
@@ -43,7 +43,7 @@ Elasticsearch (telemetry data)
 
 ## Impact
 
-- Replaced manual dashboard review with an automated daily report, freeing operations staff to focus on remediation rather than detection
+- Replaced manual dashboard review with an automated daily report, freeing our operations engineers to focus on remediation rather than detection
 - Correctly distinguished routine conditions from real faults using context a threshold rule lacks — for example, framing a fleet-wide "no data" reading as a public holiday rather than firing a blind outage alert
 - Improved early fault detection by correlating multi-signal patterns (combined CPU, temperature, and GPS signatures) that single-query review consistently missed
 
