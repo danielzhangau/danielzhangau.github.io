@@ -54,6 +54,38 @@
   .skip-link {
     @apply absolute left-2 top-2 px-3 py-2 rounded-md bg-primary-600 text-white text-sm font-medium z-[100] -translate-y-20 focus:translate-y-0 transition-transform;
   }
+
+  /* --- Touch interaction feedback ---------------------------------------
+     Mobile has no :hover, so taps on links/cards/buttons gave no visual
+     confirmation. Remove the inconsistent native tap highlight and supply
+     our own "pressed" cue, scoped to coarse pointers so mouse users are
+     unaffected. */
+  a,
+  button,
+  [role="button"],
+  label,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    a.group,
+    .tap-press {
+      transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+    }
+    a.group:active,
+    .tap-press:active {
+      transform: scale(0.97);
+    }
+    a:not(.group):active,
+    button:active,
+    [role="button"]:active {
+      opacity: 0.55;
+      transition: opacity 0.05s ease;
+    }
+  }
 }
 
 /* Scrollbar styling */

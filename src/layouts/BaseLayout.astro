@@ -161,8 +161,52 @@ const articleJsonLd = article
         }
       })();
     </script>
+
+    <!-- Top loading bar driver: gives click/loading feedback during
+         view-transition navigation (critical on mobile, which has no hover).
+         Registered once on document; the listener survives swaps. -->
+    <script is:inline>
+      (function () {
+        let timer;
+        const get = () => document.getElementById("nav-loading");
+        function start() {
+          const b = get();
+          if (!b) return;
+          b.style.opacity = "1";
+          b.style.transform = "scaleX(0.3)";
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            const x = get();
+            if (x) x.style.transform = "scaleX(0.9)";
+          }, 120);
+        }
+        function done() {
+          clearTimeout(timer);
+          const b = get();
+          if (!b) return;
+          b.style.transform = "scaleX(1)";
+          setTimeout(() => {
+            const x = get();
+            if (x) {
+              x.style.opacity = "0";
+              x.style.transform = "scaleX(0)";
+            }
+          }, 180);
+        }
+        document.addEventListener("astro:before-preparation", start);
+        document.addEventListener("astro:after-swap", done);
+      })();
+    </script>
   </head>
   <body class="min-h-screen flex flex-col">
+    <!-- Top loading bar shown during client-side navigation -->
+    <div
+      id="nav-loading"
+      aria-hidden="true"
+      class="fixed top-0 inset-x-0 h-0.5 z-[60] bg-primary-500 origin-left opacity-0 transition-[transform,opacity] duration-200 ease-out"
+      style="transform: scaleX(0)"
+    >
+    </div>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <Header />
     <main id="main-content" class="flex-1">
