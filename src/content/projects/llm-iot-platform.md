@@ -25,20 +25,25 @@ As the primary developer, I designed and built the core components of an LLM-pow
 
 ```
 Elasticsearch (telemetry data)
-        |
-  Predefined Tool Functions ── get_device_metrics(device_id, time_range, signal_type)
-        |                   ── data cleaning / aggregation
-        |                   ── report formatting
-        |
-  Claude Orchestrator (function calling)   ── multi-step loop (each result drives the next)
-        |── selects tool & fills parameters
-        |── decides the next step from results
-        |── accumulates cross-device context
-        |
-  Daily Report ── classified & priority-ranked issues
-               ── root-cause hypotheses + recommended actions
+  │
+  ▼
+Predefined Tool Functions
+  ├─ get_device_metrics(device_id, time_range, signal_type)
+  ├─ data cleaning / aggregation
+  └─ report formatting
+  │
+  ▼
+Claude Orchestrator (function calling) ── multi-step loop (each result drives the next)
+  ├─ selects tool & fills parameters
+  ├─ decides the next step from results
+  └─ accumulates cross-device context
+  │
+  ▼
+Daily Report
+  ├─ classified & priority-ranked issues
+  └─ root-cause hypotheses + recommended actions
 
-  Cloud Scheduler ──> Cloud Run (daily) ──> Claude API
+Cloud Scheduler ──> Cloud Run (daily) ──> Claude API
 ```
 
 ## Impact
