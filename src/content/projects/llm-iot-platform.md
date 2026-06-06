@@ -1,54 +1,46 @@
 ---
 title: "LLM-Powered IoT Device Monitoring Platform"
-description: "Intelligent monitoring platform using LLM function calling to orchestrate data retrieval, analysis, and automated report generation for IoT device fleets."
-tags: ["LLMs", "Function Calling", "Elasticsearch", "GCP", "Python", "API Integration"]
+description: "An LLM agent that investigates IoT fleet telemetry in Elasticsearch — running a multi-step investigation and writing a daily report, instead of the team reading dashboards by hand."
+tags: ["LLMs", "Function Calling", "Claude", "Elasticsearch", "GCP", "Python"]
 featured: true
 order: 3
 category: "production"
 image: "/img/iot-monitoring-concept.svg"
 ---
 
-## Problem
+## The problem
 
-IoT device fleets generate massive volumes of telemetry data — GPS signals, camera feeds, CPU metrics, temperature readings, and error logs — all stored across Elasticsearch indices. Operations teams were spending significant time manually querying dashboards and sifting through logs to identify issues, often missing subtle cross-signal patterns that indicated impending device failures.
+Our IoT fleets generate a lot of telemetry: GPS, camera status, CPU load, temperature, error logs, all stored in Elasticsearch. The team used to go through it by hand, reading dashboards and running queries. That works for the obvious cases, like a single metric spiking, but it's slow, and it tends to miss the problems that only show up when you line up several signals at once.
 
-## Solution
+## Why I used an LLM
 
-As the primary developer, I designed and built the core components of an LLM-powered monitoring platform deployed on Google Cloud Platform, automating telemetry analysis through intelligent tool orchestration:
+The threshold alerts were never the hard part. A simple query already tells you a device's CPU spiked. What actually took the team's time was what came after: working out whether a few unrelated-looking signals added up to one failing device, or whether a whole fleet going silent meant an outage or just everyone off for a public holiday. That judgment is the part I wanted the LLM to handle, not the querying. A dashboard can show you the numbers; it can't tell you which ones matter today.
 
-- **LLM Function Calling Orchestration**: Designed the core agent loop where the LLM dynamically selects and invokes the right tools based on the analysis context — deciding which data to fetch, how to process it, and what to report
-- **Tool Suite**: Built a set of callable tools including Elasticsearch data retrieval (querying device metrics across time ranges), data cleaning and aggregation pipelines, anomaly detection routines, and report formatting functions
-- **Context Management**: Implemented structured context passing so the LLM maintains awareness of fleet-wide state across multi-step analysis workflows — correlating anomalies across different devices and signal types
-- **Automated Daily Reports**: The system generates comprehensive reports with natural language explanations of device behavior patterns, flagged anomalies with probable root causes, and prioritized recommendations
+## What I built
 
-## Architecture
+I built the agent loop that runs the investigation. Instead of running a fixed batch of queries every time, it works one step at a time and decides what to look at next based on what it just found. A typical run pulls a fleet overview, notices one device with abnormal CPU, then goes and fetches that device's temperature and error logs, then checks nearby devices to tell a single-unit fault from something environmental. It ends with a short report: the issues worth attention, grouped and ranked, each with a likely cause and a suggested next step.
 
 ```
-Elasticsearch (telemetry data)
-        |
-  Tool Functions ── Data retrieval
-        |          ── Data cleaning
-        |          ── Anomaly detection
-        |          ── Report formatting
-        |
-  LLM Orchestrator (function calling)
-        |── Selects tools & parameters
-        |── Manages multi-step context
-        |── Generates natural language insights
-        |
-  Daily Analysis Report
+Elasticsearch (telemetry)
+   ↑  tool functions: get_device_metrics(device_id, time_range, signal_type), ...
+   |
+Claude agent loop  →  pick a tool, fill params, read the result, decide the next step
+   |
+Daily report: grouped + ranked issues, each with a likely cause and next step
 ```
 
-## Impact
+## How the queries work
 
-- Significantly reduced daily telemetry review time by replacing manual dashboard querying with automated reports, freeing operations staff to focus on remediation
-- Multiple orchestrated tool functions (ES query, data cleaning, aggregation, anomaly detection, report formatting) dynamically selected by the LLM based on analysis context
-- Improved early fault detection through multi-signal correlation — catching cross-device anomaly patterns that manual review consistently missed
+My first instinct was to let the model write the Elasticsearch queries itself. It wasn't reliable, and it didn't need to be: the schema is fixed and fairly simple, so there's no reason to make the model rediscover it every run. I moved the schema into a fixed set of tool functions — `get_device_metrics(device_id, time_range, signal_type)` and a few others — and let the model only pick which to call and fill in the parameters. That alone made the output far more consistent.
 
-## Technical Highlights
+## Choosing a model
 
-- LLM function calling for dynamic tool selection — the model decides which Elasticsearch queries to run and how to interpret results
-- Robust parameter extraction and validation to ensure correct tool invocation
-- Multi-step reasoning with context accumulation across sequential tool calls
-- Deployed as a managed service on GCP with scheduled execution
-- Graceful error handling when tools return unexpected data or LLM hallucination detection in generated reports
+I tried a few models during development and compared their output on the same tasks. The things that mattered for this job were how reliably each one called the right tool, how often it got the parameters right, the quality of the written report, and cost. Claude came out best on that balance, so that's what it runs on, through the official API.
+
+## Running it in production
+
+It runs as a scheduled job on GCP: Cloud Scheduler triggers a Cloud Run job once a day, which calls the Claude API and produces the report. Nothing elaborate, but it means the report is just there every morning instead of someone having to go dig for it.
+
+## What changed
+
+The main thing is the team stopped spending the start of the day sifting through dashboards. The report does that first pass for them, and they go straight to the things that need a decision. The example I keep coming back to is the "no data" one: a quiet fleet used to mean someone had to check whether it was a real outage or just a holiday, and the system now makes that call from the wider context instead of firing a blind alert. It also catches the multi-signal cases — CPU, temperature, and GPS drift together pointing at one overheating device — that were easy to miss when each signal sat on its own chart.
