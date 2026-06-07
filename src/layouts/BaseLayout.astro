@@ -149,16 +149,26 @@ const articleJsonLd = article
     <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd ?? personJsonLd)} />
     {articleJsonLd && <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />}
 
-    <!-- Theme initialization (prevent flash) -->
+    <!-- Theme initialization (prevent flash, and re-applied after each
+         view-transition swap so the theme persists across navigations) -->
     <script is:inline>
       (function () {
-        const stored = localStorage.getItem("theme");
-        if (
-          stored === "dark" ||
-          (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)
-        ) {
-          document.documentElement.classList.add("dark");
+        function applyTheme() {
+          const stored = localStorage.getItem("theme");
+          if (
+            stored === "dark" ||
+            (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)
+          ) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
         }
+        applyTheme();
+        // The incoming <html> is server-rendered without the dark class, so
+        // restore it before paint. The listener lives on document, which
+        // survives view-transition swaps.
+        document.addEventListener("astro:after-swap", applyTheme);
       })();
     </script>
 
