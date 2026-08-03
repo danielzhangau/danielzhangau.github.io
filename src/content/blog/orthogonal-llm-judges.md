@@ -1,6 +1,6 @@
 ---
 title: "I Ran Three LLM Judges on the Same Answers: The Disagreement Was the Only Signal"
-description: "A build log for evaluating a domain chatbot with no ground truth. Why a single LLM judge and temperature sampling both produce noise instead of signal, how to design orthogonal evaluation axes so judges disagree structurally, and the six harness decisions that determine whether any of it means anything."
+description: "A build log for evaluating a domain chatbot with no ground truth. Why a single LLM judge and temperature sampling both produce noise instead of signal, how to design orthogonal evaluation axes so judges disagree structurally, and the four harness decisions that determine whether any of it means anything."
 pubDate: 2026-07-28
 draft: true
 tags: ["LLM", "Evaluation", "LLM-as-Judge", "Domain Chatbot", "Production AI", "Prompt Engineering"]
@@ -10,7 +10,7 @@ At the end of [the last post](/blog/rag-to-full-context-domain-chatbot), where I
 
 This is what happened when I took that step. It did not go the way I expected, and the useful part is not the harness — it is a design constraint I ended up with: **for outputs with no correct answer, disagreement between judges is only informative if it comes from structure, not from sampling.** A single judge, or one judge sampled five times at high temperature, produces variance. Variance is not signal.
 
-This post is the build log for that: what broke, what I threw away, the six decisions that turned out to matter more than the axis names, and the rule I now use to decide whether an eval harness is worth building at all.
+This post is the build log for that: what broke, what I threw away, the four decisions that turned out to matter more than the axis names, and the rule I now use to decide whether an eval harness is worth building at all.
 
 ## The Problem: I Could Not Tell If I Had Made It Worse
 
@@ -96,7 +96,7 @@ Each axis runs on a **different model**. [TODO: Daniel — which model per axis,
 
 The evaluation set is two sources, deliberately: **hand-written high-risk questions** covering the specs where a wrong answer is a structural defect rather than an inconvenience, and **QA pairs synthesized from the source documents** for breadth. [TODO: Daniel — size of each set, and whether the synthesized pairs were reviewed before use.] The hand-written set covers what I know to be dangerous; the synthesized set covers what I did not think to ask. Neither is real user traffic, which is a gap I come back to.
 
-## Six Decisions That Decide Whether Any of This Means Anything
+## Four Decisions That Decide Whether Any of This Means Anything
 
 Naming three axes is the easy part. What follows determines whether the numbers coming out are worth reading, and I got several of them wrong on the first pass.
 
@@ -118,23 +118,11 @@ This is a genuine fork, and my first instinct was wrong. Grounding is defined by
 
 But handing the docs to all three judges quietly destroys the orthogonality. A judge that can see the specs starts scoring correctness no matter what its prompt says about form; the Expression axis becomes a second, worse correctness judge, and the three axes collapse toward each other. So the docs go to Verifiability only. Outcome and Expression see the question and the answer and nothing else. **Narrow inputs are part of what keeps axes narrow** — the input each judge receives is as much a design decision as the prompt.
 
-**4. Verifiability is half a judge and half an assertion.**
-
-The judgeable part of that axis is "does the cited section support this claim." The other part — does the cited anchor resolve to a real section at all — is a string lookup. Resolving citations programmatically _before_ the judge runs catches the most common defect deterministically and for free, and it means the judge spends its attention only on the part that needs judgment. Anything a judge does that an assertion could do is a place where you have chosen a slower, more expensive, non-deterministic tool for no reason.
-
-**5. Disagreement means rank inversion, not a score gap.**
+**4. Disagreement means rank inversion, not a score gap.**
 
 Because the verdict is pairwise, "the axes split" has a definition that needs no threshold: **Outcome prefers version B, Verifiability prefers version A.** Two axes pointing in opposite directions on the same question is unambiguous, robust to scale drift, and cannot be tuned into existence by choosing a convenient cutoff. On the pointwise side, the equivalent is one axis clearing its floor while another fails.
 
 The moment I had that definition, the aggregate scores stopped being the interesting output. The inversion list is.
-
-**6. Pin everything, and re-baseline rather than compare across judge versions.**
-
-The entire purpose of this harness is comparison across time, which fails silently if the ruler moves. Three things get pinned and recorded on every run: the exact judge model identifiers, a hash of each judge prompt, and the **raw** judge output — not just the extracted score.
-
-Note what is not on that list: temperature. Reaching for `temperature=0` to make a judge reproducible is a reflex worth dropping — several current frontier models have removed sampling parameters outright, so a reproducibility story that rests on pinning temperature is resting on something that may not exist on the model you want to use next year. Determinism has to come from pinning and record-keeping instead.
-
-And the rule that follows: when a judge prompt or judge model changes, previous results are not comparable. Re-run the old answers through the new judge. That costs a full re-run every time I touch a prompt, which is exactly why the prompts need to stop changing before the numbers start mattering. [TODO: Daniel — confirm the harness stores raw judge output and prompt hashes; if not, that is the first thing to add.]
 
 ## The Signal That Needs No Judge
 

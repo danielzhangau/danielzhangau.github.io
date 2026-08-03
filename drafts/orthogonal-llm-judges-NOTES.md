@@ -10,20 +10,64 @@ resolved.
 ## ⚠️ Read this first: the post now describes a harness you may not have built
 
 You asked me to research best practice and make the calls on questions 1-7. I
-did, and I wrote those decisions into the post as decisions — pairwise verdict
-plus pointwise floor, both orderings on every comparison, docs to the
-Verifiability judge only, programmatic citation resolution, rank inversion as
-the disagreement definition, pinned models and prompt hashes.
+did, and four of those decisions are written into the post as decisions —
+pairwise verdict plus pointwise floor, both orderings on every comparison, docs
+to the Verifiability judge only, rank inversion as the disagreement definition.
 
-**That means the post currently describes a design, some of which the prototype
-may not implement yet.** Before publishing, either bring the harness in line
-with the decisions, or tell me which ones you are not doing and I will rewrite
-those passages as recommendations rather than as things you did. A build log
-that describes a harness that does not exist is the one failure mode this post
-cannot survive, because the honesty is the whole reason anyone reads it.
+**That means the post currently describes a design the prototype may not
+implement yet.** Before publishing, either bring the harness in line with those
+four, or tell me which ones you are not doing and I will rewrite those passages
+as recommendations rather than as things you did. A build log that describes a
+harness that does not exist is the one failure mode this post cannot survive,
+because the honesty is the whole reason anyone reads it.
 
-Section 6 in particular ("Pin everything") asserts you store raw judge output
-and prompt hashes. There is an inline TODO on it, but verify it.
+## Cut from the post, still worth implementing
+
+Two decisions were pulled from the body to control length. They are engineering
+hygiene rather than load-bearing argument, so the post survives without them —
+but the harness is worse without them, so they stay here as build instructions.
+Neither is referenced anywhere in the post, so nothing dangles.
+
+### Verifiability is half a judge and half an assertion
+
+The judgeable part of that axis is "does the cited section support this claim."
+The other part — does the cited anchor resolve to a real section at all — is a
+string lookup. Resolve citations programmatically **before** the judge runs: it
+catches the most common defect deterministically and for free, and it means the
+judge spends its attention only on the part that needs judgment. Anything a
+judge does that an assertion could do is a place where you have chosen a slower,
+more expensive, non-deterministic tool for no reason.
+
+(The general form of this survives in the post, in "The Signal That Needs No
+Judge" — *before building a judge for something, check whether it is already a
+number.* Citation resolution is named there as an example, so the idea is
+present even though the mechanism is not.)
+
+### Pin everything, and re-baseline rather than compare across judge versions
+
+The entire purpose of the harness is comparison across time, which fails
+silently if the ruler moves. Pin and record on every run:
+
+- the exact judge model identifiers,
+- a hash of each judge prompt,
+- the **raw** judge output, not just the extracted score.
+
+Note what is *not* on that list: temperature. Reaching for `temperature=0` to
+make a judge reproducible is a reflex worth dropping — several current frontier
+models have removed sampling parameters outright, so a reproducibility story
+resting on pinned temperature rests on something that may not exist on the model
+you want to use next year. Determinism has to come from pinning and
+record-keeping instead.
+
+The rule that follows: **when a judge prompt or judge model changes, previous
+results are not comparable.** Re-run the old answers through the new judge. That
+costs a full re-run every time you touch a prompt, which is exactly why the
+prompts need to stop changing before the numbers start mattering.
+
+**TODO: confirm the harness stores raw judge output and prompt hashes. If not,
+that is the first thing to add** — it is cheap now and unrecoverable later, and
+without it the cross-version comparison this whole post is about will quietly
+stop meaning anything the first time a judge model updates underneath you.
 
 ## Decisions I made on your behalf (questions 1-7)
 
@@ -47,7 +91,7 @@ Reasoning is in the post; sources at the bottom of this file. Short version:
 
 4. **Disagreement = rank inversion.** One axis prefers version A, another
    prefers version B. No threshold to tune, robust to scale drift. On the
-   pointwise side: one axis clears its floor, another fails.
+   pointwise side: one axis clears its floor, another fails. (Post decision 4.)
 
 5. **Verbosity bias is the most likely confound, and it is now in Limitations.**
    Judges favour longer answers; full-context injection plausibly changed answer
@@ -56,11 +100,8 @@ Reasoning is in the post; sources at the bottom of this file. Short version:
    bias is handled structurally by running both orderings.
 
 6. **Reproducibility → pin model IDs, hash judge prompts, store raw judge
-   output.** Notably *not* temperature: several current frontier models have
-   removed sampling parameters entirely, so a reproducibility story built on
-   `temperature=0` is built on something that may not exist on your next judge
-   model. Corollary: when a judge prompt changes, re-run the old answers. Old
-   results are not comparable.
+   output.** Cut from the post for length; full version above under "Cut from
+   the post, still worth implementing." Notably *not* temperature.
 
 7. **Outcome judge input → question and answer only, no docs.** Follows from
    decision 2. The post keeps the honest note that "Outcome" is an optimistic
@@ -89,7 +130,8 @@ which is a decent independent check that the three axes are the right three.
 4. **Single-judge failure evidence** — the score distribution shape, and whether
    the cross-version delta really was smaller than run-to-run spread. Two
    separate claims depend on this.
-5. **Reconcile the harness with the six decisions** (see the warning above).
+5. **Reconcile the harness with the four decisions in the post** (see the
+   warning above), and decide whether the two cut decisions get implemented.
 
 ### P1 — significantly weakens the post if missing
 
