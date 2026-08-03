@@ -162,7 +162,7 @@ The reading framework, which does not depend on the specific numbers:
 
 ## Where This Breaks Down
 
-Six honest limitations, in descending order of how much they bother me.
+Four honest limitations, in descending order of how much they bother me.
 
 **Different models do not buy as much independence as it looks.** Running each axis on a different model removes shared weights, but not shared preferences. Contemporary instruction-tuned models have been through broadly similar preference training and inherit a broadly similar aesthetic: longer is more thorough, structured is more rigorous, hedged is more careful. The more holistic a question you ask, the more they converge — not because they agree about the answer, but because they were shaped to like the same _kind_ of answer. Orthogonality survives only as long as each axis stays narrow and mechanical; ask any judge for "overall quality" and you get that shared preference back, whatever the nameplate says. [TODO: Daniel — did the cross-model setup actually show more disagreement than a same-model multi-role version, if you ran both? That comparison would be the most valuable paragraph in this post.]
 
@@ -170,11 +170,7 @@ Six honest limitations, in descending order of how much they bother me.
 
 **Verbosity is the most likely confound.** LLM judges reliably favor longer answers, and length-controlled evaluation exists as a standard correction because of it. Full-context injection plausibly changed answer length relative to RAG — which would push every axis in the same direction at once and look exactly like an improvement. So answer length is logged with every score, and if mean length moved between versions, the comparison has to be re-checked on a length-matched subset before I believe it. [TODO: Daniel — did mean answer length change across the migration?]
 
-**Outcome is a proxy, and I named it optimistically.** No judge knows whether the person on the job site got what they needed. It is a model's estimate of usefulness, evaluated without the situation, the site conditions, or the follow-up question the user would have asked. Calling the axis "Outcome" makes it sound like I measured outcomes. I measured a model's guess at them.
-
-**No human baseline.** I have not measured agreement between these judges and a domain expert on the same answers. Without that, I know the axes separate from each other but not whether any of them tracks reality. [TODO: Daniel — is a human-labeled subset feasible? Even 30-50 expert-scored answers would turn this from "the judges disagree with each other" into "the judges agree with a person."]
-
-**The only real usage signal is latency.** Hand-written plus synthesized covers what I imagined and what the documents contain. It does not cover how people actually phrase questions on a roof holding a phone — abbreviations, typos, missing context, three questions at once. Time-to-first-token is the one measurement in this whole system that comes from reality rather than from my eval set.
+**Nothing in this harness has met a real user.** Three gaps that are really one gap. The Outcome axis is named optimistically — no judge knows whether the person on the job site got what they needed, so what it produces is a model's estimate of usefulness, formed without the situation, the site conditions, or the follow-up question the user would have asked. There is no human baseline either: I have not measured agreement between these judges and a domain expert, so I know the axes separate from each other but not whether any of them tracks reality. And the eval set is hand-written plus synthesized, which covers what I imagined and what the documents contain, not how someone phrases a question on a roof holding a phone — abbreviations, typos, missing context, three questions at once. Time-to-first-token is the only measurement in the whole system that comes from reality rather than from my own imagination. [TODO: Daniel — is a human-labeled subset feasible? Even 30-50 expert-scored answers would turn this from "the judges disagree with each other" into "the judges agree with a person."]
 
 ## The Rule of Thumb
 
