@@ -148,6 +148,41 @@ because full-context injection puts a large prompt on every request. Your
 "concise and clear" maps onto Expression and "strongly relevant" onto Outcome,
 which is a decent independent check that the three axes are the right three.
 
+## Data template for the results section (pointwise, post-fix)
+
+Paste this filled in and the results section can be written in one pass. No
+absolute numbers required anywhere — direction and shape only, per the
+disclosure call.
+
+```
+Eval set size:              (hand-written high-risk ___ / synthesized ___)
+Scoring scale:              (1-5? binary? something else)
+Model per axis:             Outcome ___ / Expression ___ / Verifiability ___
+
+Per-axis score distribution shape, post-fix:
+  Outcome:                  spread wide · moderate · collapsed to top
+  Expression:               spread wide · moderate · collapsed to top
+  Verifiability:            spread wide · moderate · collapsed to top
+
+Which axes track each other, which move independently:
+                            (e.g. Outcome and Expression still correlated,
+                             Verifiability now independent)
+
+Split answers (one axis passes its floor, another fails):
+  Common or rare:           ___
+  What they look like:      1-2 shapes, no need to paste the answers
+                            (e.g. "cited correctly but answers a different
+                             question than the one asked")
+
+BEFORE vs AFTER the input fix:
+  Did convergence drop when the docs were pulled from Outcome/Expression?
+                            yes, a lot · yes, a little · no change
+  (This is its own finding. See P0 item 5 — keep the pre-fix numbers.)
+
+Answer length: did the mean change across the RAG → full-context migration?
+                            yes / no / not measured
+```
+
 ## TODO checklist, ordered by how badly the post needs it
 
 ### P0 — post cannot publish without these
@@ -167,6 +202,15 @@ which is a decent independent check that the three axes are the right three.
    docs, so any convergence in the current numbers is uninterpretable. Cheapest
    fix on the list; do it before collecting the results for item 1, or you will
    collect them twice.
+
+   **Keep the pre-fix numbers.** Do not overwrite them. The delta between
+   docs-to-all-three and docs-to-Verifiability-only is a direct measurement of
+   how much of the axis convergence was plumbing rather than model behaviour —
+   which is the exact question the convergence limitation currently has to
+   hand-wave. Running the same eval set through both wirings is a controlled
+   experiment you get almost for free, and only if you still have the old
+   scores when the new ones land. If they are already gone, re-run the old
+   wiring once before fixing it; it is cheaper than the section it buys.
 
 ### P1 — significantly weakens the post if missing
 
