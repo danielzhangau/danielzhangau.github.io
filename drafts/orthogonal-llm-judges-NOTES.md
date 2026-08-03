@@ -7,19 +7,32 @@ the post ships.
 Post status: `draft: true`. Do not flip to `false` until every P0 below is
 resolved.
 
-## ⚠️ Read this first: the post now describes a harness you may not have built
+## Implementation status (resolved — post now matches)
 
-You asked me to research best practice and make the calls on questions 1-7. I
-did, and four of those decisions are written into the post as decisions —
-pairwise verdict plus pointwise floor, both orderings on every comparison, docs
-to the Verifiability judge only, rank inversion as the disagreement definition.
+**Confirmed: pointwise only. Pairwise is not implemented.** The post has been
+reframed to say so, prominently, at the top of the decisions section rather than
+buried in a caveat. Decisions 1, 2 and 4 are now labelled conclusions rather than
+results, and the "Where This Breaks Down" section leads with the honest headline
+limitation — the harness still cannot answer the question it was built for,
+because the verdict needs pairwise.
 
-**That means the post currently describes a design the prototype may not
-implement yet.** Before publishing, either bring the harness in line with those
-four, or tell me which ones you are not doing and I will rewrite those passages
-as recommendations rather than as things you did. A build log that describes a
-harness that does not exist is the one failure mode this post cannot survive,
-because the honesty is the whole reason anyone reads it.
+This is a better post than the version that implied a pairwise harness. The arc
+is now: manual review failed → one judge failed → temperature was the wrong fix
+→ three orthogonal axes, built and run pointwise → the split list works today →
+the verdict still doesn't, and here is exactly what it would take. That is the
+same shape as the RAG post, which ended on an honest "a real eval set is the
+obvious next step" rather than a fake resolution.
+
+**One status question is still open, and it is now load-bearing:** decision 3
+says only the Verifiability judge sees the source documentation. Is that how the
+pointwise run is actually wired, or do all three judges currently see the docs?
+There is an inline TODO on it. If all three see them, that is a live candidate
+explanation for any axis convergence in the results, and it needs to move into
+the results section rather than sit in the design section as if it were settled.
+
+Everything else in the post that describes behaviour — three axes, cross-model
+assignment, pointwise scoring, the split queue — should be verified against the
+prototype before publishing, but nothing else is known to be aspirational.
 
 ## Cut from the post, still worth implementing
 
@@ -130,8 +143,9 @@ which is a decent independent check that the three axes are the right three.
 4. **Single-judge failure evidence** — the score distribution shape, and whether
    the cross-version delta really was smaller than run-to-run spread. Two
    separate claims depend on this.
-5. **Reconcile the harness with the four decisions in the post** (see the
-   warning above), and decide whether the two cut decisions get implemented.
+5. **Confirm decision 3's wiring** — does only the Verifiability judge see the
+   source docs, or do all three? Inline TODO in the post. Load-bearing for how
+   the convergence results get explained.
 
 ### P1 — significantly weakens the post if missing
 

@@ -98,31 +98,33 @@ The evaluation set is two sources, deliberately: **hand-written high-risk questi
 
 ## Four Decisions That Decide Whether Any of This Means Anything
 
-Naming three axes is the easy part. What follows determines whether the numbers coming out are worth reading, and I got several of them wrong on the first pass.
+Naming three axes is the easy part. What follows determines whether the numbers coming out are worth reading — and before any of it, the status, because it changes how you should read the rest of this post.
+
+**What I have actually run is pointwise scoring on all three axes. The pairwise half is designed, argued for below, and not built yet.** Decisions 1, 2, and 4 are conclusions, not results. I am writing them down anyway, because working out _why_ the pointwise run could not answer my question turned out to be the part that transfers — and because a build log that quietly upgrades its plans into its accomplishments is worth nothing.
 
 **1. Pairwise for the verdict, per-axis rubric for the diagnosis.**
 
 The "everything scores 4 or 5" collapse is a known property of pointwise absolute scoring, not a quirk of my prompt. Asking a model to hold a stable absolute standard across runs, across models, and across months is asking it for the thing it is worst at. Pairwise comparison — here are two answers to the same question, which is better on this axis — is a far easier question, and it is the question I actually have. I am not trying to learn that the system scores 4.2. I am trying to learn whether version B beat version A.
 
-So the harness runs both, for different jobs. **Pairwise decides**: did this change help, per axis. **Pointwise rubric diagnoses**: which axis is weak in absolute terms, and which specific answers fall below a floor. Reporting a pointwise mean as the verdict is the mistake; the mean is a trend line, not a decision.
+The two are for different jobs, and I built the wrong one first. **Pointwise rubric diagnoses**: which axis is weak in absolute terms, and which specific answers fall below a floor. That is what I have. **Pairwise decides**: did this change help, per axis. That is what I wanted, and what I have been reading my pointwise means as if they were — which is the mistake. A pointwise mean is a trend line, not a verdict.
 
 **2. Every pairwise call runs in both orderings.**
 
 LLM judges have a position preference: the same two answers, swapped, can flip the verdict. This was identified in the original MT-Bench work alongside verbosity and self-enhancement bias, and it has not gone away. A single-ordering pairwise result is not a measurement.
 
-So each comparison runs twice, A/B and B/A, and only a verdict that survives the swap counts as a preference. A flip is recorded as a tie — and a high tie rate on an axis is itself a finding: that axis cannot tell these two versions apart. This doubles the judge cost and it is non-negotiable. An eval you cannot trust is more expensive than one that costs twice as much.
+So when I build it, each comparison runs twice, A/B and B/A, and only a verdict that survives the swap counts as a preference. A flip is recorded as a tie — and a high tie rate on an axis is itself a finding: that axis cannot tell the two versions apart. This doubles the judge cost and it is non-negotiable. An eval you cannot trust is more expensive than one that costs twice as much.
 
 **3. Only the Verifiability judge sees the source documentation.**
 
 This is a genuine fork, and my first instinct was wrong. Grounding is defined by the source: "does this claim appear in the documentation" is answerable only with the documentation in context. Without it, a judge is scoring whether a claim _sounds like_ the kind of thing the docs would say — plausibility wearing the name of verification.
 
-But handing the docs to all three judges quietly destroys the orthogonality. A judge that can see the specs starts scoring correctness no matter what its prompt says about form; the Expression axis becomes a second, worse correctness judge, and the three axes collapse toward each other. So the docs go to Verifiability only. Outcome and Expression see the question and the answer and nothing else. **Narrow inputs are part of what keeps axes narrow** — the input each judge receives is as much a design decision as the prompt.
+But handing the docs to all three judges quietly destroys the orthogonality. A judge that can see the specs starts scoring correctness no matter what its prompt says about form; the Expression axis becomes a second, worse correctness judge, and the three axes collapse toward each other. So the docs go to Verifiability only. Outcome and Expression see the question and the answer and nothing else. **Narrow inputs are part of what keeps axes narrow** — the input each judge receives is as much a design decision as the prompt. [TODO: Daniel — is this how the pointwise run is actually wired, or do all three judges currently see the docs? If they all see them, that is a live explanation for any axis convergence in the results below, and it belongs there rather than here.]
 
-**4. Disagreement means rank inversion, not a score gap.**
+**4. Disagreement is a threshold crossing, not a score gap.**
 
-Because the verdict is pairwise, "the axes split" has a definition that needs no threshold: **Outcome prefers version B, Verifiability prefers version A.** Two axes pointing in opposite directions on the same question is unambiguous, robust to scale drift, and cannot be tuned into existence by choosing a convenient cutoff. On the pointwise side, the equivalent is one axis clearing its floor while another fails.
+"The axes split" needs a definition that cannot be tuned into existence by picking a convenient cutoff. Pointwise, which is what I have, that definition is **one axis clears its floor and another fails on the same answer** — a crossing, not a distance. Once pairwise exists it gets a sharper form: Outcome prefers version B, Verifiability prefers version A. Two axes pointing opposite directions on the same question is unambiguous and robust to scale drift in a way no score gap is.
 
-The moment I had that definition, the aggregate scores stopped being the interesting output. The inversion list is.
+Either way the consequence is the same, and it is the most useful thing this exercise produced: the moment disagreement had a definition, the aggregate scores stopped being the interesting output. The split list is.
 
 ## The Signal That Needs No Judge
 
@@ -136,25 +138,25 @@ The general form: **before building a judge for something, check whether it is a
 
 ## What Actually Diverged
 
-This is where I have to be careful, because it is the part of a post like this that is most tempting to write ahead of the data. The harness is still a prototype and the judge prompts are still moving, so what follows is how I read the output, not a claim about final numbers.
+This is where I have to be careful, because it is the part of a post like this that is most tempting to write ahead of the data. The harness is a prototype, the judge prompts are still moving, and everything below comes from pointwise scoring only — so what follows is how I read the output, not a claim about final numbers, and not the version comparison I actually wanted.
 
 [TODO: Daniel — the core empirical result. Which axes separated across system versions, which converged, and the tie rate per axis. Directional statements only, per your call on disclosure. This is the load-bearing section of the post and it is currently a placeholder.]
 
 The reading framework, which does not depend on the specific numbers:
 
-**If two axes agree on every comparison, they are not orthogonal.** Either the prompts leaked into each other — a Verifiability prompt that says "a good answer cites its sources" has quietly imported a quality judgment — or the underlying property really is one property, and I should merge them and reclaim the budget.
+**If two axes track each other across the whole set, they are not orthogonal.** Either the prompts leaked into each other — a Verifiability prompt that says "a good answer cites its sources" has quietly imported a quality judgment — or the underlying property really is one property, and I should merge them and reclaim the budget.
 
-**If an axis ties on nearly every comparison, it has no discriminative power.** Two causes, different responses. Either both versions genuinely clear that bar, in which case the axis is real but the bar is too low to be informative; or the axis is not something a judge can assess from the input it gets, in which case it should not be a judge.
+**If an axis gives nearly every answer the same score, it has no discriminative power.** Two causes, different responses. Either the outputs genuinely clear that bar, in which case the axis is real but the bar is too low to be informative; or the axis is not something a judge can assess from the input it gets, in which case it should not be a judge at all.
 
-**The answers where axes invert are the whole product.** Not the per-axis aggregates — the _list of comparisons where the axes point in opposite directions._ Those are the cases where something real is happening, and they are the only queue I review by hand now. The harness's job is not to score my system; it is to shrink the set of answers I must read from all of them down to the contested ones.
+**The answers where the axes split are the whole product.** Not the per-axis aggregates — the _list of answers where one axis passes and another fails._ Those are the cases where something real is happening, and they are the only queue I review by hand. The harness's job is not to score my system; it is to shrink the set of answers I must read from all of them down to the contested ones. This is the one part of the design that works today, without pairwise.
 
 ## Where This Breaks Down
 
 Four honest limitations, in descending order of how much they bother me.
 
-**Different models do not buy as much independence as it looks.** Running each axis on a different model removes shared weights, but not shared preferences. Contemporary instruction-tuned models have been through broadly similar preference training and inherit a broadly similar aesthetic: longer is more thorough, structured is more rigorous, hedged is more careful. The more holistic a question you ask, the more they converge — not because they agree about the answer, but because they were shaped to like the same _kind_ of answer. Orthogonality survives only as long as each axis stays narrow and mechanical; ask any judge for "overall quality" and you get that shared preference back, whatever the nameplate says. [TODO: Daniel — did the cross-model setup actually show more disagreement than a same-model multi-role version, if you ran both? That comparison would be the most valuable paragraph in this post.]
+**It still cannot answer the question I built it for.** Pointwise scoring tells me how the current system looks against an absolute rubric. It does not tell me whether the architecture change helped, because a mean whose movement is smaller than its own run-to-run spread is not a comparison — that is the failure that started this whole exercise, and swapping one judge for three orthogonal ones did not fix it. What three axes bought me is a better _diagnosis_: I can now see which dimension is weak and which specific answers are contested. The verdict needs pairwise, and pairwise is not built. I would rather say that plainly than present a diagnostic instrument as if it were a decision procedure.
 
-**Pairwise tells you which is better, not whether either is good.** This is the direct cost of decision 1. Version B can beat version A on all three axes while both remain unfit to put in front of an installer. That is precisely why the pointwise floor stays in the harness: pairwise answers "did this change help," and only an absolute bar answers "is this acceptable." Running only the comparison is how you ship a system that improved its way into being wrong.
+**Different models do not buy as much independence as it looks.** Running each axis on a different model removes shared weights, but not shared preferences. Contemporary instruction-tuned models have been through broadly similar preference training and inherit a broadly similar aesthetic: longer is more thorough, structured is more rigorous, hedged is more careful. The more holistic a question you ask, the more they converge — not because they agree about the answer, but because they were shaped to like the same _kind_ of answer. Orthogonality survives only as long as each axis stays narrow and mechanical; ask any judge for "overall quality" and you get that shared preference back, whatever the nameplate says. [TODO: Daniel — did the cross-model setup actually show more disagreement than a same-model multi-role version, if you ran both? That comparison would be the most valuable paragraph in this post.]
 
 **Verbosity is the most likely confound.** LLM judges reliably favor longer answers, and length-controlled evaluation exists as a standard correction because of it. Full-context injection plausibly changed answer length relative to RAG — which would push every axis in the same direction at once and look exactly like an improvement. So answer length is logged with every score, and if mean length moved between versions, the comparison has to be re-checked on a length-matched subset before I believe it. [TODO: Daniel — did mean answer length change across the migration?]
 
@@ -167,7 +169,7 @@ When this is worth building, and when it is not:
 | Situation                                                                                 | What to do                                                                                                                        |
 | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | The property is already a number — latency, a resolvable citation, a unit, an exact value | **Assert on it.** Not a judge. Deterministic, free, and cannot be flattered.                                                      |
-| Output is prose with no correct answer, and you are iterating on it frequently            | **Orthogonal multi-axis judges, pairwise for the verdict.** The inversion queue is the deliverable, not the scores.               |
+| Output is prose with no correct answer, and you are iterating on it frequently            | **Orthogonal multi-axis judges, pairwise for the verdict.** The disagreement queue is the deliverable, not the scores.            |
 | Output is prose with no correct answer, but the system is stable                          | **A fixed manual checklist.** Twenty questions you re-read after each change beats a harness you built once and stopped trusting. |
 | You want one number to report                                                             | **Don't.** A single overall score is the least informative artifact you can produce and the easiest to fool yourself with.        |
 
@@ -181,7 +183,7 @@ The threshold, concretely: build this when you can no longer hold the change's e
 
 **Ask the easier question.** Almost every "my judge scores everything 4 out of 5" problem is a pointwise problem. You rarely need an absolute score; you need to know which of two versions is better, and models are far better at that comparison than at holding a stable absolute scale.
 
-**The output you want is a queue, not a score.** Aggregates are for tracking over time. What changes your Monday is the list of comparisons where your axes point in opposite directions — that is where the defects live, and it is short enough to read.
+**The output you want is a queue, not a score.** Aggregates are for tracking over time. What changes your Monday is the list of answers where your axes disagree with each other — that is where the defects live, and it is short enough to read. You get that list from the cheap half of this design, before any of the comparison machinery exists.
 
 **Be suspicious of convergence.** If all your judges agree all the time, the pleasant interpretation is that your system is good. The likelier one is that you asked them the same question three times.
 
