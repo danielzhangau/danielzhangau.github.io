@@ -23,16 +23,35 @@ the verdict still doesn't, and here is exactly what it would take. That is the
 same shape as the RAG post, which ended on an honest "a real eval set is the
 obvious next step" rather than a fake resolution.
 
-**One status question is still open, and it is now load-bearing:** decision 3
-says only the Verifiability judge sees the source documentation. Is that how the
-pointwise run is actually wired, or do all three judges currently see the docs?
-There is an inline TODO on it. If all three see them, that is a live candidate
-explanation for any axis convergence in the results, and it needs to move into
-the results section rather than sit in the design section as if it were settled.
+**Confirmed: all three judges currently see the source documentation.** So none
+of the four decisions is implemented — three describe machinery not built, and
+decision 3 describes a defect not yet fixed. The post says exactly that.
+
+This one has consequences beyond the status line, and they are now written into
+three places:
+
+- **Decision 3** is framed as a correction rather than a plan, including why the
+  mistake was easy to make (giving each judge everything it might need feels
+  safe; "give it everything" is what collapses three axes into one).
+- **The results section** carries the caveat before any number, with the
+  asymmetry that makes the run still worth something: shared inputs push axes
+  *together*, so **convergence is currently uninterpretable but divergence still
+  counts.** If two axes disagree despite reading the same material, that
+  disagreement is real. Do not let anyone talk you out of this asymmetry — it is
+  the only reason the pointwise data has any value before the fix.
+- **The convergence limitation** now leads with the boring explanation. The
+  cross-model "shared preference training" argument is the one you *want* to
+  have found, which is exactly why it has to wait until the plumbing is ruled
+  out.
+
+**Fix the input wiring before you run anything else.** It is the cheapest item
+on the whole list, and every convergence number collected before it lands is
+uninterpretable — meaning a re-run is required regardless. Doing it first saves
+the re-run.
 
 Everything else in the post that describes behaviour — three axes, cross-model
-assignment, pointwise scoring, the split queue — should be verified against the
-prototype before publishing, but nothing else is known to be aspirational.
+assignment, pointwise scoring, the split queue — should still be verified against
+the prototype before publishing.
 
 ## Cut from the post, still worth implementing
 
@@ -95,7 +114,8 @@ Reasoning is in the post; sources at the bottom of this file. Short version:
    the source, so that judge needs them. But giving all three the docs re-couples
    the axes: any judge that can see the specs starts scoring correctness, and
    Expression becomes a second, worse correctness judge. The input each judge
-   gets is as much a design decision as its prompt.
+   gets is as much a design decision as its prompt. **Currently violated — all
+   three see the docs. This is the top-priority fix.**
 
 3. **Pairwise, not pointwise, for the version comparison.** This is the direct
    fix for the "everything scores 4 or 5" collapse — it is a known property of
@@ -143,9 +163,10 @@ which is a decent independent check that the three axes are the right three.
 4. **Single-judge failure evidence** — the score distribution shape, and whether
    the cross-version delta really was smaller than run-to-run spread. Two
    separate claims depend on this.
-5. **Confirm decision 3's wiring** — does only the Verifiability judge see the
-   source docs, or do all three? Inline TODO in the post. Load-bearing for how
-   the convergence results get explained.
+5. **Fix the input wiring and re-run** — all three judges currently see the
+   docs, so any convergence in the current numbers is uninterpretable. Cheapest
+   fix on the list; do it before collecting the results for item 1, or you will
+   collect them twice.
 
 ### P1 — significantly weakens the post if missing
 
