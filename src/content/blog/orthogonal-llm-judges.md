@@ -1,16 +1,16 @@
 ---
-title: "I Ran Three LLM Judges on the Same Answers: The Disagreement Was the Only Signal"
-description: "A build log for evaluating a domain chatbot that has no ground truth. Why one LLM judge and temperature sampling both produce noise, how to design evaluation axes that can disagree with each other, and what I got wrong wiring the harness up."
+title: "Three LLM Judges, One Set of Documents: How I Invalidated My Own Eval"
+description: "A build log for evaluating a documentation chatbot that has no ground truth. Why one judge and temperature sampling both produce noise, how to design evaluation axes that can disagree with each other, and the wiring mistake that made my own results unreadable."
 pubDate: 2026-08-05
 draft: false
 tags: ["LLM", "Evaluation", "LLM-as-Judge", "Domain Chatbot", "Production AI", "Prompt Engineering"]
 ---
 
-At the end of [the last post](/blog/rag-to-full-context-domain-chatbot), where I deleted two generations of RAG and injected the whole knowledge base into the system prompt instead, I admitted I had no evaluation set — only manual spot-checks — and that a real one was the obvious next step.
+I gave three LLM judges three different jobs, three different models, and one set of documents. The documents were the mistake.
 
-I built it. It still cannot answer the question I built it for, and working out why turned out to be worth more than the harness.
+The harness was supposed to settle a question left over from [the last post](/blog/rag-to-full-context-domain-chatbot), where I deleted two generations of RAG and injected the whole knowledge base into the system prompt instead: were the answers better afterwards, or had I just made the system simpler and quietly worse? It still cannot tell me. Working out why was worth more than the harness.
 
-The short version: for answers with no correct string, judges only tell you something when they can disagree for structural reasons. One judge gives you one opinion. The same judge sampled five times at high temperature gives you five samples of one opinion. Neither is a second opinion.
+The rule I came away with is that judges only tell you something when they can disagree for structural reasons. One judge gives you one opinion. The same judge sampled five times at high temperature gives you five samples of one opinion. Neither is a second opinion.
 
 ## The Problem: I Could Not Tell If I Had Made It Worse
 
