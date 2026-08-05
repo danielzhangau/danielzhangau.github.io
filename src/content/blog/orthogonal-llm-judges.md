@@ -2,7 +2,7 @@
 title: "I Ran Three LLM Judges on the Same Answers: The Disagreement Was the Only Signal"
 description: "A build log for evaluating a domain chatbot that has no ground truth. Why one LLM judge and temperature sampling both produce noise, how to design evaluation axes that can disagree with each other, and what I got wrong wiring the harness up."
 pubDate: 2026-08-05
-draft: true
+draft: false
 tags: ["LLM", "Evaluation", "LLM-as-Judge", "Domain Chatbot", "Production AI", "Prompt Engineering"]
 ---
 
