@@ -1,7 +1,7 @@
 ---
 title: "I Ran Three LLM Judges on the Same Answers: The Disagreement Was the Only Signal"
 description: "A build log for evaluating a domain chatbot with no ground truth. Why a single LLM judge and temperature sampling both produce noise instead of signal, how to design orthogonal evaluation axes so judges disagree structurally, and the four harness decisions that determine whether any of it means anything."
-pubDate: 2026-07-28
+pubDate: 2026-08-05
 draft: true
 tags: ["LLM", "Evaluation", "LLM-as-Judge", "Domain Chatbot", "Production AI", "Prompt Engineering"]
 ---
@@ -138,15 +138,17 @@ So it goes into the harness as a fourth dimension that is not a judge axis: meas
 
 The general form: **before building a judge for something, check whether it is already a number.** Latency is. Citation resolution is. Answer length is. What is left over — is this useful, is this well-formed, is this checkable — is the part that actually needs judgment.
 
-## What Actually Diverged
+## Why There Are No Numbers Here Yet
 
 This is where I have to be careful, because it is the part of a post like this that is most tempting to write ahead of the data. The harness is a prototype, the judge prompts are still moving, and everything below comes from pointwise scoring only — so what follows is how I read the output, not a claim about final numbers, and not the version comparison I actually wanted.
 
-[TODO: Daniel — the core empirical result. Which axes separated across system versions, which converged, and the tie rate per axis. Directional statements only, per your call on disclosure. This is the load-bearing section of the post and it is currently a placeholder.]
+So, plainly: I do not have a divergence result to show you, and the reason is the defect in decision 3. I ran the three axes pointwise across the eval set and got three columns of numbers. I cannot tell you what they mean, because all three judges were reading the same documents when they produced them — and that is precisely the wiring that manufactures agreement between axes. Publishing those correlations would be publishing my own plumbing.
 
-One caveat has to come before any number, and it is my own fault: **all three judges currently see the source documentation.** Any convergence between axes in this data has a mundane explanation available — three judges that can all check the specs will all, to some degree, end up scoring correctness — and I cannot separate that from a real finding until the inputs are narrowed. Note the asymmetry, because it is what makes the run worth anything at all: shared inputs push the axes _together_, so convergence is currently uninterpretable, while **divergence still counts**. If two axes disagree despite reading the same material, that disagreement is real.
+I want to be exact about why I am not rounding that up, because the temptation here is the strongest in the whole project. I have numbers. They form a pattern. The pattern is interesting. And I am the only person who knows the setup that produced them was contaminated. Every incentive points toward presenting them with a soft caveat and moving on. But that is the same failure I opened this post with — grading my own architecture — just wearing a lab coat, and the caveat would be doing the work of making it feel handled rather than actually handling it.
 
-The reading framework, which does not depend on the specific numbers:
+One caveat governs everything below, and it is my own fault: **all three judges currently see the source documentation.** Any convergence between axes in this data has a mundane explanation available — three judges that can all check the specs will all, to some degree, end up scoring correctness — and I cannot separate that from a real finding until the inputs are narrowed. Note the asymmetry, because it is what makes the run worth anything at all: shared inputs push the axes _together_, so convergence is currently uninterpretable, while **divergence still counts**. If two axes disagree despite reading the same material, that disagreement is real.
+
+What I can hand you instead is the reading framework — which is the part I would have needed anyway, and which does not depend on the numbers:
 
 **If two axes track each other across the whole set, they are not orthogonal.** Three causes, and they need ruling out in order of dumbness: the inputs leaked, which for me they currently do; or the prompts leaked into each other — a Verifiability prompt that says "a good answer cites its sources" has quietly imported a quality judgment; or the underlying property really is one property, and I should merge the axes and reclaim the budget.
 
