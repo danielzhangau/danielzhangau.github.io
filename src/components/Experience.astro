@@ -6,11 +6,7 @@ const experiences = [
     role: "Data Scientist",
     period: "2026 - Present",
     location: "Shanghai, China",
-    highlights: [
-      "Partnering with leading AI companies in China, on site and remotely, on the model challenges, data gaps, and performance bottlenecks behind their development workflows",
-      "Technical workshops with customer AI and data teams — surfacing their pain points and shaping use cases with measurable model and business impact",
-      "Data and model support across the deal cycle and through post-deal integration, validation, and benchmarking, so customers realise value from web data in model development and evaluation",
-    ],
+    highlights: [],
   },
   {
     company: "Invespec",
@@ -27,8 +23,8 @@ const experiences = [
     period: "2021 - 2025",
     location: "Brisbane, AU",
     highlights: [
-      "Deeply involved in architecting an AI-powered road monitoring system deployed across 5+ councils covering 5,000+ km of roads, achieving 95% detection accuracy and significantly reducing survey costs",
-      "Helped design and develop a street waste detection system generating city-wide Cleanliness Index scores, enabling data-driven cleanup dispatch and equitable resource allocation",
+      "Architected an AI-powered road monitoring system deployed across 5+ councils covering 5,000+ km of roads, achieving 95% detection accuracy and significantly reducing survey costs",
+      "Designed and developed a street waste detection system generating city-wide Cleanliness Index scores, enabling data-driven cleanup dispatch and equitable resource allocation",
       "Built an LLM-powered IoT monitoring platform on GCP using function calling to orchestrate Elasticsearch data retrieval, anomaly detection, and automated reporting — significantly reducing daily telemetry review time",
     ],
   },
@@ -64,7 +60,7 @@ const experiences = [
               <div class="absolute left-0 sm:left-8 -translate-x-1/2 w-3 h-3 rounded-full bg-primary-500 border-2 border-white dark:border-slate-900 shadow-sm mt-1.5" />
 
               <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                   <div>
                     <h3 class="text-lg font-bold text-slate-900 dark:text-white">{exp.role}</h3>
                     <p class="text-primary-600 dark:text-primary-400 font-medium">{exp.company}</p>
@@ -75,24 +71,26 @@ const experiences = [
                     {exp.location && <span>{exp.location}</span>}
                   </div>
                 </div>
-                <ul class="space-y-2">
-                  {exp.highlights.map((highlight) => (
-                    <li class="flex gap-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                      <span class="text-primary-500 mt-1 shrink-0">
-                        <svg
-                          class="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
+                {exp.highlights.length > 0 && (
+                  <ul class="space-y-2 mt-4">
+                    {exp.highlights.map((highlight) => (
+                      <li class="flex gap-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <span class="text-primary-500 mt-1 shrink-0">
+                          <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <path d="M9 5l7 7-7 7" />
+                          </svg>
+                        </span>
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           ))
