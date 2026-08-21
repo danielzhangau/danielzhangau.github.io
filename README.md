@@ -129,6 +129,6 @@ Push to `master` → GitHub Actions runs `format:check` + `build`, then publishe
 ## Contact
 
 - **Email:** ddaniel.zhang0413@gmail.com
-- **LinkedIn:** [bosheng-zhang](https://www.linkedin.com/in/bosheng-zhang-7b7036149/)
+- **LinkedIn:** [boshengzhangau](https://www.linkedin.com/in/boshengzhangau/)
 - **GitHub:** [@danielzhangau](https://github.com/danielzhangau)
 - **RSS:** [danielzhangau.github.io/rss.xml](https://danielzhangau.github.io/rss.xml)

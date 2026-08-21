@@ -1,15 +1,24 @@
 ---
-// Experience data - update dates and details as needed
+// Experience data - update dates and details as needed (location is optional)
 const experiences = [
   {
-    company: "Independent",
-    role: "AI Engineer & Researcher",
+    company: "Similarweb",
+    role: "Data Scientist",
     period: "2026 - Present",
-    location: "Brisbane, AU",
+    location: "Shanghai, China",
     highlights: [
-      "Researching and developing domain-specific business chatbots powered by LLMs, focusing on practical enterprise applications",
-      "Exploring agentic AI frameworks, RAG architectures, and multi-modal models for real-world solution design",
-      "Experimenting with emerging AI patterns through personal projects and prototypes",
+      "Working directly with leading AI companies in China, on site and remotely, to understand their model challenges, data gaps, and performance bottlenecks",
+      "Running technical workshops with customer AI and data teams, translating their pain points into data-driven solutions and use cases with measurable model and business impact",
+      "Supporting the deal process from a data and model perspective, then leading post-deal integration, validation, and benchmarking so customers realise value from web data in their model development and evaluation workflows",
+    ],
+  },
+  {
+    company: "Invespec",
+    role: "AI & Software Engineer",
+    period: "2026",
+    highlights: [
+      "Designed and built a CRM system to support the team's day-to-day sales and customer workflows",
+      "Explored and developed internal AI tooling to boost productivity across the team",
     ],
   },
   {
@@ -62,8 +71,8 @@ const experiences = [
                   </div>
                   <div class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
                     <span>{exp.period}</span>
-                    <span class="hidden sm:inline">|</span>
-                    <span>{exp.location}</span>
+                    {exp.location && <span class="hidden sm:inline">|</span>}
+                    {exp.location && <span>{exp.location}</span>}
                   </div>
                 </div>
                 <ul class="space-y-2">

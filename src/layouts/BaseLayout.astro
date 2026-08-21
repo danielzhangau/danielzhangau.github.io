@@ -22,7 +22,7 @@ interface Props {
 
 const {
   title = "Bosheng (Daniel) Zhang | AI/ML Engineer & Solution Architect",
-  description = "AI engineer with 4+ years of experience designing and delivering end-to-end AI systems. Specialized in computer vision, LLM agents, RAG, and production AI solutions.",
+  description = "AI engineer with 5+ years of experience designing and delivering end-to-end AI systems. Data Scientist at Similarweb. Specialized in computer vision, LLM agents, RAG, and production AI solutions.",
   image = "/img/portfolio-picture.webp",
   article,
 } = Astro.props;
@@ -38,13 +38,26 @@ const personJsonLd = {
   alternateName: "Daniel Zhang",
   url: "https://danielzhangau.github.io/",
   image: "https://danielzhangau.github.io/img/portfolio-picture.webp",
-  jobTitle: "AI/ML Engineer & Solution Architect",
+  jobTitle: "Data Scientist",
+  worksFor: {
+    "@type": "Organization",
+    name: "Similarweb",
+  },
+  homeLocation: {
+    "@type": "Place",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Shanghai",
+      addressCountry: "CN",
+    },
+  },
   alumniOf: {
     "@type": "EducationalOrganization",
     name: "University of Queensland",
   },
   knowsAbout: [
     "Artificial Intelligence",
+    "Data Science",
     "Solution Architecture",
     "AI Agents",
     "Large Language Models",
@@ -53,10 +66,7 @@ const personJsonLd = {
     "PyTorch",
     "Google Cloud Platform",
   ],
-  sameAs: [
-    "https://github.com/danielzhangau",
-    "https://www.linkedin.com/in/bosheng-zhang-7b7036149/",
-  ],
+  sameAs: ["https://github.com/danielzhangau", "https://www.linkedin.com/in/boshengzhangau/"],
 };
 
 const articleJsonLd = article
@@ -96,7 +106,7 @@ const articleJsonLd = article
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="AI Engineer, Solution Architect, AI Agents, LLM, RAG, Computer Vision, PyTorch, Google Cloud Platform, Brisbane, Australia, Machine Learning, MLOps"
+      content="AI Engineer, Data Scientist, Solution Architect, AI Agents, LLM, RAG, Computer Vision, PyTorch, Google Cloud Platform, Similarweb, Shanghai, Brisbane, Australia, Machine Learning, MLOps"
     />
 
     <!-- Open Graph -->
