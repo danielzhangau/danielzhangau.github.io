@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio and blog for Bosheng (Daniel) Zhang — AI/ML Engineer based in Brisbane, Australia. Previously at Vision HQ (2021-2025), now independently researching domain-specific business chatbots. Site URL: https://danielzhangau.github.io
+Personal portfolio and blog for Bosheng (Daniel) Zhang — AI/ML Engineer. Currently Data Scientist at Similarweb (Shanghai, from Aug 2026); previously Invespec (2026) and Vision HQ in Brisbane (2021-2025). Site URL: https://danielzhangau.github.io
 
 ## Tech Stack
 
@@ -23,7 +23,7 @@ src/
 │   ├── Header.astro     # Sticky nav + dark/light toggle + mobile menu + ScrollSpy
 │   ├── Hero.astro       # Full viewport hero with bg image + CTA
 │   ├── About.astro      # Bio section with profile picture
-│   ├── Experience.astro # Timeline (3 entries)
+│   ├── Experience.astro # Timeline (4 entries, `location` optional)
 │   ├── Skills.astro     # 4-category grid
 │   ├── Projects.astro   # Featured projects section (homepage)
 │   ├── ProjectCard.astro # Reusable card with image, tags, hover
@@ -140,4 +140,4 @@ Config: `.github/workflows/deploy.yml`
 
 - Email: ddaniel.zhang0413@gmail.com
 - GitHub: danielzhangau
-- LinkedIn: bosheng-zhang-7b7036149
+- LinkedIn: boshengzhangau

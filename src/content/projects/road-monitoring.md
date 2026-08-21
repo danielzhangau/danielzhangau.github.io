@@ -14,7 +14,7 @@ Road infrastructure deterioration poses significant safety risks to drivers and 
 
 ## Solution
 
-As the primary ML engineer, I developed the computer vision pipeline and was deeply involved in architecting the overall system. The system leverages the regular coverage patterns of waste collection trucks — by mounting cameras on these vehicles, it captures imagery of every road in a council's service area during routine collection rounds, then processes the data through a deep learning pipeline:
+As the primary ML engineer, I developed the computer vision pipeline and architected the overall system. The system leverages the regular coverage patterns of waste collection trucks — by mounting cameras on these vehicles, it captures imagery of every road in a council's service area during routine collection rounds, then processes the data through a deep learning pipeline:
 
 - **Object Detection Pipeline**: Built with PyTorch, trained to identify and classify multiple types of road defects including potholes, cracking, edge deterioration, and surface deformation
 - **Cloud Processing**: Deployed on Google Cloud Platform with containerized inference services (Docker) for scalable batch processing of daily image captures
@@ -23,9 +23,9 @@ As the primary ML engineer, I developed the computer vision pipeline and was dee
 
 ## Impact
 
-- Deployed across **5+ Australian local government areas**, monitoring over **5,000 km** of road network using existing waste collection fleet — eliminating the need for dedicated survey vehicle passes
-- Achieved **95% detection accuracy** with high precision tuning to minimize false positives, ensuring councils can trust automated alerts without manual verification overhead
-- Significantly reduced road condition survey costs by replacing specialized survey vehicle deployments and manual data processing with automated, continuous AI-driven monitoring
+- Deployed across multiple Australian local government areas, monitoring council road networks at scale using the existing waste collection fleet — eliminating the need for dedicated survey vehicle passes
+- Tuned for high precision to minimize false positives, so councils can trust automated alerts without manual verification overhead
+- Cut road condition survey costs by replacing specialized survey vehicle deployments and manual data processing with automated, continuous AI-driven monitoring
 - Transformed road maintenance from reactive complaint-driven to proactive data-driven, enabling councils to identify and prioritize emerging defects before they escalate into safety hazards
 
 ## Technical Highlights
